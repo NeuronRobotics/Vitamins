@@ -4,6 +4,7 @@ use <../Vitamins/Fasteners/ScrewsAsBolts/Motor_Screw_As_Bolt_Vitamin.scad>
 
 function RodEndClipLength()=RodEndBallSwivelFlangeHeight()*1.2;
 function RodEndClipWidth()=MotorScrewBoltLength()*.9;
+function RodEndClipHeight()=RodEndTopWidth();
 
 module RodEndClip()
 {
@@ -13,9 +14,9 @@ module RodEndClip()
 		{
 			union()
 			{
-				translate([0,-RodEndTopWidth()/8,0])
+				translate([0,-RodEndClipHeight()/8,0])
 				{
-					cube([RodEndClipLength(), RodEndClipWidth(),  RodEndTopWidth()], center=true);
+					cube([RodEndClipLength(), RodEndClipWidth(),  RodEndClipHeight()], center=true);
 				}
 				translate([RodEndRodInset()*.8,-RodEndTopWidth()/8,0])
 				{
@@ -29,7 +30,6 @@ module RodEndClip()
 			{
 				union()
 				{
-my computer is being 
 				#RodEnd();
 				RodEndSlot();
 				}
@@ -42,7 +42,7 @@ my computer is being
 
 module RodEndClips()
 {
-	translate([-RodEndSpacing()/2,-RodEndClipLength()/2,RodEndTopWidth()/2])
+	translate([-RodEndSpacing()/2,-RodEndClipLength()/2,RodEndClipHeight()/2])
 	{
 		union()
 		{

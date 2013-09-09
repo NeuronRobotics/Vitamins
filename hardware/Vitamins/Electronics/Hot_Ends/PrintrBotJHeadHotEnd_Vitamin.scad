@@ -1,5 +1,5 @@
-
 $fn=50;
+
 function HotEndDiam() = 16;
 function HotEndRecessDiam() = 7;
 function HotEndRecessHeight() = 2;
@@ -23,4 +23,4 @@ module HotEnd(ScrewChannel=false,3dPrinterTolerance=.4){
 	}
 }
 
-HotEnd(false,.4);		
+HotEnd(true,.4);		
