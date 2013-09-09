@@ -1,7 +1,7 @@
 $fn = 60;
 
 function getNubRadius() =1.3;
-function getPinHeight() = 11;
+function getPinHeight() = 10;
 function getFlangeWidth(tolerance)= 2.3 + tolerance;
 function getFlangeLength(tolerance)= 6.64 + tolerance;
 function getQuickCamRadius(tolerance)= 55.93/2 +tolerance;
