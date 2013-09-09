@@ -74,7 +74,7 @@ module cameraTiltBar(3dPrinterTolerance=.4){
 					getCamerabarThickness()/2]){
 			rotate([0,90,0]){
 				rotate([0,0,45]){
-					#StandardServoMotor(true, 1, true, .4);
+					StandardServoMotor(true, 1, true, .4);
 				}
 			}
 		}

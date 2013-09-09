@@ -44,6 +44,9 @@ function StandardServoNubDiam(3dPrinterTolerance=.4)=6+3dPrinterTolerance;
 function StandardServoBoltHeight()=13.5;
 function StandardServoBoltDiam()=2.5;
 
+//horn bolts
+function hornBoltHeight()=10;
+
 //body bolts
 function StandardServoBoltSideDist()=4.35;
 function StandardServoBoltEdgeDist()=4.85;
@@ -67,31 +70,40 @@ module StandardServoBolt(ServoTolerance=StandardServoTolerance())
 {
 	cylinder(h=StandardServoBoltHeight()+ServoTolerance, r=(StandardServoBoltDiam()+ServoTolerance)/2, $fn=100);
 }
+module StandardServoHornBolt(ServoTolerance=StandardServoTolerance())
+{	
+	union(){
+		translate([0,0, hornBoltHeight()]){
+			cylinder(	h= hornBoltHeight()+ServoTolerance, 
+						r=(StandardServoBoltDiam()+ServoTolerance)*1.5, 
+						$fn=100);
+		}
+		cylinder(h= hornBoltHeight()+ServoTolerance, r=(StandardServoBoltDiam()+ServoTolerance)/2, $fn=100);
+	}
+}
 
 module bodyBolts(boltPlacementZ,ServoTolerance=StandardServoTolerance())
 {
-		translate([StandardServoBoltEdgeDist(),-StandardServoBoltSideDist(),boltPlacementZ])
-		{
-			StandardServoBolt(ServoTolerance);
+	for (i = [0:1]){
+		for (j = [0:1]){
+			//Use the for loop like binary flags
+			translate([	(i*(StandardServoThickness() - StandardServoBoltEdgeDist()*2)),
+			           	(j*(StandardServoBaseLength() + StandardServoBoltSideDist()*2)),
+			           	boltPlacementZ]){
+							//Center the first pin on the hole
+							translate([	StandardServoBoltEdgeDist(),
+										-StandardServoBoltSideDist(),
+										0]){
+								StandardServoBolt(ServoTolerance);
+							}
+			}	
 		}
-		
-		translate([(StandardServoThickness()-StandardServoBoltEdgeDist()),-StandardServoBoltSideDist(),boltPlacementZ])
-		{
-			StandardServoBolt(ServoTolerance);
-		}
+	}
 
-		translate([StandardServoBoltEdgeDist(),(StandardServoBaseLength()+StandardServoBoltSideDist()),boltPlacementZ])
-		{
-			StandardServoBolt(ServoTolerance);
-		}
-		
-		translate([(StandardServoThickness()-StandardServoBoltEdgeDist()),(StandardServoBaseLength()+StandardServoBoltSideDist()),boltPlacementZ])
-		{
-			StandardServoBolt(ServoTolerance);
-		}
 }
 
 module StandardServoBlock(boltsUp=true, Cylinder=1, ServoTolerance=StandardServoTolerance()){
+	n=90;
 	union()
 	{
 //basic motor shape
@@ -116,24 +128,14 @@ if(Cylinder==1){
 		}
 
 //cylinder bolts
-		translate([StandardServoThickness()/2,StandardServoCylinderDist()-StandardServoCylBoltDist(),(StandardServoHeight()+StandardServoCylinderHeight())])
-		{
-			StandardServoBolt(ServoTolerance);
-		}
-
-		translate([StandardServoThickness()/2,StandardServoCylinderDist()+StandardServoCylBoltDist(),(StandardServoHeight()+StandardServoCylinderHeight())])
-		{
-			StandardServoBolt(ServoTolerance);
-		}
-
-		translate([StandardServoThickness()/2+StandardServoCylBoltDist(),StandardServoCylinderDist(),(StandardServoHeight()+StandardServoCylinderHeight())])
-		{
-			StandardServoBolt(ServoTolerance);
-		}
-
-		translate([StandardServoThickness()/2-StandardServoCylBoltDist(),StandardServoCylinderDist(),(StandardServoHeight()+StandardServoCylinderHeight())])
-		{
-			StandardServoBolt(ServoTolerance);
+		for (i = [0:n:360]) { 
+			//for loop makes a hole every n degrees on a 360 degree sweep
+			translate([	StandardServoThickness()/2 + (cos(i)*StandardServoCylBoltDist()),
+			           	StandardServoCylinderDist() + (sin(i)*StandardServoCylBoltDist()),
+			           	(StandardServoHeight()+StandardServoCylinderHeight())
+			           	]){
+							StandardServoHornBolt(ServoTolerance);
+			}
 		}
 }else{
 	if(Cylinder==2){
@@ -290,7 +292,7 @@ module horn_drills(d,n,h)
 //The first boolean determines the bolt direction(true is up, false is down, default=true), 
 //the first number determines whether to use the large cylindrical hub (1), the small metal nub (2), or the 4-arm horn (3)(default=1). The second boolean determines where the module is centered (true centers at the hub, false centers at the motor mount, default=false). The number indicated the tolerance of the motor (default is .4 mm)
 
-StandardServoMotor(true,2,true,.4);
+StandardServoMotor(true, 1, true, .4);
 
 
 
