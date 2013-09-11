@@ -27,9 +27,7 @@ module getBar(3dPrinterTolerance=.4){
 
 module coreCameraBar(3dPrinterTolerance=.4){
 	union(){
-		
-		
-			
+
 		difference(){
 			getBar(3dPrinterTolerance);
 			
