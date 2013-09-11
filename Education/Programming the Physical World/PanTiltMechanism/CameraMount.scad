@@ -2,18 +2,12 @@ use <../../../hardware/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.sc
 use <../../../hardware/Vitamins/Sensors/Camera/QuickCam_STX.scad>
 use <../../../hardware/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 
-//QuickCam();
-
-//StandardServoMotor(true, 1, false, .4);
 
 function getCamerabarThickness()=25;
-function getCamerabarWidth()=10;
+function getCamerabarWidth()=8;
 
 module getBar(3dPrinterTolerance=.4){
-//	cylinder(	getCamerabarThickness(),				//
-//							getQuickCamRadius(3dPrinterTolerance)+getCamerabarWidth(), 	// 
-//					 		getQuickCamRadius(3dPrinterTolerance)+getCamerabarWidth(), 	// 
-//					 		false);
+
 	union(){
 		intersection(){
 				cylinder(	h=getCamerabarThickness(),				//
@@ -60,12 +54,9 @@ module coreCameraBar(3dPrinterTolerance=.4){
 		           getCamerabarThickness()/2]){
 			rotate([0,90,0]){
 				cylinder(	h=getCamerabarWidth(),				//
-							r=getCamerabarThickness()/2, 	// 
+							r=608BallBearingDiam(3dPrinterTolerance)/2, 	// 
 							center=false);
 			}
-//			cube([	getCamerabarWidth(),
-//					getCamerabarThickness(),
-//					getCamerabarThickness()]);
 		}
 		//Servo Brick
 		translate([-(getQuickCamRadius(3dPrinterTolerance)+getCamerabarWidth()),
@@ -73,13 +64,13 @@ module coreCameraBar(3dPrinterTolerance=.4){
 		           getCamerabarThickness()/2]){
 					rotate([0,90,0]){
 						cylinder(	h=getCamerabarWidth(),				//
-									r=getCamerabarThickness()/2, 	// 
+									r=608BallBearingDiam(3dPrinterTolerance)/2, 	// 
 									center=false);
 					}
 		}
 		// Bearing rod
 		placeBearingPart(3dPrinterTolerance){
-				cylinder(	608BallBearingHeight(3dPrinterTolerance)*2,
+				cylinder(	608BallBearingHeight(3dPrinterTolerance),
 							608BallBearingInnerDiam(3dPrinterTolerance)/2,
 							608BallBearingInnerDiam(3dPrinterTolerance)/2,
 							false

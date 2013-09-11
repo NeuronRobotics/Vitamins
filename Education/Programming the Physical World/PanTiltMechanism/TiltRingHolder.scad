@@ -9,9 +9,15 @@ function getRingRadius(3dPrinterTolerance=.4) = getQuickCamRadius(3dPrinterToler
 module clearenceParts(3dPrinterTolerance=.4){
 	union(){
 		cameraTiltBar();
-		cameraTiltServo();
+		#cameraTiltServo();
 		placeBearingPart(3dPrinterTolerance){
 			608BallBearing(3dPrinterTolerance);		
+		}
+		placeBearingPart(3dPrinterTolerance){
+			cylinder(	h=608BallBearingHeight(3dPrinterTolerance)*2,
+						r=608BallBearingDiam(3dPrinterTolerance)/2-3,
+						center=false
+						);	
 		}
 	}
 }
@@ -20,7 +26,7 @@ module cameraPanServo(3dPrinterTolerance=.4, screwAlignment=0){
 	translate([	0,
 	           	-(getRingRadius(3dPrinterTolerance)),
 				getCamerabarThickness()/2]){
-				rotate([-90,0,0]){
+				rotate([-90,90,0]){
 					rotate([0,0,screwAlignment]){
 						StandardServoMotor(true, 1, true, .4);
 					}
@@ -62,11 +68,11 @@ module outerRing(3dPrinterTolerance=.4){
 			cube([StandardServoBoltHeight()+5,StandardServoLength(),getCamerabarThickness()]);
 		}
 		placePanBearing(3dPrinterTolerance){
-			cylinder(	608BallBearingHeight(3dPrinterTolerance)*2,
-										608BallBearingInnerDiam(3dPrinterTolerance)/2,
-										608BallBearingInnerDiam(3dPrinterTolerance)/2,
-										false
-										);
+			cylinder(	608BallBearingHeight(3dPrinterTolerance),
+						608BallBearingInnerDiam(3dPrinterTolerance)/2,
+						608BallBearingInnerDiam(3dPrinterTolerance)/2,
+						false
+						);
 		}
 	}
 }
@@ -80,3 +86,4 @@ module tiltRing(3dPrinterTolerance=.4){
 }
 
 tiltRing(.3);
+panRingHolder();
