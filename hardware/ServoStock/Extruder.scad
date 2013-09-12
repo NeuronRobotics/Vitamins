@@ -91,8 +91,7 @@ module Extruder(servo=true, 3dPrinterTolerance=.4)
 	}
 }
 
-//TO PRINT: KEEP THE MIRRORED HALF IN ITS CURRENT CONFIGURATION.  REMOVING THE MIRROR WILL MAKE THE HALVES CHIRAL AND THEREFORE UNUSABLE.  TRY IT IF YOU DON'T BELIEVE ME.
-translate([0,ExtruderWidth()+6,ExtruderHeight()]){mirror([0,0,1]){Extruder(true,.4);}}
+translate([0,ExtruderWidth(),0]){mirror([1,0,0]){Extruder(true,.4);}}
 
 Extruder(false,.4);
 				
