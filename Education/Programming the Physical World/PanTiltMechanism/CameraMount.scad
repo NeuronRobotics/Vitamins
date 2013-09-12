@@ -3,8 +3,8 @@ use <../../../hardware/Vitamins/Sensors/Camera/QuickCam_STX.scad>
 use <../../../hardware/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 
 
-function getCamerabarThickness()=25;
-function getCamerabarWidth()=8;
+function getCamerabarThickness()=28;
+function getCamerabarWidth()=10;
 
 module getBar(3dPrinterTolerance=.4){
 
@@ -24,12 +24,13 @@ module coreCameraBar(3dPrinterTolerance=.4){
 
 		difference(){
 			getBar(3dPrinterTolerance);
-			
+			// subtract the camera
 			translate([0,-getQuickCamRadius(3dPrinterTolerance),getCamerabarThickness()/2]){
 				rotate([-90,0,0]){
 					QuickCam();
 				}
 			}
+			
 			translate([-(getQuickCamRadius(3dPrinterTolerance)+getCamerabarThickness()),0,-1]){
 				rotate([0,0,0]){
 					cube([	(getQuickCamRadius(3dPrinterTolerance)+getCamerabarThickness())*2,

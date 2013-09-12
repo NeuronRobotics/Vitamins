@@ -9,15 +9,15 @@ function getRingRadius(3dPrinterTolerance=.4) = getQuickCamRadius(3dPrinterToler
 module clearenceParts(3dPrinterTolerance=.4){
 	union(){
 		cameraTiltBar();
-		#cameraTiltServo();
+		cameraTiltServo();
 		placeBearingPart(3dPrinterTolerance){
 			608BallBearing(3dPrinterTolerance);		
 		}
 		placeBearingPart(3dPrinterTolerance){
-			cylinder(	h=608BallBearingHeight(3dPrinterTolerance)*2,
-						r=608BallBearingDiam(3dPrinterTolerance)/2-3,
-						center=false
-						);	
+		cylinder(	h=608BallBearingHeight(3dPrinterTolerance)*2,
+					r=608BallBearingDiam(3dPrinterTolerance)/2-((getCamerabarWidth()*3)/10),
+					center=false
+					);	
 		}
 	}
 }
@@ -63,9 +63,9 @@ module outerRing(3dPrinterTolerance=.4){
 		// servo mount block
 		translate([	-(StandardServoBoltHeight()+5+getQuickCamRadius(3dPrinterTolerance)+getCamerabarWidth() +1),
 		           	-37.5,
-		           	0]){
+		           (getCamerabarThickness()-StandardServoThickness())/2]){
 			
-			cube([StandardServoBoltHeight()+5,StandardServoLength(),getCamerabarThickness()]);
+			cube([StandardServoBoltHeight()+5,StandardServoLength(),StandardServoThickness()]);
 		}
 		placePanBearing(3dPrinterTolerance){
 			cylinder(	608BallBearingHeight(3dPrinterTolerance),
@@ -85,5 +85,4 @@ module tiltRing(3dPrinterTolerance=.4){
 	}
 }
 
-tiltRing(.3);
-panRingHolder();
+tiltRing();

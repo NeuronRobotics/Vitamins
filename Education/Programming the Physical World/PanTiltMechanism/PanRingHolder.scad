@@ -9,7 +9,7 @@ function getPanRingRadius(3dPrinterTolerance=.4) = getRingRadius(3dPrinterTolera
 module mainPanRing(3dPrinterTolerance=.4){
 	intersection(){
 		translate([0,-getPanRingRadius(3dPrinterTolerance),-.5]){
-				cube([getPanRingRadius(3dPrinterTolerance)*2,getPanRingRadius(3dPrinterTolerance)*2,getCamerabarThickness()+1]);
+				cube([getPanRingRadius(3dPrinterTolerance)*2,getPanRingRadius(3dPrinterTolerance)*2,getCamerabarThickness()]);
 		}
 		translate([0,0,getCamerabarThickness()/2]){
 			difference(){
@@ -30,18 +30,28 @@ module mainPanRing(3dPrinterTolerance=.4){
 						center=false);
 		}
 	}
+	//Bearing brick
+	translate([-getCamerabarThickness()/2,
+			   -getPanRingRadius(3dPrinterTolerance)+2,
+			  0]){
+					#cube([	getCamerabarThickness(),
+							getCamerabarWidth()-3,
+							getCamerabarThickness()]);
+	}
 	//Servo Brick
 	translate([0,
 	           -(getPanRingRadius(3dPrinterTolerance)-getCamerabarWidth() ),
-	           getCamerabarThickness()/2]){
+	           StandardServoThickness()/2]){
 		rotate([90,90,0]){
 			translate([	-getCamerabarThickness()/2,
 			           	-getCamerabarThickness()/2-5,
 						1]){
-						
-						cube([	getCamerabarThickness(),
-								StandardServoLength(),
-								StandardServoBoltHeight()+5]);
+						union(){
+							cube([	StandardServoThickness(),
+									StandardServoLength(),
+									StandardServoBoltHeight()+5]);
+							
+						}
 			}
 		}
 	}
@@ -54,10 +64,8 @@ module panRingHolder(3dPrinterTolerance=.4){
 		placePanBearing(3dPrinterTolerance){
 			608BallBearing(3dPrinterTolerance);		
 		}
-		#cameraPanServo(3dPrinterTolerance, 0);
+		cameraPanServo(3dPrinterTolerance, 0);
 	}
 }
 
 panRingHolder();
-tiltRing(.3);
-cameraTiltBar();
