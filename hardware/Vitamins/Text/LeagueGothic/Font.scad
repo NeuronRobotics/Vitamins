@@ -52,7 +52,7 @@ module fnt_str(chars,char_count, block_size, height) {
 
 }
 
-module getChar(dxfString="0.dxf", height=5,scaleValue=[1,1]){
+module getChar(dxfString="0.dxf", height=5,scaleValue=[1,1,1]){
 	scale(scaleValue){
 			linear_extrude(height=height, convexity=10){
 				import(file=str(fnt_directory,dxfString));
@@ -60,11 +60,8 @@ module getChar(dxfString="0.dxf", height=5,scaleValue=[1,1]){
 	}
 }
 
-module fnt_char(char, block_size, height, include_base) {
+module fnt_char(char, block_size, height, include_base,scaleValue=[8,8,1]) {
   //TODO: Adjust scaling factors, determine correct "block" size.
-   scale_x=8;
-   scale_y=8;
-   scaleValue=[scale_x,scale_y,1];
   if (char == "0") {
 	  getChar("0.dxf", height,scaleValue);
   } else if (char == "1") {
@@ -274,7 +271,7 @@ module fnt_test() {
 		fnt_str(["(",")","<",">","[","]","/","\\","_","|"],10,1,2);
 }
 
-module makeWord_LeagueGothic(wordString=" ",word_height=2.0){
+module makeWord_LeagueGothic(wordString=" ",word_height=2.0, baseThickness = 2 ){
 	   //Block-size will be effectly ignored for now...may try to do something with it in the future
 	   char_width=5;
 	   char_count = len(wordString);
@@ -283,16 +280,18 @@ module makeWord_LeagueGothic(wordString=" ",word_height=2.0){
 	   //Trans
 	   union() {
 			for (count = [0:char_count-1]) {
-				translate(v = [char_width,-2.5+count * char_width, 0])
+				translate(v = [char_width*2,count * char_width, baseThickness])
 						rotate([0,0,90]) 
 							fnt_char(wordString[count], block_size, word_height);
 			}
+			translate([0,-char_width/2,0])
+				cube([char_width*2, char_width*char_count+char_width/2,baseThickness ]);
 
 	   }
 }
 
 
-module makeWords(words=[" "],word_height=2.0) {
+module makeWords_LeagueGothic(words=[" "],word_height=2.0) {
 	for(i=[0:(len(words)-1)]){
 	  translate([i*10,0,0]){
 		  makeWord_LeagueGothic(wordString=words[i],word_height=word_height);
@@ -300,7 +299,7 @@ module makeWords(words=[" "],word_height=2.0) {
 	}
 }
 
-makeWords(words=["Unfortunante","Publications"],word_height=5.0);
+makeWords_LeagueGothic(words=["Unfortunante","Publications"],word_height=5.0);
 
 
 
