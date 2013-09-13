@@ -2,7 +2,7 @@
 
 use <MCAD/fonts.scad>
 
-module makeWord(wordString=" ",word_height=2){
+module makeWord_8bitPolyfont(wordString=" ",word_height=2){
 	thisFont=8bit_polyfont();
 	x_shift=thisFont[0][0];
 	y_shift=thisFont[0][1];
@@ -19,7 +19,7 @@ module makeWord(wordString=" ",word_height=2){
 module makeWords(words=[" "],word_height=2.0) {
 	for(i=[0:(len(words)-1)]){
 	  translate([0,-i*10,0]){
-		  makeWord(wordString=words[i],word_height=word_height);
+		  makeWord_8bitPolyfont(wordString=words[i],word_height=word_height);
 	  }
 	}
 }

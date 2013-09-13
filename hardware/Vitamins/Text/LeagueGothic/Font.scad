@@ -52,189 +52,210 @@ module fnt_str(chars,char_count, block_size, height) {
 
 }
 
-
+module getChar(dxfString="0.dxf", height=5,scaleValue=[1,1]){
+	scale(scaleValue){
+			linear_extrude(height=height, convexity=10){
+				import(file=str(fnt_directory,dxfString));
+			}
+	}
+}
 
 module fnt_char(char, block_size, height, include_base) {
   //TODO: Adjust scaling factors, determine correct "block" size.
    scale_x=8;
    scale_y=8;
-
-    if (char == "0") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"0.dxf"),height=height, convexity=10);
+   scaleValue=[scale_x,scale_y,1];
+  if (char == "0") {
+	  getChar("0.dxf", height,scaleValue);
   } else if (char == "1") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"1.dxf"),height=height, convexity=10);
+	  getChar("1.dxf", height,scaleValue);
   } else if (char == "2") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"2.dxf"),height=height, convexity=10);
+	  getChar("2.dxf", height,scaleValue);
   } else if (char == "3") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"3.dxf"),height=height, convexity=10);
+	  getChar("3.dxf", height,scaleValue);
   } else if (char == "4") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"4.dxf"),height=height, convexity=10);
+	  getChar("4.dxf", height,scaleValue);
   } else if (char == "5") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"5.dxf"),height=height, convexity=10);
+	  getChar("5.dxf", height,scaleValue);
   } else if (char == "6") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"6.dxf"),height=height, convexity=10);
+	  getChar("6.dxf", height,scaleValue);
   } else if (char == "7") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"7.dxf"),height=height, convexity=10);
+	  getChar("7.dxf", height,scaleValue);
   } else if (char == "8") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"8.dxf"),height=height, convexity=10);
+	  getChar("8.dxf", height,scaleValue);
   } else if (char == "9") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"9.dxf"),height=height, convexity=10);
+	  getChar("9.dxf", height,scaleValue);
   } else if (char == "a") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"a-lower.dxf"),height=height, convexity=10);
+	  getChar("a-lower.dxf", height,scaleValue);
   } else if (char == "A") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"A.dxf"),height=height, convexity=10);
+	  getChar("A.dxf", height,scaleValue);
   } else if (char == "&") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"amperstand.dxf"),height=height, convexity=10);
+	  getChar("amperstand.dxf", height,scaleValue);
   } else if (char == "*") {
-    translate([0,2,0]) scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"asterisk.dxf"),height=height, convexity=10);
+    translate([0,2,0]) 
+    		getChar("asterisk.dxf", height,scaleValue);
   } else if (char == "\\") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"backslash.dxf"),height=height, convexity=10);
+	  getChar("backslash.dxf", height,scaleValue);
   } else if (char == "|") {
-    translate([1.7,0,0])scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"bar.dxf"),height=height, convexity=10);
+    translate([1.7,0,0])
+    		getChar("bar.dxf", height,scaleValue);
   } else if (char == "b") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"b-lower.dxf"),height=height, convexity=10);
+	  getChar("b-lower.dxf", height,scaleValue);
   } else if (char == "B") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"B.dxf"),height=height, convexity=10);
+	  getChar("B.dxf", height,scaleValue);
   } else if (char == "c") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"c-lower.dxf"),height=height, convexity=10);
+	  getChar("c-lower.dxf", height,scaleValue);
   } else if (char == "C") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"C.dxf"),height=height, convexity=10);
+	  getChar("C.dxf", height,scaleValue);
   } else if (char == "-") {
-    translate([1.7,4,0]) scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"dash.dxf"),height=height, convexity=10);
+    translate([1.7,4,0]) 
+    		getChar("dash.dxf", height,scaleValue);
   } else if (char == "d") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"d-lower.dxf"),height=height, convexity=10);
+	  getChar("d-lower.dxf", height,scaleValue);
   } else if (char == "D") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"D.dxf"),height=height, convexity=10);
+	  getChar("D.dxf", height,scaleValue);
   } else if (char == "$") {
-    translate([0,-1.5,0]) scale([scale_x-1,scale_y,0]) linear_extrude(file=str(fnt_directory,"dollarsign.dxf"),height=height, convexity=10);
+    translate([0,-1.5,0]) 
+		getChar("dollarsign.dxf", height,[scaleValue[0]-1,scaleValue[1],scaleValue[2]]);
   } else if (char == ".") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"dot.dxf"),height=height, convexity=10);
+	  getChar("dot.dxf", height,scaleValue);
   } else if (char == "''") {
-    translate([0,6,0]) scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"doublequote.dxf"),height=height, convexity=10);
+    translate([0,6,0]) 
+    		getChar("doublequote.dxf", height,scaleValue);
   } else if (char == "=") {
-    translate([0,2.5,0]) scale([scale_x-2,scale_y,0]) linear_extrude(file=str(fnt_directory,"=.dxf"),height=height, convexity=10);
+    translate([0,2.5,0]) 
+				getChar("=.dxf", height,[scaleValue[0]-2,scaleValue[1],scaleValue[2]]);
   } else if (char == "_") {
-    scale([scale_x-2,scale_y,0]) linear_extrude(file=str(fnt_directory,"_.dxf"),height=height, convexity=10);
+	  getChar("_.dxf", height,[scaleValue[0]-2,scaleValue[1],scaleValue[2]]);
   } else if (char == ",") {
-    translate([0,-1.75,0]) scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,",.dxf"),height=height, convexity=10);
+    translate([0,-1.75,0]) 
+    		getChar(",.dxf", height,scaleValue);
   } else if (char == ":") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,":.dxf"),height=height, convexity=10);
+	  getChar(":.dxf", height,scaleValue);
   } else if (char == "!") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"!.dxf"),height=height, convexity=10);
+	  getChar("!.dxf", height,scaleValue);
   } else if (char == "(") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"openpar.dxf"),height=height, convexity=10);
+	  getChar("openpar.dxf", height,scaleValue);
   } else if (char == ")") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"closepar.dxf"),height=height, convexity=10);
+	  getChar("closepar.dxf", height,scaleValue);
   } else if (char == "[") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"[.dxf"),height=height, convexity=10);
+	  getChar("[.dxf", height,scaleValue);
   } else if (char == "]") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"].dxf"),height=height, convexity=10);
+	  getChar("].dxf", height,scaleValue);
   } else if (char == "@") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"@.dxf"),height=height, convexity=10);
+	  getChar("@.dxf", height,scaleValue);
   } else if (char == "#") {
-    scale([scale_x-3,scale_y,0]) linear_extrude(file=str(fnt_directory,"#.dxf"),height=height, convexity=10);
+	  getChar("#.dxf", height,[scaleValue[0]-3,scaleValue[1],scaleValue[2]]);
   } else if (char == "+") {
-    translate([0,2,0]) scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"+.dxf"),height=height, convexity=10);
+    translate([0,2,0]) 
+    		getChar("+.dxf", height,scaleValue);
   } else if (char == "e") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"e-lower.dxf"),height=height, convexity=10);
+	  getChar("e-lower.dxf", height,scaleValue);
   } else if (char == "E") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"E.dxf"),height=height, convexity=10);
+	  getChar("E.dxf", height,scaleValue);
   } else if (char == "f") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"f-lower.dxf"),height=height, convexity=10);
+	  getChar("f-lower.dxf", height,scaleValue);
   } else if (char == "F") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"F.dxf"),height=height, convexity=10);
+	  getChar("F.dxf", height,scaleValue);
   } else if (char == "/") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"forwardslash.dxf"),height=height, convexity=10);
+	  getChar("forwardslash.dxf", height,scaleValue);
   } else if (char == "g") {
-    translate([0,-3,0]) scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"g-lower.dxf"),height=height, convexity=10);
+    translate([0,-3,0]) 
+    		getChar("g-lower.dxf", height,scaleValue);
   } else if (char == "G") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"G.dxf"),height=height, convexity=10);
+	  getChar("G.dxf", height,scaleValue);
   } else if (char == ">") {
-    scale([scale_x-2,scale_y,0]) linear_extrude(file=str(fnt_directory,"greaterthen.dxf"),height=height, convexity=10);
+	  getChar("greaterthen.dxf", height,[scaleValue[0]-2,scaleValue[1],scaleValue[2]]);
   } else if (char == "h") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"h-lower.dxf"),height=height, convexity=10);
+	  getChar("h-lower.dxf", height,scaleValue);
   } else if (char == "H") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"H.dxf"),height=height, convexity=10);
+	  getChar("H.dxf", height,scaleValue);
   } else if (char == "i") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"i-lower.dxf"),height=height, convexity=10);
+	  getChar("i-lower.dxf", height,scaleValue);
   } else if (char == "I") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"I.dxf"),height=height, convexity=10);
+	  getChar("I.dxf", height,scaleValue);
   } else if (char == "j") {
-     translate([0,-2.5,0]) scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"j-lower.dxf"),height=height, convexity=10);
+     translate([0,-2.5,0])
+    		 getChar("j-lower.dxf", height,scaleValue);
   } else if (char == "J") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"J.dxf"),height=height, convexity=10);
+	  getChar("J.dxf", height,scaleValue);
   } else if (char == "k") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"k-lower.dxf"),height=height, convexity=10);
+	  getChar("k-lower.dxf", height,scaleValue);
   } else if (char == "K") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"K.dxf"),height=height, convexity=10);
+	  getChar("K.dxf", height,scaleValue);
   } else if (char == "l") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"l-lower.dxf"),height=height, convexity=10);
+	  getChar("l-lower.dxf", height,scaleValue);
   } else if (char == "L") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"L.dxf"),height=height, convexity=10);
+	  getChar("L.dxf", height,scaleValue);
   } else if (char == "<") {
-    scale([scale_x-2,scale_y,0]) linear_extrude(file=str(fnt_directory,"lessthen.dxf"),height=height, convexity=10);
+	  getChar("lessthen.dxf", height,[scaleValue[0]-2,scaleValue[1],scaleValue[2]]);
   } else if (char == "m") {
-    scale([scale_x-1,scale_y,0]) linear_extrude(file=str(fnt_directory,"m-lower.dxf"),height=height, convexity=10);
+	  getChar("m-lower.dxf", height,[scaleValue[0]-1,scaleValue[1],scaleValue[2]]);
   } else if (char == "M") {
-    scale([scale_x-1,scale_y,0]) linear_extrude(file=str(fnt_directory,"M.dxf"),height=height, convexity=10);
+	  getChar("M.dxf", height,[scaleValue[0]-1,scaleValue[1],scaleValue[2]]);
   } else if (char == "n") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"n-lower.dxf"),height=height, convexity=10);
+	  getChar("n-lower.dxf", height,scaleValue);
   } else if (char == "N") {
-    scale([scale_x-1,scale_y,0]) linear_extrude(file=str(fnt_directory,"N.dxf"),height=height, convexity=10);
+	getChar("N.dxf", height,[scaleValue[0]-1,scaleValue[1],scaleValue[2]]);
   } else if (char == "o") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"o-lower.dxf"),height=height, convexity=10);
+	  getChar("o-lower.dxf", height,scaleValue);
   } else if (char == "O") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"O.dxf"),height=height, convexity=10);
+	  getChar("O.dxf", height,scaleValue);
   } else if (char == "p") {
-     translate([0,-2.5,0]) scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"p-lower.dxf"),height=height, convexity=10);
+     translate([0,-2.5,0]) 
+    		 getChar("p-lower.dxf", height,scaleValue);
   } else if (char == "P") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"P.dxf"),height=height, convexity=10);
+	  getChar("P.dxf", height,scaleValue);
   } else if (char == "%") {
-   scale([scale_x-1.75,scale_y,0]) linear_extrude(file=str(fnt_directory,"percent.dxf"),height=height, convexity=10);
+	  getChar("percent.dxf", height,[scaleValue[0]-1.75,scaleValue[1],scaleValue[2]]);
   } else if (char == "q") {
-     translate([0,-2.5,0]) scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"q-lower.dxf"),height=height, convexity=10);
+     translate([0,-2.5,0]) 
+    		 getChar("q-lower.dxf", height,scaleValue);
   } else if (char == "Q") {
-     translate([0,-0.5,0]) scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"Q.dxf"),height=height, convexity=10);
+     translate([0,-0.5,0]) 
+    		 getChar("Q.dxf", height,scaleValue);
   } else if (char == "?") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"question.dxf"),height=height, convexity=10);
+	  getChar("question.dxf", height,scaleValue);
   } else if (char == "r") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"r-lower.dxf"),height=height, convexity=10);
+	  getChar("r-lower.dxf", height,scaleValue);
   } else if (char == "R") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"R.dxf"),height=height, convexity=10);
+	  getChar("R.dxf", height,scaleValue);
   } else if (char == "s") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"s-lower.dxf"),height=height, convexity=10);
+	  getChar("s-lower.dxf", height,scaleValue);
   } else if (char == "S") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"S.dxf"),height=height, convexity=10);
+	  getChar("S.dxf", height,scaleValue);
   } else if (char == "'") {
-    translate([0,6,0]) scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"singlequote.dxf"),height=height, convexity=10);
+    translate([0,6,0]) 
+    		getChar("singlequote.dxf", height,scaleValue);
   } else if (char == "t") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"t-lower.dxf"),height=height, convexity=10);
+	  getChar("t-lower.dxf", height,scaleValue);
   } else if (char == "T") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"T.dxf"),height=height, convexity=10);
+	  getChar("T.dxf", height,scaleValue);
   } else if (char == "u") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"u-lower.dxf"),height=height, convexity=10);
+	  getChar("u-lower.dxf", height,scaleValue);
   } else if (char == "U") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"U.dxf"),height=height, convexity=10);
+	  getChar("U.dxf", height,scaleValue);
   } else if (char == "v") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"v-lower.dxf"),height=height, convexity=10);
+	  getChar("v-lower.dxf", height,scaleValue);
   } else if (char == "V") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"V.dxf"),height=height, convexity=10);
+	  getChar("V.dxf", height,scaleValue);
   } else if (char == "w") {
-    scale([scale_x-1,scale_y,0]) linear_extrude(file=str(fnt_directory,"w-lower.dxf"),height=height, convexity=10);
+	  getChar("w-lower.dxf", height,[scaleValue[0]-1,scaleValue[1],scaleValue[2]]);
   } else if (char == "W") {
-    scale([scale_x-2,scale_y,0]) linear_extrude(file=str(fnt_directory,"W.dxf"),height=height, convexity=10);
+	  getChar("W.dxf", height,[scaleValue[0]-2,scaleValue[1],scaleValue[2]]);
   } else if (char == "x") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"x-lower.dxf"),height=height, convexity=10);
+	  getChar("x-lower.dxf", height,scaleValue);
   } else if (char == "X") {
-    scale([scale_x-1,scale_y,0]) linear_extrude(file=str(fnt_directory,"X.dxf"),height=height, convexity=10);
+	  getChar("X.dxf", height,[scaleValue[0]-1,scaleValue[1],scaleValue[2]]);
   } else if (char == "y") {
-     translate([0,-2.5,0]) scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"y-lower.dxf"),height=height, convexity=10);
+     translate([0,-2.5,0]) 
+    		 getChar("y-lower.dxf", height,scaleValue);
   } else if (char == "Y") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"Y.dxf"),height=height, convexity=10);
+	  getChar("Y.dxf", height,scaleValue);
   } else if (char == "z") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"z-lower.dxf"),height=height, convexity=10);
+	  getChar("z-lower.dxf", height,scaleValue);
   } else if (char == "Z") {
-    scale([scale_x,scale_y,0]) linear_extrude(file=str(fnt_directory,"Z.dxf"),height=height, convexity=10);
+	  getChar("Z.dxf", height,scaleValue);
   } else {
     echo ("Unknown charachter: ",char);
   }
@@ -253,4 +274,33 @@ module fnt_test() {
 		fnt_str(["(",")","<",">","[","]","/","\\","_","|"],10,1,2);
 }
 
-fnt_test();
+module makeWord_LeagueGothic(wordString=" ",word_height=2.0){
+	   //Block-size will be effectly ignored for now...may try to do something with it in the future
+	   char_width=5;
+	   char_count = len(wordString);
+	   echo(str("Total Width: ", char_width*char_count, "mm"));
+	   block_size=1;
+	   //Trans
+	   union() {
+			for (count = [0:char_count-1]) {
+				translate(v = [char_width,-2.5+count * char_width, 0])
+						rotate([0,0,90]) 
+							fnt_char(wordString[count], block_size, word_height);
+			}
+
+	   }
+}
+
+
+module makeWords(words=[" "],word_height=2.0) {
+	for(i=[0:(len(words)-1)]){
+	  translate([i*10,0,0]){
+		  makeWord_LeagueGothic(wordString=words[i],word_height=word_height);
+	  }
+	}
+}
+
+makeWords(words=["Unfortunante","Publications"],word_height=5.0);
+
+
+
