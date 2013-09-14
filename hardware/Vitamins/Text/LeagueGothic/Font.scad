@@ -53,6 +53,7 @@ module fnt_str(chars,char_count, block_size, height) {
 }
 
 module getChar(dxfString="0.dxf", height=5,scaleValue=[1,1,1]){
+	//echo("Height of letter ",height);
 	scale(scaleValue){
 			linear_extrude(height=height, convexity=10){
 				import(file=str(fnt_directory,dxfString));
@@ -271,11 +272,11 @@ module fnt_test() {
 		fnt_str(["(",")","<",">","[","]","/","\\","_","|"],10,1,2);
 }
 
-module makeWord_LeagueGothic(wordString=" ",word_height=2.0, baseThickness = 2 ){
+module makeWord_LeagueGothic(wordString=" ",word_height=2.0, baseThickness = 2,size=[60,10],char_width=5){
 	   //Block-size will be effectly ignored for now...may try to do something with it in the future
-	   char_width=5;
+
 	   char_count = len(wordString);
-	   echo(str("Total Width: ", char_width*char_count, "mm"));
+	   //echo(str("Total Width: ", char_width*char_count, "mm"));
 	   block_size=1;
 	   //Trans
 	   union() {
@@ -284,22 +285,43 @@ module makeWord_LeagueGothic(wordString=" ",word_height=2.0, baseThickness = 2 )
 						rotate([0,0,90]) 
 							fnt_char(wordString[count], block_size, word_height);
 			}
-			translate([0,-char_width/2,0])
-				cube([char_width*2, char_width*char_count+char_width/2,baseThickness ]);
+			translate([0,0,0])
+				cube([char_width*2, char_width*char_count,baseThickness ]);
 
 	   }
+	   
 }
 
 
-module makeWords_LeagueGothic(words=[" "],word_height=2.0) {
-	for(i=[0:(len(words)-1)]){
-	  translate([i*10,0,0]){
-		  makeWord_LeagueGothic(wordString=words[i],word_height=word_height);
-	  }
+module makeWords_LeagueGothic(words=[" "],word_height=2.0,size=[100,100]) {
+	char_width=5;
+	startingy = len(words[0])*char_width;
+	echo("Startiny y",startingy );
+	startingx = char_width*2*len(words);
+	echo("Startiny x",startingx );
+	y=size[0]/startingy;
+	x=size[1]/startingx;	
+	echo(size);
+	echo(x);
+	echo(y);
+	echo(word_height);
+
+	
+	scale([x,y,1]){
+		union(){
+			for(i=[0:(len(words)-1)]){
+			  translate([i*9.9,0,0]){
+				  makeWord_LeagueGothic(wordString=words[i],word_height=word_height,char_width=char_width,baseThickness=word_height);
+			  }
+			}	
+		}
 	}
 }
 
-makeWords_LeagueGothic(words=["Unfortunante","Publications"],word_height=5.0);
+inpitSize=[3*25.4,2*25.4];
+
+//cube([inpitSize[0],inpitSize[1],2*25.4]);
+#makeWords_LeagueGothic(words=["Unfortunante","Publications"],word_height=.25*25.4,size=inpitSize);
 
 
 
