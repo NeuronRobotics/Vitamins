@@ -281,15 +281,19 @@ module makeWord_LeagueGothic(wordString=" ",word_height=2.0, baseThickness = 2,s
 	   //echo(str("Total Width: ", char_width*char_count, "mm"));
 	   block_size=1;
 	   //Trans
-	   union() {
-			for (count = [0:char_count-1]) {
-				translate(v = [char_width*2,count * char_width, baseThickness])
-						rotate([0,0,90]) 
-							fnt_char(wordString[count], block_size, word_height);
-			}
-			translate([0,0,0])
-				cube([char_width*2, char_width*char_count,baseThickness ]);
-
+	    translate([0,0,baseThickness*2]){
+		   rotate([180,0,0]){
+			   union() {
+					for (count = [0:char_count-1]) {
+						translate(v = [char_width*2,count * char_width, 0])
+								rotate([0,0,90]) 
+									fnt_char(wordString[count], block_size, word_height);
+					}
+					translate([0,0,baseThickness])
+						cube([char_width*2, char_width*char_count,baseThickness ]);
+		
+			   }
+		   }
 	   }
 	   
 }
@@ -310,7 +314,7 @@ module makeWords_LeagueGothic(words=[" "],word_height=2.0,size=[100,100]) {
 
 	
 	scale([x,y,1]){
-		union(){\
+		union(){
 			for(i=[0:(len(words)-1)]){
 			  translate([i*9.9,0,0]){
 				  makeWord_LeagueGothic(wordString=words[i],word_height=word_height,char_width=char_width,baseThickness=word_height);
