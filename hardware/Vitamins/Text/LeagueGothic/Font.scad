@@ -169,7 +169,8 @@ module fnt_char(char, block_size, height, include_base,scaleValue=[8,8,1]) {
   } else if (char == "H") {
 	  getChar("H.dxf", height,scaleValue);
   } else if (char == "i") {
-	  getChar("i-lower.dxf", height,scaleValue);
+	  translate([1.2,0,0]) 
+			  getChar("i-lower.dxf", height,scaleValue);
   } else if (char == "I") {
 	  getChar("I.dxf", height,scaleValue);
   } else if (char == "j") {
@@ -182,7 +183,8 @@ module fnt_char(char, block_size, height, include_base,scaleValue=[8,8,1]) {
   } else if (char == "K") {
 	  getChar("K.dxf", height,scaleValue);
   } else if (char == "l") {
-	  getChar("l-lower.dxf", height,scaleValue);
+	  translate([1.2,0,0]) 
+			  getChar("l-lower.dxf", height,scaleValue);
   } else if (char == "L") {
 	  getChar("L.dxf", height,scaleValue);
   } else if (char == "<") {
@@ -279,7 +281,7 @@ module makeWord_LeagueGothic(wordString=" ",word_height=2.0, baseThickness = 2,s
 	   //echo(str("Total Width: ", char_width*char_count, "mm"));
 	   block_size=1;
 	   //Trans
-	   translate([0,0,baseThickness*2]){
+	    translate([0,0,baseThickness*2]){
 		   rotate([180,0,0]){
 			   union() {
 					for (count = [0:char_count-1]) {
@@ -293,6 +295,7 @@ module makeWord_LeagueGothic(wordString=" ",word_height=2.0, baseThickness = 2,s
 			   }
 		   }
 	   }
+	   
 }
 
 
@@ -321,7 +324,7 @@ module makeWords_LeagueGothic(words=[" "],word_height=2.0,size=[100,100]) {
 	}
 }
 
-inpitSize=[4*25.4,2*25.4];
+inpitSize=[3*25.4,2*25.4];
 
 //cube([inpitSize[0],inpitSize[1],2*25.4]);
 #makeWords_LeagueGothic(words=["Unfortunante","Publications"],word_height=.25*25.4,size=inpitSize);
