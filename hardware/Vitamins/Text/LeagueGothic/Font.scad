@@ -324,10 +324,10 @@ module makeWords_LeagueGothic(words=[" "],word_height=2.0,size=[100,100]) {
 	}
 }
 
-inpitSize=[3*25.4,2*25.4];
+inpitSize=[2.5*25.4,1*25.4];
 
 //cube([inpitSize[0],inpitSize[1],2*25.4]);
-#makeWords_LeagueGothic(words=["Unfortunante","Publications"],word_height=.25*25.4,size=inpitSize);
+#makeWords_LeagueGothic(words=["Unfortunante","Publications"],word_height=(1/8)*25.4,size=inpitSize);
 
 
 
