@@ -76,7 +76,7 @@ module StandardServoHornBolt(ServoTolerance=StandardServoTolerance(), boltLen = 
 	union(){
 		translate([0,0, boltLen]){
 			cylinder(	h= boltLen*2+ServoTolerance, 
-						r=(StandardServoBoltDiam()+ServoTolerance)*1.5, 
+						r=(StandardServoBoltDiam()+ServoTolerance)*1.3, 
 						$fn=100);
 		}
 		cylinder(h= boltLen+ServoTolerance, r=(StandardServoBoltDiam()+ServoTolerance)/2, $fn=100);

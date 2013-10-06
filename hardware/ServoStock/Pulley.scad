@@ -266,7 +266,7 @@ module servo_pulley(MagnetType=true, MotorType=true){
 									Cylinder=1,
 									hornCentered=true,
 									ServoTolerance=.4,
-									hornBoltLength = 80);
+									hornBoltLength = 17.5);
 		}
 	}else{
 		difference(){
