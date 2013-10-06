@@ -97,9 +97,17 @@ module bodyBolts(boltPlacementZ,ServoTolerance=StandardServoTolerance())
 										0]){
 								StandardServoBolt(ServoTolerance);
 							}
-			}	
+					
+			}
+		}
+		// notches for the bolts
+		translate([	(StandardServoThickness()/2)-1,
+					((-1+i)*6)+(StandardServoBaseLength()*i),
+					boltPlacementZ]){
+			cube([2,6,5]);
 		}
 	}
+	
 
 }
 
