@@ -234,7 +234,9 @@ module shaft(MagnetType=true){
 	difference(){
 		union(){
 			//Main Shaft
-			cylinder(r = shaftDiameter/2, h = 608BallBearingHeight()+PulleyHeight(), center = false);
+			cylinder(	r = shaftDiameter/2, 
+						h = 608BallBearingHeight()+PulleyHeight()+3.1, 
+						center = false);
 			//Bearing Stop
 			//translate([0,0,splineToPulleyHeight])
 			//	cylinder(r = bearingStopRadius, h = bearingDistance-splineToPulleyHeight, center = false);
@@ -244,7 +246,7 @@ module shaft(MagnetType=true){
 
 		}
 		
-			translate([0, 0, PulleyTotalHeight()-MagnetLength()+1])
+			translate([0, 0, PulleyTotalHeight()-MagnetLength()+4.1])
 				MagnetDraft();
 		
 	}
@@ -257,12 +259,16 @@ module shaft(MagnetType=true){
 module servo_pulley(MagnetType=true, MotorType=true){
 
 	if(MotorType==true){
-	difference(){
-		pulley(MagnetType);		
-		translate([0,0,-1])
-			StandardServoMotor(true,1,true);
+		difference(){
+			pulley(MagnetType);		
+			translate([0,0,-1])
+				StandardServoMotor(	boltsUp=true,
+									Cylinder=1,
+									hornCentered=true,
+									ServoTolerance=.4,
+									hornBoltLength = 80);
 		}
-		}else{
+	}else{
 		difference(){
 			union(){
 				pulley(MagnetType);
@@ -271,7 +277,11 @@ module servo_pulley(MagnetType=true, MotorType=true){
 					cylinder(h=horn_height(), r=PulleyOuterDiam()/2);
 				}
 				}						
-			StandardServoMotor(false,3,true);
+				StandardServoMotor(	boltsUp=false,
+									Cylinder=3,
+									hornCentered=true,
+									ServoTolerance=.4,
+									hornBoltLength = 80);
 			}
 		
 	}
