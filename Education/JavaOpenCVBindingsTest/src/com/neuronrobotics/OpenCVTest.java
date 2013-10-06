@@ -35,7 +35,7 @@ public class OpenCVTest {
 		        System.out.println("Camera Error");
 		    }
 		    else{
-		        System.out.println("Camera OK?");
+		        System.out.println("Camera OK");
 		    }
 		    JFrame frame = new JFrame();
 		    ImageIcon icon = new ImageIcon();
@@ -67,7 +67,6 @@ public class OpenCVTest {
 				    for (Rect rect : faceDetections.toArray()) {
 				        Core.rectangle(matImage, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 255, 0));
 				    }
-				    
 				    try {
 				        Highgui.imencode(".jpg", matImage, mb);
 						BufferedImage image = ImageIO.read(new ByteArrayInputStream(mb.toArray()));

@@ -91,9 +91,9 @@ module Extruder(servo=true, 3dPrinterTolerance=.4)
 	}
 }
 
-translate([0,ExtruderWidth(),0]){mirror([1,0,0]){Extruder(true,.4);}}
+translate([ExtruderLength()/2+10,0,0]){mirror([1,0,0]){Extruder(true,.4);}}
 
-Extruder(false,.4);
+//translate([-ExtruderLength()/2-10,0,0]){Extruder(false,.4);}
 				
 			
 
