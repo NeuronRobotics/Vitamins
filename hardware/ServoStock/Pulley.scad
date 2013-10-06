@@ -234,7 +234,8 @@ module shaft(MagnetType=true){
 	difference(){
 		union(){
 			//Main Shaft
-			cylinder(	r = shaftDiameter/2, 
+			cylinder(	r1 = (shaftDiameter/2)-.2, // taper the bottom in a bit so the bearing seats all the way down
+						r2 = shaftDiameter/2, 
 						h = 608BallBearingHeight()+PulleyHeight()+3.1, 
 						center = false);
 			//Bearing Stop
@@ -246,8 +247,8 @@ module shaft(MagnetType=true){
 
 		}
 		
-			translate([0, 0, PulleyTotalHeight()-MagnetLength()+4.1])
-				MagnetDraft();
+		translate([0, 0, PulleyTotalHeight()-MagnetLength()+4.1])
+			MagnetDraft();
 		
 	}
 }

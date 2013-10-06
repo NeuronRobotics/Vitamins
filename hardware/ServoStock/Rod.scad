@@ -132,29 +132,31 @@ module BoltSlot(RodLength=100)
 }
 
 
-module OtherAlternateRod(RodLength=100)
+module DeltaFreeArm(RodLength=200)
 {
-	difference()
-	{
-		rotate([36,0,0])
+	translate([0,0,RodEndRodDiam()*.7]){
+		difference()
 		{
-			rotate([0,90,0])
+			rotate([36,0,0])
 			{
-				cylinder(h=RodLength,r=RodEndRodDiam()*1.7/2, $fn=5);
+				rotate([0,90,0])
+				{
+					cylinder(h=RodLength,r=RodEndRodDiam()*1.7/2, $fn=5);
+				}
 			}
+			BoltSlot(RodLength);	
+			translate([RodLength,0,0])
+			{
+				mirror([1,0,0])
+				{
+					BoltSlot(RodLength);	
+				}
+			}		
 		}
-		BoltSlot(RodLength);	
-		translate([RodLength,0,0])
-		{
-			mirror([1,0,0])
-			{
-				BoltSlot(RodLength);	
-			}
-		}		
 	}
 }
 
-translate([0,-25,0])
-color("Red")
-OtherAlternateRod();
+translate([0,0,0])
+	color("Red")
+		DeltaFreeArm();
 
