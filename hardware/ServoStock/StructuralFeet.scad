@@ -5,7 +5,7 @@ use <../Vitamins/Kinematics/Pulleys/Pulley_Vitamin.scad>
 use <../Vitamins/Sensors/Encoders/Encoder_Vitamin.scad>
 use <../Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 
-//HEYHEYHEYHEYHEYHEYHEYHEYHEYHEYHEYHEYHEYHEYHEYHEYHEYHEYHEYHEYHEYHEYHEYHEYHEY
+
 use <BearingCap.scad>	
 use <Clips.scad>	
 
@@ -24,40 +24,29 @@ echo(PlasticWidth());
 
 module wing()
 {
-	difference()
-	{		
-		//This makes the wings for the bed mount
-		translate([-SideWidth()*3-PlasticWidth()-ClipWidth(),-ZrodSpacing()/2-PlasticWidth()/2,0])
-		{
-			union()
-			{	
-				//difference()
-				//{
-				cube([SideWidth()*3,PlasticWidth(), MotorBracketHeight()]);
 
-				//these wings made it hard to figure out scalability
-					//translate([SideWidth()+PlasticWidth()*5,-1,-MotorBracketHeight()/1.5])
-					//{
-						//rotate([0,-45,0])
-						//{
-								//cube([SideWidth()*3+PlasticWidth()*2,PlasticWidth()+2, MotorBracketHeight()*1.5]);
-						//}
-					//}
-				//}
-				translate([0,PlasticWidth()/2,MotorBracketHeight()-HiLoScrewLength()-PlasticWidth()])
-				{
-					cylinder(h=HiLoScrewLength()+PlasticWidth(), r=PlasticWidth());
-				}
+	//This makes the wings for the bed mount
+	translate([	-SideWidth()*2.5-PlasticWidth()-ClipWidth()-3,
+	           	-ZrodSpacing()/2-PlasticWidth()/2,
+	           	0]
+	){
+		union()
+		{	
+
+			cube([SideWidth()*2.5-1,PlasticWidth(), MotorBracketHeight()]);
+
+		}
+	}
+	placeClipMountHoleCenter(){
+		translate([-36,-ZrodSpacing()/2,0]){
+			difference(){
+				cylinder(h=MotorBracketHeight(), r=PlasticWidth());
+				translate([0,0,-1])
+					cylinder(h=MotorBracketHeight()*2, r=HiLoScrewDiameter(.66)/2);
 			}
 		}
+	}
 		
-		//This makes the screwholes on the wings of the bed mount
-		translate([-SideWidth()*3-PlasticWidth()-ClipWidth(),-ZrodSpacing()/2,MotorBracketHeight()-HiLoScrewLength()-PlasticWidth()*2+2])
-		{
-			cylinder(h=HiLoScrewLength()+PlasticWidth()*2, r=HiLoScrewDiameter(.66)/2);
-				
-		}
-	}	
 }
 
 //This just duplicates the wing into two wings
@@ -150,6 +139,8 @@ module StructuralFeet(EncoderScrews=false)
 				}
 			}
 			wings();
+			
+
 //			difference()
 //			{
 				EncoderMount();

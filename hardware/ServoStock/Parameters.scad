@@ -9,7 +9,8 @@ function mm(i) = i*25.4;
 //(bearing diameter is dependent on rod diameter)
 
 
-function RodEndSpacing()= 105;
+function RodEndSpacing()= 108.4;// this is a magic number
+
 function ZrodSpacing()=RodEndSpacing()-LM8UULinearBearingDiam()*2-PlasticWidth()*4;
 echo(ZrodSpacing());
 

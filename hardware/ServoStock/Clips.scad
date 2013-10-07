@@ -12,6 +12,29 @@ function BearingBracketHeight()=608BallBearingDiam()*1.5;
 function SlotWidth()= PlasticWidth()/2;
 function ClipWidth()=StandardServoHeightAbvWings()-1.5;
 
+module placeClipMountHoleCenter(){
+	translate(	[-12,0,0]){
+			for (i = [0 : $children-1]){
+				placeRodHoleCenter(){
+					child(i);
+				}
+			 }	
+		}
+}
+
+module placeRodHoleCenter(){
+	translate([	PlasticWidth()+8mmRodDiameter(.8)/4-ClipWidth(),
+				0,
+				0]
+	){
+		for (i = [0 : $children-1]){
+			 child(i);
+		 }
+			
+	}
+}
+
+
 //This makes a single clip
 module clip(Height = MotorBracketHeight())
 {
@@ -24,30 +47,33 @@ module clip(Height = MotorBracketHeight())
 				//this makes the basic curved rectangle shape of the clip
 				union()
 				{
-					cube([SideWidth()*2,SideWidth(),Height]);
-					translate([0,SideWidth()/2,0])
+					translate([-5.5-ClipWidth(),0,0])
+							cube([(SideWidth()*2+5.5),SideWidth(),Height]);
+					translate([-5.5-ClipWidth(),SideWidth()/2,0])
 					{
 						cylinder(h=Height,r=SideWidth()/2);
 					}
 				}
 
 				//This makes the holes for the structural rod
-				translate([PlasticWidth()+8mmRodDiameter(.8)/4,SideWidth()/2,-1])
-				{
-					cylinder(h=Height+2, r=8mmRodDiameter(.8)/2, $fn=50);
+				translate([	0,SideWidth()/2,-1]){
+					placeRodHoleCenter(){
+						cylinder(h=Height+2, r=8mmRodDiameter(.8)/2, $fn=50);
+					}
+					//This makes the screwholes for the bed mount
+					placeClipMountHoleCenter(){
+						cylinder(h=Height+3, r=HiLoScrewDiameter(.6)/2, $fn=50);
+					}
 				}
-
 				//This makes the slot for the clip
-				translate([8mmRodDiameter(.8)/2+8mmRodDiameter(.8)/4+1,SideWidth()/2-PlasticWidth()/4,-1])
+				translate([	8mmRodDiameter(.8)/2+8mmRodDiameter(.8)/4+1-ClipWidth(),
+				           	SideWidth()/2-PlasticWidth()/4,
+				           	-1])
 				{
 					cube([SideWidth()*2-SideWidth()/2+PlasticWidth(),SlotWidth(),Height+2]);
 				}
 
-				//This makes the screwholes for the bed mount
-				translate([-PlasticWidth()/2,SideWidth()/2,-1])
-				{
-					cylinder(h=Height+2, r=HiLoScrewDiameter(.6)/2, $fn=50);
-				}
+
 			} 	
 		}	
 	}	
@@ -88,6 +114,7 @@ module sidebolts(Height = MotorBracketHeight())
 
 module bolts(Height = MotorBracketHeight())
 {
+	
 	union()
 	{
 		sidebolts(Height);
@@ -101,66 +128,45 @@ module bolts(Height = MotorBracketHeight())
 	}
 }
 		
+module localClips(height=10){
+	translate([0,-ZrodSpacing()/2, 0])
+	{
+		difference()
+		{
+			union()
+			{
+	//this draws the clips themselves
+				clip(height);
+				translate([0,ZrodSpacing(),0])
+				{
+					clip(height);
+				}
+				translate([-ClipWidth(),8mmRodDiameter(.8)/2, 0])
+//this draws the box between the clips
+				{
+					cube([ClipWidth(), ZrodSpacing()-8mmRodDiameter(.8),height]);
+				}
+			}
+			translate([-ClipWidth(),0, 0])
+				bolts(height);
+		}
+	}
 
+}
 
 //This module calls the clips and makes the box between them. If true, it makes the bottom set, and if false it makes the top set (which is shorter)
 module Clips(MotorHeight=true)
 {
-
 	//This part of the if statement makes the bottom clips
 	if(MotorHeight==true){
-
-
-	//This centers everything
-		translate([-ClipWidth(),-ZrodSpacing()/2, 0])
-		{
-			difference()
-			{
-				union()
-				{
-		//this draws the clips themselves
-					clip(MotorBracketHeight());
-					translate([0,ZrodSpacing(),0])
-					{
-						clip(MotorBracketHeight());
-					}
-						translate([0,8mmRodDiameter(.8)/2, 0])
-	//this draws the box between the clips
-					{
-						cube([ClipWidth(), ZrodSpacing()-8mmRodDiameter(.8),MotorBracketHeight()]);
-					}
-				}
-				bolts(MotorBracketHeight());
-			}
-		}
-
-
+		localClips(MotorBracketHeight());
 	//this is same as above, except it makes the top clips	
 	}else{
-		translate([-ClipWidth(),-ZrodSpacing()/2, 0])
-		{
-			difference()
-			{
-				union()
-				{
-		//this draws the clips themselves
-					clip(BearingBracketHeight());
-					translate([0,ZrodSpacing(),0])
-					{
-						clip(BearingBracketHeight());
-					}
-						translate([0,8mmRodDiameter(.8)/2, 0])
-	//this draws the box between the clips
-					{
-						cube([ClipWidth(), ZrodSpacing()-8mmRodDiameter(.8),BearingBracketHeight()]);
-					}
-				}
-				bolts(BearingBracketHeight());
-			}
-		}		
+		localClips(BearingBracketHeight());		
 	}
 }
 
 
 
 Clips(false);
+
