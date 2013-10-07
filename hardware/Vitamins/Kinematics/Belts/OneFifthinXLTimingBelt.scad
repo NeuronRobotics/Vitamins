@@ -29,15 +29,21 @@ union()
 {
 	translate([0,2XLBeltSlotWidth(3dPrinterTolerance)-.1,0])
 	{
-	cube([Length,2XLBeltSlotWidth(3dPrinterTolerance),2XLBeltGripHeight()]);
+		cube([Length,2XLBeltSlotWidth(3dPrinterTolerance),2XLBeltGripHeight()]);
 	}
-	 {
+	 
 	cube([Length,2XLBeltSlotWidth(3dPrinterTolerance),2XLBeltBaseHeight(3dPrinterTolerance)]) ;
-	for (inc = [0:(2XLBeltToothWidth(3dPrinterTolerance)
-+2XLBeltSpaceWidth(0)-3dPrinterTolerance):Length-2XLBeltToothWidth(3dPrinterTolerance)
-]) translate([inc-3dPrinterTolerance*1.4,0,2XLBeltBaseHeight(3dPrinterTolerance)-.6]) cube([2XLBeltToothWidth(3dPrinterTolerance*2)
-,2XLBeltSlotWidth(3dPrinterTolerance),(2XLBeltGripHeight(3dPrinterTolerance*2)-2XLBeltBaseHeight(3dPrinterTolerance))]) ;
-}
+	for (inc = [	0:	
+	            	(2XLBeltToothWidth(3dPrinterTolerance)+2XLBeltSpaceWidth(0)-3dPrinterTolerance):
+	            	Length-2XLBeltToothWidth(3dPrinterTolerance)]){
+		translate([	inc-3dPrinterTolerance*1.4,
+		           	0,
+		           	2XLBeltBaseHeight(3dPrinterTolerance)-.6]) 
+		           		cube([	2XLBeltToothWidth(3dPrinterTolerance*2),
+		           		      	2XLBeltSlotWidth(3dPrinterTolerance),
+		           		      	(2XLBeltGripHeight(3dPrinterTolerance*2)-2XLBeltBaseHeight(3dPrinterTolerance))]) ;
+	}
+
 }
 
 translate([0,-25,0])
