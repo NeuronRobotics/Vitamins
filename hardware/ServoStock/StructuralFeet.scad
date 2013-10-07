@@ -203,7 +203,7 @@ module StructuralFeet(EncoderScrews=false)
 //rotating the module, as it would be rotated for printing
 translate([0,0, MotorBracketHeight()])
 {
-	rotate([0,180,0])
+	rotate([0,180,90])
 	{
 		StructuralFeet();
 	}
