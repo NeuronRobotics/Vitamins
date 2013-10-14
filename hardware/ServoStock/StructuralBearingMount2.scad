@@ -20,7 +20,7 @@ use <IdlerBearingPlug.scad>
 
 //if anyone ever wants to change it back just swap the cylinder from 90 to -90, remove the plasticwidth() from its translate, change the bolt round to -90, and make its translate just -boltheadheight()/2-BallBearingHeight()-Plasticwidth() for the first term.
 
-
+function getPulleyOffset()=6.79;
 //This makes the structual bearing mount, in its entirety
 module StructuralBearingMount(Style=1)
 {
@@ -30,7 +30,7 @@ module StructuralBearingMount(Style=1)
 		{
 			Clips(false);
 
-			//This adds the cylindrical peice, wh5ich itself maintains friction against the inside of the bearing allowing the outside to spin
+			//This adds the cylindrical peice, which itself maintains friction against the inside of the bearing allowing the outside to spin
 			union()
 			{
 				translate([0,0,BearingBracketHeight()/2])
@@ -39,25 +39,37 @@ module StructuralBearingMount(Style=1)
 					{
 						union()
 						{
-							cylinder(StandardServoOutcrop()+PulleyBaseHeight(), BearingBracketHeight()/2, 608BallBearingAvgDiam()/2, $fn=50);
-						if(Style==3)
-						{
-							translate([0,0,StandardServoOutcrop()+PulleyBaseHeight()])
+							cylinder(	h=StandardServoOutcrop()+PulleyBaseHeight()- getPulleyOffset(), 
+										r1=BearingBracketHeight()/2, 
+										r2=608BallBearingAvgDiam()/2, 
+										$fn=50);
+							if(Style==3)
 							{
-								cylinder(h=608BallBearingHeight()/3, r=608BallBearingInnerDiam()/2, $fn=30);
+								translate([0,0,StandardServoOutcrop()+PulleyBaseHeight()- getPulleyOffset()])
+								{
+									cylinder(	h=(608BallBearingHeight()/3), 
+												r=608BallBearingInnerDiam()/2, 
+												$fn=30);
+								}
+							}else{
+								
 							}
-						}else{}
 						}
 					}
 				}
-				translate([0,-(608BallBearingDiam()/2+608BallBearingInnerDiam()/2)/2,0])
-				cube([StandardServoOutcrop()+PulleyBaseHeight()-BearingClipSideWidth()*2,(608BallBearingDiam()/2+608BallBearingInnerDiam()/2), BearingBracketHeight()/2]);
+				translate([	0,
+				           	-(608BallBearingDiam()/2+608BallBearingInnerDiam()/2)/2,
+				           	0]){
+					cube([	StandardServoOutcrop()+PulleyBaseHeight()-BearingClipSideWidth()*2 - getPulleyOffset(),
+							(608BallBearingDiam()/2+608BallBearingInnerDiam()/2), 
+							BearingBracketHeight()/2]);
+				}
 			}			
 		}	
 		//this cuts the bolthole out of the mount
 		if(Style==1)
 		{
-			translate([608BallBearingHeight()+PlasticWidth()+ StandardServoOutcrop(),0,BearingBracketHeight()/2])
+			translate([608BallBearingHeight()+PlasticWidth()+ StandardServoOutcrop()- getPulleyOffset(),0,BearingBracketHeight()/2])
 			{
 				rotate([0,90,0])
 				{
@@ -67,7 +79,7 @@ module StructuralBearingMount(Style=1)
 		}else{
 			if(Style==2)
 			{
-				translate([608BallBearingHeight()+PlasticWidth()+ StandardServoOutcrop(),0,BearingBracketHeight()/2])
+				translate([608BallBearingHeight()+PlasticWidth()+ StandardServoOutcrop()- getPulleyOffset(),0,BearingBracketHeight()/2])
 				{
 					rotate([0,90,0])
 					{
@@ -81,8 +93,9 @@ module StructuralBearingMount(Style=1)
 						}
 					}
 				}
-			}else{
-				translate([608BallBearingHeight()+PlasticWidth()+StandardServoOutcrop()+IdlerBearingPlugPlasticWidth(),0,BearingBracketHeight()/2])
+			}
+			if(Style==3){
+				translate([608BallBearingHeight()+PlasticWidth()+StandardServoOutcrop()+IdlerBearingPlugPlasticWidth()- getPulleyOffset(),0,BearingBracketHeight()/2])
 				{
 					rotate([0,90,0])
 					{
