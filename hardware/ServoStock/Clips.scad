@@ -91,9 +91,11 @@ module sidebolts(Height = MotorBracketHeight())
 		//{
 		//	rotate([90,0,0])
 		//	{
-		translate([SideWidth()*2-PlasticWidth()*1.5,PlasticWidth()+HiLoBoltHeadHeight()/2+1,Height/3])
+		translate([	SideWidth()*2-PlasticWidth()*1.5,
+		           	PlasticWidth()+HiLoBoltHeadHeight()/2+1-13,
+		           	Height/3])
 		{
-			rotate([-90,0,0])
+			rotate([-90,0,180])
 			{
 				#HiLoBolt(.4, PlasticWidth());
 			}
@@ -102,9 +104,11 @@ module sidebolts(Height = MotorBracketHeight())
 		//{
 		//	rotate([90,0,0])
 		//	{
-		translate([SideWidth()*2-PlasticWidth()*1.5,PlasticWidth()+HiLoBoltHeadHeight()/2+1,2*Height/3])
+		translate([	SideWidth()*2-PlasticWidth()*1.5,
+		           	PlasticWidth()+HiLoBoltHeadHeight()/2+1-13,
+		           	2*Height/3])
 		{
-			rotate([-90,0,0])
+			rotate([-90,0,180])
 			{
 				#HiLoBolt(.4, PlasticWidth());
 			}
