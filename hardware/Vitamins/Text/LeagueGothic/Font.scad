@@ -124,29 +124,29 @@ module fnt_char(char, block_size, height, include_base,scaleValue=[8,8,1]) {
     translate([0,2.5,0]) 
 				getChar("=.dxf", height,[scaleValue[0]-2,scaleValue[1],scaleValue[2]]);
   } else if (char == "_") {
-	  getChar("_.dxf", height,[scaleValue[0]-2,scaleValue[1],scaleValue[2]]);
+	  getChar("underscore.dxf", height,[scaleValue[0]-2,scaleValue[1],scaleValue[2]]);
   } else if (char == ",") {
     translate([0,-1.75,0]) 
-    		getChar(",.dxf", height,scaleValue);
+    		getChar("coma.dxf", height,scaleValue);
   } else if (char == ":") {
-	  getChar(":.dxf", height,scaleValue);
+	  getChar("colin.dxf", height,scaleValue);
   } else if (char == "!") {
-	  getChar("!.dxf", height,scaleValue);
+	  getChar("bang.dxf", height,scaleValue);
   } else if (char == "(") {
 	  getChar("openpar.dxf", height,scaleValue);
   } else if (char == ")") {
 	  getChar("closepar.dxf", height,scaleValue);
   } else if (char == "[") {
-	  getChar("[.dxf", height,scaleValue);
+	  getChar("rbracket.dxf", height,scaleValue);
   } else if (char == "]") {
-	  getChar("].dxf", height,scaleValue);
+	  getChar("lbracket.dxf", height,scaleValue);
   } else if (char == "@") {
-	  getChar("@.dxf", height,scaleValue);
+	  getChar("at.dxf", height,scaleValue);
   } else if (char == "#") {
-	  getChar("#.dxf", height,[scaleValue[0]-3,scaleValue[1],scaleValue[2]]);
+	  getChar("hash.dxf", height,[scaleValue[0]-3,scaleValue[1],scaleValue[2]]);
   } else if (char == "+") {
     translate([0,2,0]) 
-    		getChar("+.dxf", height,scaleValue);
+    		getChar("plus.dxf", height,scaleValue);
   } else if (char == "e") {
 	  getChar("e-lower.dxf", height,scaleValue);
   } else if (char == "E") {
