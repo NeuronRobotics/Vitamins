@@ -41,8 +41,10 @@ module wing()
 		translate([-36,-ZrodSpacing()/2,0]){
 			difference(){
 				cylinder(h=MotorBracketHeight(), r=PlasticWidth());
-				translate([0,0,-1])
-					cylinder(h=MotorBracketHeight()*2, r=HiLoScrewDiameter(.66)/2);
+				translate([0,0,-1]){
+				//cylinder(h=MotorBracketHeight()*2, r=HiLoScrewDiameter(.66)/2);
+					#cylinder(h=MotorBracketHeight()*2, r=HiLoScrewDiameter(.6)/2, $fn=50);
+				}
 			}
 		}
 	}
