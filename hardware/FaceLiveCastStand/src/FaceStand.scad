@@ -1,5 +1,6 @@
 
-function getMaterialThickness() = 5.4;
+function getMaterialThickness() = 25.4*(3/4);
+//function getMaterialThickness() = 5.4;
 
 module slot(){
 	translate([-.5,0,-.5])
@@ -78,6 +79,5 @@ module faceStandSheet(){
 	}
 
 }
-projection(cut=false){ 
+projection(cut=false) 
 	faceStandSheet();
-}

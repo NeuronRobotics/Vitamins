@@ -1,0 +1,13 @@
+package com.neuronrobotics.jniloader;
+
+public class OpenCVJNILoader {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
