@@ -1,13 +1,17 @@
 package com.neuronrobotics.jniloader;
 
 public class OpenCVJNILoader {
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	static NativeResource resource=null;
+	public static void load() {
+		if( resource!=null)
+			return;
+		resource= new NativeResource();
+		
+		if(NativeResource.isLinux())
+			resource.load("libopencv_java246");
+		if(NativeResource.isOSX())
+			resource.load("libopencv_java");
+		
 	}
 
 }

@@ -3,7 +3,7 @@
 
 	<property name="app.name"      value="OpenCVJava"/>
 	<property name="app.version"      value="2.4"/>
-	<property name="app.javac.version"      value="1.7"/>
+	<property name="app.javac.version"      value="1.6"/>
 	
   <property name="app.path"      value="/${app.name}"/>
   <property name="build.home"    value="${basedir}/build"/>
