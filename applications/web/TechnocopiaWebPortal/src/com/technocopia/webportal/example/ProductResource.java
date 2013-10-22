@@ -1,4 +1,4 @@
-package com.technocopia.webportal;
+package com.technocopia.webportal.example;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;

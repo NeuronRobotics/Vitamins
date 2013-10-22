@@ -1,4 +1,4 @@
-package com.technocopia.webportal;
+package com.technocopia.webportal.example;
 
 public class Product {
  
