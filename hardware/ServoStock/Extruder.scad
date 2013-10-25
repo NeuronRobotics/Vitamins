@@ -40,7 +40,7 @@ module ExtruderBlock(3dPrinterTolerance=.4)
 //Counterbored screw holes:
 		translate([ExtruderLength()/2-ExtruderIdlerWheelDiam(.4)/5,ExtruderWidth()/2-HiLoScrewHeadDiameter(.4)*2,-.1]){CounterboreScrew(.4);}
 		translate([ExtruderLength(.4)/2-ExtruderIdlerWheelDiam(.4)/5,-ExtruderWidth()/2+HiLoScrewHeadDiameter(.4)/3,-.1]){CounterboreScrew(.4);}
-		translate([-ExtruderLength()/2+ExtruderIdlerWheelDiam(.4),ExtruderWidth()/2-HiLoScrewHeadDiameter(.4)*2,-.1]){CounterboreScrew(.4);}
+		translate([-ExtruderLength()/1.5+ExtruderIdlerWheelDiam(.4),ExtruderWidth()/2-HiLoScrewHeadDiameter(.4)*2,-.1]){CounterboreScrew(.4);}
 		translate([-ExtruderLength()/2+ExtruderIdlerWheelDiam(),-ExtruderWidth()/2+StandardServoThickness()/1.5,-.1]){CounterboreScrew(.4);}
 //The 608 Bearing.  commented out cube is for cross-section examination
 		translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,MagnetLength()-ExtruderIdlerWheelThickness()*3+1]){cylinder(h=608BallBearingHeight(3dPrinterTolerance)+ExtruderIdlerWheelThickness(),r=(608BallBearingDiam()+.04)/2);}
@@ -76,7 +76,7 @@ module Extruder(servo=true, 3dPrinterTolerance=.4)
 	if(servo==true){
 		difference(){
 			ExtruderBlock(.4);
-			translate([ExtruderIdlerWheelDiam()/2.5,StandardServoNubDiam()/2+FilamentDiam()/4,StandardServoHeightAbvWings()*2-ExtruderIdlerWheelThickness()-.25]){rotate([0,0,-90]){StandardServoMotor(true,2,true,.4);}}
+			rotate([0,0,-9]){translate([ExtruderIdlerWheelDiam()/2.5-.5,StandardServoNubDiam()*1.35-FilamentDiam()*1.5,StandardServoHeightAbvWings()*2-ExtruderIdlerWheelThickness()-.25]){rotate([0,0,-90]){StandardServoMotor(true,2,true,.4);}}}
 		}
 	}else{
 		difference(){
@@ -93,7 +93,7 @@ module Extruder(servo=true, 3dPrinterTolerance=.4)
 
 translate([ExtruderLength()/2+10,0,0]){mirror([1,0,0]){Extruder(true,.4);}}
 
-//translate([-ExtruderLength()/2-10,0,0]){Extruder(false,.4);}
+translate([ExtruderLength()/2,ExtruderWidth(),0]){Extruder(false,.4);}
 				
 			
 
