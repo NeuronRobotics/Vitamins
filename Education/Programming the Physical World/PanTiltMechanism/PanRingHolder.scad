@@ -22,10 +22,10 @@ module mainPanRing(3dPrinterTolerance=.4){
 	
 	//Bearing brick
 	translate([0,
-	           getPanRingRadius(3dPrinterTolerance),
+	           getPanRingRadius(3dPrinterTolerance)-2.4,
 	           getCamerabarThickness()/2]){
 		rotate([90,90,0]){
-			cylinder(	h=getCamerabarWidth(),				//
+			cylinder(	h=getCamerabarWidth()-2.4,				//
 						r=getCamerabarThickness()/2, 	// 
 						center=false);
 		}
@@ -34,7 +34,7 @@ module mainPanRing(3dPrinterTolerance=.4){
 	translate([-getCamerabarThickness()/2,
 			   -getPanRingRadius(3dPrinterTolerance)+2,
 			  0]){
-					#cube([	getCamerabarThickness(),
+					cube([	getCamerabarThickness(),
 							getCamerabarWidth()-3,
 							getCamerabarThickness()]);
 	}
@@ -44,10 +44,10 @@ module mainPanRing(3dPrinterTolerance=.4){
 	           StandardServoThickness()/2]){
 		rotate([90,90,0]){
 			translate([	-getCamerabarThickness()/2,
-			           	-getCamerabarThickness()/2-5,
-						1]){
+			           	(-getCamerabarThickness()/2)-3.5,
+						-1.5]){
 						union(){
-							cube([	StandardServoThickness(),
+							cube([	StandardServoThickness()+5,
 									StandardServoLength(),
 									StandardServoBoltHeight()+5]);
 							

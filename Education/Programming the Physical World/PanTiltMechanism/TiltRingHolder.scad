@@ -28,7 +28,7 @@ module cameraPanServo(3dPrinterTolerance=.4, screwAlignment=0){
 				getCamerabarThickness()/2]){
 				rotate([-90,90,0]){
 					rotate([0,0,screwAlignment]){
-						StandardServoMotor(true, 1, true, .4);
+						StandardServoMotor(true, 1, true, .4,8);
 					}
 				}
 			}
@@ -63,9 +63,11 @@ module outerRing(3dPrinterTolerance=.4){
 		// servo mount block
 		translate([	-(StandardServoBoltHeight()+5+getQuickCamRadius(3dPrinterTolerance)+getCamerabarWidth() +1),
 		           	-37.5,
-		           (getCamerabarThickness()-StandardServoThickness())/2]){
+		           (getCamerabarThickness()-StandardServoThickness())/2-5]){
 			
-			cube([StandardServoBoltHeight()+5,StandardServoLength(),StandardServoThickness()]);
+			cube([	StandardServoBoltHeight()+5,
+			      	StandardServoLength(),
+			      	StandardServoThickness()+5]);
 		}
 		placePanBearing(3dPrinterTolerance){
 			cylinder(	608BallBearingHeight(3dPrinterTolerance),
