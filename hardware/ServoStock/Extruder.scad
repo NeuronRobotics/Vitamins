@@ -53,13 +53,13 @@ module ExtruderBlock(3dPrinterTolerance=.4)
 //the filament channel:
 		rotate([0,90,0]){translate([-ExtruderHeight(),0,-ExtruderLength()/2-2]){Filament();}}
 		rotate([0,90,0]){translate([-ExtruderHeight(),0,-ExtruderLength()/2-2]){cylinder(FilamentHeight()/4,FilamentDiam()*4,FilamentDiam()/2);}}
-//Platform connector Screws:
+//Tool Plate connector Screws:
 		translate([ExtruderLength()/2+HiLoScrewLength()/2,-ExtruderWidth()/2+HotEndDiam()/2,ExtruderHeight()]){rotate([0,90,0]){HiLoScrew();}}
 		mirror([0,0,1]){translate([ExtruderLength()/2+HiLoScrewLength()/2,StandardExtruderSpacing()/2,-ExtruderHeight()]){rotate([0,90,0]){HiLoScrew();}}}
 //The Idler Wheel Recess:
 		translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,ExtruderHeight(3dPrinterTolerance)/2-ExtruderIdlerWheelThickness(3dPrinterTolerance)-.4]){IdlerWheelKeepaway(.4);}
 //The Idler Wheel (use for adjusting the filament and servo locations):
-		translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,ExtruderHeight(3dPrinterTolerance)/2-ExtruderIdlerWheelThickness(3dPrinterTolerance)-.4]){IdlerWheel(.4);}
+		#translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,ExtruderHeight(3dPrinterTolerance)/2-ExtruderIdlerWheelThickness(3dPrinterTolerance)-.4]){IdlerWheel(.4);}
 //The thru hole for the idler wheel:
 		translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,-1]){cylinder(h=MagnetLength(3dPrinterTolerance)*2, r=608BallBearingInnerDiam(-3dPrinterTolerance)/2);}
 //The hole for the servo connector:
@@ -75,7 +75,7 @@ module Extruder(servo=true, 3dPrinterTolerance=.4)
 	if(servo==true){
 		difference(){
 			ExtruderBlock(.4);
-			rotate([0,0,-9]){translate([ExtruderIdlerWheelDiam()/2.5-.5,StandardServoNubDiam()*1.35-FilamentDiam(),StandardServoHeightAbvWings()*2-ExtruderIdlerWheelThickness()-.25]){rotate([0,0,-90]){StandardServoMotor(true,2,true,.4);}}}
+			#rotate([0,0,-9]){translate([ExtruderIdlerWheelDiam()/2.5-.5,StandardServoNubDiam()*1.35-FilamentDiam()-.5,StandardServoHeightAbvWings()*2-ExtruderIdlerWheelThickness()-.25]){rotate([0,0,-90]){StandardServoMotor(true,2,true,.4);}}}
 		}
 	}else{
 		difference(){
@@ -85,7 +85,7 @@ module Extruder(servo=true, 3dPrinterTolerance=.4)
 //The Support Housing
 			translate([ExtruderIdlerWheelDiam()/2.5-HiLoScrewDiameter(.4)/2,-GripLength(.4)/2+HiLoScrewDiameter(.4)/2,-.001]){rotate([180,0,90]){EncoderHousing(false);}}
 //Extra space for the servo nub
-			translate([ExtruderIdlerWheelDiam()/2.5,StandardServoNubDiam()/2+FilamentDiam()/4,StandardServoNubHeight()]){rotate([0,180,-90]){StandardServoMotor(false,2,true,.4);}}
+			translate([ExtruderIdlerWheelDiam()/2.5,StandardServoNubDiam()/2+FilamentDiam()/2.5,StandardServoNubHeight()]){rotate([0,180,-90]){StandardServoMotor(false,2,true,.4);}}
 		}
 	}
 }
