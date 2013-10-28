@@ -42,7 +42,7 @@ function StandardServoNubDiam(3dPrinterTolerance=.4)=6+3dPrinterTolerance;
 
 //all bolts
 function StandardServoBoltHeight()=13.5;
-function StandardServoBoltDiam()=2.5;
+function StandardServoBoltDiam()=1.5;//2.5, but when using screws to fasten into plastic, the threads must run through the plastic
 
 //horn bolts
 function hornBoltHeight()=10;
