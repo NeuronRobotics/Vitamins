@@ -1,7 +1,7 @@
 use <../Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>;
 use <../Vitamins/Sensors/Encoders/EncoderMagnet_Vitamin.scad>;
 $fn=50;
-function ExtruderIdlerWheelThickness() = 1.6;
+function ExtruderIdlerWheelThickness() = 1.2;
 function ExtruderIdlerWheelDiam(3dPrinterTolerance=.4) = 37+3dPrinterTolerance;
 function ExtruderIdlerWheelInnerDiam(3dPrinterTolerance=.4) = ExtruderIdlerWheelDiam(3dPrinterTolerance)-1.5+3dPrinterTolerance;
 
@@ -46,6 +46,7 @@ module IdlerWheelKeepaway(3dPrinterTolerance=.4){
 				}			
 		}
 		translate([0,0,MagnetLength(3dPrinterTolerance)-.25]){rotate([0,180,0]){MagnetDraft(.4);}}
+		
 	}
 }
 

@@ -44,7 +44,7 @@ module ExtruderBlock(3dPrinterTolerance=.4)
 		translate([-ExtruderLength()/2+ExtruderIdlerWheelDiam(),-ExtruderWidth()/2+StandardServoThickness()/1.5,-.1]){CounterboreScrew(.4);}
 //The 608 Bearing.  commented out cube is for cross-section examination
 		translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,MagnetLength()-ExtruderIdlerWheelThickness()*3+1]){cylinder(h=608BallBearingHeight(3dPrinterTolerance)+ExtruderIdlerWheelThickness(),r=(608BallBearingDiam()+.04)/2);}
-		translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,ExtruderHeight()/2-ExtruderIdlerWheelThickness()*2.25]){608BallBearing();}
+		#translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,ExtruderHeight()/2-ExtruderIdlerWheelThickness()*2.5]){608BallBearing();}
 		//translate([0,-ExtruderWidth()/2-608BallBearingDiam(3dPrinterTolerance)/5,-ExtruderHeight()]){cube([100,20,100]);}
 //the hot end and its securing screws:
 		translate([ExtruderWidth()/2,0,ExtruderHeight()]){rotate([0,90,0]){HotEnd(true,.4);}}
@@ -57,9 +57,9 @@ module ExtruderBlock(3dPrinterTolerance=.4)
 		translate([ExtruderLength()/2+HiLoScrewLength()/2,-ExtruderWidth()/2+HotEndDiam()/2,ExtruderHeight()]){rotate([0,90,0]){HiLoScrew();}}
 		mirror([0,0,1]){translate([ExtruderLength()/2+HiLoScrewLength()/2,StandardExtruderSpacing()/2,-ExtruderHeight()]){rotate([0,90,0]){HiLoScrew();}}}
 //The Idler Wheel Recess:
-		translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,ExtruderHeight(3dPrinterTolerance)/2-ExtruderIdlerWheelThickness(3dPrinterTolerance)]){IdlerWheelKeepaway(.4);}
+		translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,ExtruderHeight(3dPrinterTolerance)/2-ExtruderIdlerWheelThickness(3dPrinterTolerance)-.4]){IdlerWheelKeepaway(.4);}
 //The Idler Wheel (use for adjusting the filament and servo locations):
-		translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,ExtruderHeight(3dPrinterTolerance)/2-ExtruderIdlerWheelThickness(3dPrinterTolerance)]){IdlerWheel(.4);}
+		%translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,ExtruderHeight(3dPrinterTolerance)/2-ExtruderIdlerWheelThickness(3dPrinterTolerance)-.4]){IdlerWheel(.4);}
 //The thru hole for the idler wheel:
 		translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,-1]){cylinder(h=MagnetLength(3dPrinterTolerance)*2, r=608BallBearingInnerDiam(-3dPrinterTolerance)/2);}
 //The hole for the servo connector:
@@ -67,7 +67,6 @@ module ExtruderBlock(3dPrinterTolerance=.4)
 	}
 }
 
-//ExtruderBlock(.4);
 
 //Removing feature elements from block. The boolean creates either a servo side or an encoder side.
 
@@ -76,13 +75,13 @@ module Extruder(servo=true, 3dPrinterTolerance=.4)
 	if(servo==true){
 		difference(){
 			ExtruderBlock(.4);
-			rotate([0,0,-9]){translate([ExtruderIdlerWheelDiam()/2.5-.5,StandardServoNubDiam()*1.35-FilamentDiam()*1.5,StandardServoHeightAbvWings()*2-ExtruderIdlerWheelThickness()-.25]){rotate([0,0,-90]){StandardServoMotor(true,2,true,.4);}}}
+			#rotate([0,0,-9]){translate([ExtruderIdlerWheelDiam()/2.5-.5,StandardServoNubDiam()*1.35-FilamentDiam(),StandardServoHeightAbvWings()*2-ExtruderIdlerWheelThickness()-.25]){rotate([0,0,-90]){StandardServoMotor(true,2,true,.4);}}}
 		}
 	}else{
 		difference(){
 			ExtruderBlock(.4);
 //The Encoder
-			translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,-.001]){rotate([0,180,0]){Encoder(false);}}
+			#translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,-.001]){rotate([0,180,0]){Encoder(false);}}
 //The Support Housing
 			translate([ExtruderIdlerWheelDiam()/2.5-HiLoScrewDiameter(.4)/2,-GripLength(.4)/2+HiLoScrewDiameter(.4)/2,-.001]){rotate([180,0,90]){EncoderHousing(false);}}
 //Extra space for the servo nub
@@ -91,7 +90,9 @@ module Extruder(servo=true, 3dPrinterTolerance=.4)
 	}
 }
 
-translate([ExtruderLength()/2+10,0,0]){mirror([1,0,0]){Extruder(true,.4);}}
+//ExtruderBlock(.4);
+
+//translate([ExtruderLength()/2+10,0,0]){mirror([1,0,0]){Extruder(true,.4);}}
 
 translate([ExtruderLength()/2,ExtruderWidth(),0]){Extruder(false,.4);}
 				
