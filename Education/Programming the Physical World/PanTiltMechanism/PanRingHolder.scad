@@ -4,7 +4,7 @@ use <../../../hardware/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.sc
 use <../../../hardware/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 use <../../../hardware/Vitamins/Sensors/Camera/QuickCam_STX.scad>
 
-function getPanRingRadius(3dPrinterTolerance=.4) = getRingRadius(3dPrinterTolerance)+getCamerabarWidth();
+function getPanRingRadius(3dPrinterTolerance=.4) = getRingRadius(3dPrinterTolerance)+getCamerabarWidth()+2;
 
 module mainPanRing(3dPrinterTolerance=.4){
 	intersection(){
@@ -14,7 +14,7 @@ module mainPanRing(3dPrinterTolerance=.4){
 		translate([0,0,getCamerabarThickness()/2]){
 			difference(){
 				sphere(getPanRingRadius(3dPrinterTolerance));
-				sphere(getRingRadius(3dPrinterTolerance)+2);
+				sphere(getRingRadius(3dPrinterTolerance)+4);
 			}
 		}
 	}
