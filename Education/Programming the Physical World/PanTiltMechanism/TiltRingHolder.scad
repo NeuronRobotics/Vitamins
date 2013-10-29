@@ -56,12 +56,12 @@ module outerRing(3dPrinterTolerance=.4){
 			translate([0,0,getCamerabarThickness()/2]){
 				difference(){
 					sphere(getRingRadius(3dPrinterTolerance));
-					sphere(getQuickCamRadius(3dPrinterTolerance)+getCamerabarWidth()+2);
+					sphere(getQuickCamRadius(3dPrinterTolerance)+getCamerabarWidth()+5);
 				}
 			}
 		}
 		// servo mount block
-		translate([	-(StandardServoBoltHeight()+5+getQuickCamRadius(3dPrinterTolerance)+getCamerabarWidth() +1),
+		translate([	-(StandardServoBoltHeight()+5+getQuickCamRadius(3dPrinterTolerance)+getCamerabarWidth() +5),
 		           	-37.5,
 		           (getCamerabarThickness()-StandardServoThickness())/2-5]){
 			
