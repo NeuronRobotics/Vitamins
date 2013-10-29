@@ -10,7 +10,7 @@ use <ExtruderIdlerWheel.scad>;
 function GripWidth(3dPrinterTolerance=.4)= 3+3dPrinterTolerance;
 function GripLength(3dPrinterTolerance=.4)= EncoderHeight(3dPrinterTolerance)+(HiLoScrewDiameter(3dPrinterTolerance));
 function GripHeight(3dPrinterTolerance=.4)= EncoderThickness(3dPrinterTolerance)*2;
-function GripSpacing(3dPrinterTolerance=.4)= EncoderWidth(3dPrinterTolerance)-GripWidth(3dPrinterTolerance);
+function GripSpacing(3dPrinterTolerance=.4)= EncoderWidth(3dPrinterTolerance)-GripWidth(3dPrinterTolerance)*2;
 
 module ScrewRing(print=true,3dPrinterTolerance=.4)
 {

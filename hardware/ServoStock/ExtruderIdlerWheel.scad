@@ -38,7 +38,7 @@ module IdlerWheelKeepaway(3dPrinterTolerance=.4){
 			
 				translate([0,0,MagnetLength(3dPrinterTolerance)-ExtruderIdlerWheelThickness(3dPrinterTolerance)/2])
 				{
-					cylinder(h=ExtruderIdlerWheelThickness(3dPrinterTolerance),r=(ExtruderIdlerWheelDiam(3dPrinterTolerance)/2)+.5);
+					cylinder(h=ExtruderIdlerWheelThickness(3dPrinterTolerance)*2,r=(ExtruderIdlerWheelDiam(3dPrinterTolerance)/2)+.5);
 				}
 				translate([0,0,MagnetLength()-ExtruderIdlerWheelThickness(3dPrinterTolerance)])
 				{
