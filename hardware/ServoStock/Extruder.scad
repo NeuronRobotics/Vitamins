@@ -16,8 +16,8 @@ use <Extruder_Encoder_Keepaway.scad>;
 function ExtruderLength(3dPrinterTolerance=.4) = StandardServoLength(3dPrinterTolerance)+HiLoScrewLength(3dPrinterTolerance)/2+2*ConnectorLength(3dPrinterTolerance);
 function ExtruderHeight(3dPrinterTolerance=.4) = HiLoScrewLength(3dPrinterTolerance)/2;
 function ExtruderWidth(3dPrinterTolerance=.4) = StandardExtruderSpacing()+HotEndDiam(3dPrinterTolerance);
-function HEscrewvector(3dPrinterTolerance=.4) = [ExtruderWidth(.4)/2+HotEndRecessOffset()+HiLoScrewDiameter(.4)/2,-HotEndDiam()/2-HiLoScrewDiameter(.4)/4,-HiLoScrewHeadHeight(.4)];
-
+function HEscrewvector(3dPrinterTolerance=.4) = [ExtruderWidth(.4)/2+HotEndRecessOffset()*1.5+HiLoScrewDiameter(.4)/2,-HotEndDiam()/2-HiLoScrewDiameter(.4)/4,-HiLoScrewHeadHeight(.4)];
+function IdlerVector(3dPrinterTolerance=.4) = [ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2-FilamentDiam()/4,ExtruderHeight(3dPrinterTolerance)/2-ExtruderIdlerWheelThickness(3dPrinterTolerance)-.5];
 function CounterboreRad(3dPrinterTolerance=.4) = HiLoScrewHeadDiameter(3dPrinterTolerance)/2+.5;
 
 //counterbore screw module:
@@ -57,9 +57,9 @@ module ExtruderBlock(3dPrinterTolerance=.4)
 		translate([ExtruderLength()/2+HiLoScrewLength()/2,-ExtruderWidth()/2+HotEndDiam()/2,ExtruderHeight()]){rotate([0,90,0]){HiLoScrew();}}
 		mirror([0,0,1]){translate([ExtruderLength()/2+HiLoScrewLength()/2,StandardExtruderSpacing()/2,-ExtruderHeight()]){rotate([0,90,0]){HiLoScrew();}}}
 //The Idler Wheel Recess:
-		translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,ExtruderHeight(3dPrinterTolerance)/2-ExtruderIdlerWheelThickness(3dPrinterTolerance)-.4]){IdlerWheelKeepaway(.4);}
+		translate(IdlerVector(.4)){IdlerWheelKeepaway(.4);}
 //The Idler Wheel (use for adjusting the filament and servo locations):
-		#translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,ExtruderHeight(3dPrinterTolerance)/2-ExtruderIdlerWheelThickness(3dPrinterTolerance)-.4]){IdlerWheel(.4);}
+		translate(IdlerVector(.4)){IdlerWheel(.4);}
 //The thru hole for the idler wheel:
 		translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,-1]){cylinder(h=MagnetLength(3dPrinterTolerance)*2, r=608BallBearingInnerDiam(-3dPrinterTolerance)/2);}
 //The hole for the servo connector:
@@ -75,7 +75,7 @@ module Extruder(servo=true, 3dPrinterTolerance=.4)
 	if(servo==true){
 		difference(){
 			ExtruderBlock(.4);
-			#rotate([0,0,-9]){translate([ExtruderIdlerWheelDiam()/2.5-.5,StandardServoNubDiam()*1.35-FilamentDiam()-.5,StandardServoHeightAbvWings()*2-ExtruderIdlerWheelThickness()-.25]){rotate([0,0,-90]){StandardServoMotor(true,2,true,.4);}}}
+			rotate([0,0,-9]){translate([ExtruderIdlerWheelDiam()/2.5-.5,StandardServoNubDiam()*1.35-FilamentDiam()-.5,StandardServoHeightAbvWings()*2-ExtruderIdlerWheelThickness()-.25]){rotate([0,0,-90]){StandardServoMotor(true,2,true,.4);}}}
 		}
 	}else{
 		difference(){
