@@ -32,11 +32,12 @@ module CounterboreScrew(3dPrinterTolerance=.4){
 module ExtruderBlock(3dPrinterTolerance=.4)
 {
 	difference(){
-		translate([-ExtruderLength()/2,-ExtruderWidth()/1.8,0]){cube([ExtruderLength(),ExtruderWidth(),ExtruderHeight()]);}
+		translate([-ExtruderLength()/2,-ExtruderWidth()/1.8,0]){cube([ExtruderLength(.4),ExtruderWidth(.4),ExtruderHeight(.4)]);}
 //weight reduction: 
-		translate([-ExtruderHeight()-ExtruderIdlerWheelDiam(),-ExtruderIdlerWheelDiam()-FilamentDiam()*2-2,-1]){cylinder(h=ExtruderHeight()+2,r=ExtruderIdlerWheelDiam());}
+		translate([-ExtruderHeight()-ExtruderIdlerWheelDiam(),-ExtruderIdlerWheelDiam()-FilamentDiam()*2,-1]){cylinder(h=ExtruderHeight(.4)+2,r=ExtruderIdlerWheelDiam(.4));}
 		translate([-ExtruderLength()/2-1,-ExtruderWidth()/2,-ExtruderHeight()/2+4]){cube([ExtruderHeight()+2,ExtruderWidth(),ExtruderHeight()+4]);}
 		translate([-ExtruderLength()/2-HiLoScrewLength()/1.5,ExtruderWidth()/2-ExtruderHeight()+2,-2]){cube([ExtruderLength(),ExtruderWidth()/4,ExtruderHeight()+4]);}
+		//translate([CounterboreRad(.4)*2,ExtruderWidth()-ExtruderIdlerWheelDiam()+1,-1]){cylinder(h=ExtruderHeight()+2,r=ExtruderWidth()/2.5-2);}
 //Counterbored screw holes:
 		translate([ExtruderLength()/2-ExtruderIdlerWheelDiam(.4)/5,ExtruderWidth()/2-HiLoScrewHeadDiameter(.4)*2,-.1]){CounterboreScrew(.4);}
 		translate([ExtruderLength(.4)/2-ExtruderIdlerWheelDiam(.4)/5,-ExtruderWidth()/2+HiLoScrewHeadDiameter(.4)/3,-.1]){CounterboreScrew(.4);}
@@ -75,7 +76,7 @@ module Extruder(servo=true, 3dPrinterTolerance=.4)
 	if(servo==true){
 		difference(){
 			ExtruderBlock(.4);
-			rotate([0,0,-9]){translate([ExtruderIdlerWheelDiam()/2.5-.5,StandardServoNubDiam()*1.35-FilamentDiam()-.5,StandardServoHeightAbvWings()*2-ExtruderIdlerWheelThickness()-.25]){rotate([0,0,-90]){StandardServoMotor(true,2,true,.4);}}}
+			rotate([0,0,-9]){translate([ExtruderIdlerWheelDiam()/2.5-.5,StandardServoNubDiam()*1.35-FilamentDiam(),StandardServoHeightAbvWings()*2-ExtruderIdlerWheelThickness()-.25]){rotate([0,0,-90]){StandardServoMotor(true,2,true,.4);}}}
 		}
 	}else{
 		difference(){
@@ -92,9 +93,9 @@ module Extruder(servo=true, 3dPrinterTolerance=.4)
 
 //ExtruderBlock(.4);
 
-translate([ExtruderLength()/2+10,0,0]){mirror([1,0,0]){Extruder(true,.4);}}
+translate([ExtruderLength(.4)/2+10,0,0]){mirror([1,0,0]){Extruder(true,.4);}}
 
-translate([ExtruderLength()/2,ExtruderWidth(),0]){Extruder(false,.4);}
+translate([ExtruderLength(.4)/2,ExtruderWidth(.4),0]){Extruder(false,.4);}
 				
 			
 
