@@ -6,6 +6,10 @@ use <../../../hardware/Vitamins/Sensors/Camera/QuickCam_STX.scad>
 
 function getPanRingRadius(3dPrinterTolerance=.4) = getRingRadius(3dPrinterTolerance)+getCamerabarWidth();
 
+module standLeg(){
+	cube([25,100,10]);
+}
+
 module mainPanRing(3dPrinterTolerance=.4){
 	intersection(){
 		translate([0,-getPanRingRadius(3dPrinterTolerance),-.5]){
@@ -50,7 +54,23 @@ module mainPanRing(3dPrinterTolerance=.4){
 							cube([	StandardServoThickness()+5,
 									StandardServoLength(),
 									StandardServoBoltHeight()+5]);
+							//stand
+							translate([0,0,60])
+								rotate([0,0,0])
+									standLeg();
 							
+							translate([25,0,60])
+								rotate([0,0,90])
+									standLeg();
+							
+							//support struts
+							translate([17,0,0])
+								rotate([90,0,90])
+									cube([70,70,10]);
+							
+							translate([0,70,-25])
+								rotate([90,0,0])
+									cube([25,90,6]);
 						}
 			}
 		}
@@ -62,9 +82,9 @@ module panRingHolder(3dPrinterTolerance=.4){
 	difference(){
 		mainPanRing(3dPrinterTolerance);
 		placePanBearing(3dPrinterTolerance){
-			608BallBearing(3dPrinterTolerance);		
+			608BallBearing(3dPrinterTolerance+.5);		
 		}
-		cameraPanServo(3dPrinterTolerance, 0);
+		#cameraPanServo(3dPrinterTolerance, 0);
 	}
 }
 

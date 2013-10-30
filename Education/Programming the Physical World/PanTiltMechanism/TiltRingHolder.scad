@@ -11,7 +11,7 @@ module clearenceParts(3dPrinterTolerance=.4){
 		cameraTiltBar();
 		cameraTiltServo();
 		placeBearingPart(3dPrinterTolerance){
-			608BallBearing(3dPrinterTolerance);		
+			608BallBearing(3dPrinterTolerance+.5);		
 		}
 		placeBearingPart(3dPrinterTolerance){
 		cylinder(	h=608BallBearingHeight(3dPrinterTolerance)*2,
