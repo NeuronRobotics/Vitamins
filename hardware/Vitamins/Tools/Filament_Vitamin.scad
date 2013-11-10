@@ -3,7 +3,7 @@ function FilamentHeight()=100;
 module Filament()
 {
 	$fn=50;
-	cylinder(h=FilamentHeight(), r=FilamentDiam()/2);
+	cylinder(h=FilamentHeight(), r=FilamentDiam(.4)/2);
 }
 
 Filament();

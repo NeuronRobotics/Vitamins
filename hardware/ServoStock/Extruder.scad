@@ -14,9 +14,13 @@ use <Extruder_Encoder_Keepaway.scad>;
 //core dimensions of the part depend on the screw, servo, and servo connector.  Width is based on the standard platform fastener distance.  Parameterize when possible.
 
 function ExtruderLength(3dPrinterTolerance=.4) = StandardServoLength(3dPrinterTolerance)+HiLoScrewLength(3dPrinterTolerance)/2+2*ConnectorLength(3dPrinterTolerance);
+echo("Extruder Length is", ExtruderLength(.4));
 function ExtruderHeight(3dPrinterTolerance=.4) = HiLoScrewLength(3dPrinterTolerance)/2;
-function ExtruderWidth(3dPrinterTolerance=.4) = StandardExtruderSpacing()+HotEndDiam(3dPrinterTolerance);
-function HEscrewvector(3dPrinterTolerance=.4) = [ExtruderWidth(.4)/2+HotEndRecessOffset()*1.5+HiLoScrewDiameter(.4)/2,-HotEndDiam()/2-HiLoScrewDiameter(.4)/4,-HiLoScrewHeadHeight(.4)];
+echo("Extruder Height is",ExtruderHeight(.4));
+function ExtruderWidth(3dPrinterTolerance=.4) = StandardExtruderSpacing()+9*FilamentDiam(.4);
+echo("Extruder Width is", ExtruderWidth(.4));
+
+function HEscrewvector(3dPrinterTolerance=.4) = [ExtruderLength(.4)/2-CounterboreRad(.4)-1.5,-HotEndDiam()/2-HiLoScrewDiameter(.4)/4,-HiLoScrewHeadHeight(.4)];
 function IdlerVector(3dPrinterTolerance=.4) = [ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2-FilamentDiam()/4,ExtruderHeight(3dPrinterTolerance)/2-ExtruderIdlerWheelThickness(3dPrinterTolerance)-.5];
 function CounterboreRad(3dPrinterTolerance=.4) = HiLoScrewHeadDiameter(3dPrinterTolerance)/2+.5;
 
@@ -48,9 +52,10 @@ module ExtruderBlock(3dPrinterTolerance=.4)
 		translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,ExtruderHeight()/2-ExtruderIdlerWheelThickness()*2.5]){608BallBearing();}
 		//translate([0,-ExtruderWidth()/2-608BallBearingDiam(3dPrinterTolerance)/5,-ExtruderHeight()]){cube([100,20,100]);}
 //the hot end and its securing screws:
-		translate([ExtruderWidth()/2,0,ExtruderHeight()]){rotate([0,90,0]){HotEnd(true,.4);}}
-		translate(HEscrewvector(.4)){CounterboreScrew(.4);}
-		mirror ([0,1,0]){translate(HEscrewvector()){CounterboreScrew(.4);}}
+		translate([ExtruderWidth()/2,0,ExtruderHeight()]){HotEnd(true,.4);}
+		#translate(HEscrewvector(.4)){CounterboreScrew(.4);}
+		#mirror ([0,1,0]){translate(HEscrewvector()){CounterboreScrew(.4);}}
+
 //the filament channel:
 		rotate([0,90,0]){translate([-ExtruderHeight(),0,-ExtruderLength()/2-2]){Filament();}}
 		rotate([0,90,0]){translate([-ExtruderHeight(),0,-ExtruderLength()/2-2]){cylinder(FilamentHeight()/4,FilamentDiam()*4,FilamentDiam()/2);}}
@@ -93,7 +98,7 @@ module Extruder(servo=true, 3dPrinterTolerance=.4)
 
 //ExtruderBlock(.4);
 
-translate([ExtruderLength(.4)/2+10,0,0]){mirror([1,0,0]){Extruder(true,.4);}}
+translate([ExtruderLength(.4)/2,0,0]){mirror([1,0,0]){Extruder(true,.4);}}
 
 translate([ExtruderLength(.4)/2,ExtruderWidth(.4),0]){Extruder(false,.4);}
 				
