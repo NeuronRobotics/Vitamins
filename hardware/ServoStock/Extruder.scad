@@ -11,7 +11,7 @@ use <../Vitamins/Tools/Filament_Vitamin.scad>;
 use <ExtruderIdlerWheel.scad>;
 use <Extruder_Encoder_Keepaway.scad>;
 
-//core dimensions of the part depend on the screw, servo, and servo connector.  Width is based on the standard platform fastener distance.  Parameterize when possible.
+//core dimensions of the part depend on the screw, servo, and servo connector.  Width is based on the standard platform fastener distance, and the filament diameter.  Parameterize when possible.
 
 function ExtruderLength(3dPrinterTolerance=.4) = StandardServoLength(3dPrinterTolerance)+HiLoScrewLength(3dPrinterTolerance)/2+2*ConnectorLength(3dPrinterTolerance);
 echo("Extruder Length is", ExtruderLength(.4));
@@ -81,7 +81,7 @@ module Extruder(servo=true, 3dPrinterTolerance=.4)
 	if(servo==true){
 		difference(){
 			ExtruderBlock(.4);
-			rotate([0,0,-9]){translate([ExtruderIdlerWheelDiam()/2.5-.5,StandardServoNubDiam()*1.35-FilamentDiam(),StandardServoHeightAbvWings()*2-ExtruderIdlerWheelThickness()-.25]){rotate([0,0,-90]){StandardServoMotor(true,2,true,.4);}}}
+			#rotate([0,0,-9]){translate([ExtruderIdlerWheelDiam()/2.5-.5,StandardServoNubDiam()*1.35-FilamentDiam(),StandardServoHeightAbvWings()*2-ExtruderIdlerWheelThickness()-.25]){rotate([0,0,-90]){StandardServoMotor(true,2,true,.4);}}}
 		}
 	}else{
 		difference(){
