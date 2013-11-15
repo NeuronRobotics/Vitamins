@@ -31,7 +31,14 @@ module CounterboreScrew(3dPrinterTolerance=.4){
 		rotate([0,180,0]){HiLoScrew();}
 	}
 }	
-
+//Counterbored screw hole pattern:
+module screwpattern(3dprinterTolerance=.4)
+{
+		translate([ExtruderLength()/2-ExtruderIdlerWheelDiam(.4)/5,ExtruderWidth()/2-HiLoScrewHeadDiameter(.4)*2,-.1]){CounterboreScrew(.4);}
+		translate([ExtruderLength(.4)/2-ExtruderIdlerWheelDiam(.4)/5,-ExtruderWidth()/2+HiLoScrewHeadDiameter(.4)/3,-.1]){CounterboreScrew(.4);}
+		translate([-ExtruderLength()/1.5+ExtruderIdlerWheelDiam(.4),ExtruderWidth()/2-HiLoScrewHeadDiameter(.4)*2,-.1]){CounterboreScrew(.4);}
+		translate([-ExtruderLength()/2+ExtruderIdlerWheelDiam(),-ExtruderWidth()/2+StandardServoThickness()/1.5,-.1]){CounterboreScrew(.4);}
+}
 //Creating the basic extruder block
 module ExtruderBlock(3dPrinterTolerance=.4)
 {
@@ -41,12 +48,7 @@ module ExtruderBlock(3dPrinterTolerance=.4)
 		translate([-ExtruderHeight()-ExtruderIdlerWheelDiam(),-ExtruderIdlerWheelDiam()-FilamentDiam()*2,-1]){cylinder(h=ExtruderHeight(.4)+2,r=ExtruderIdlerWheelDiam(.4));}
 		translate([-ExtruderLength()/2-1,-ExtruderWidth()/2,-ExtruderHeight()/2+4]){cube([ExtruderHeight()+2,ExtruderWidth(),ExtruderHeight()+4]);}
 		translate([-ExtruderLength()/2-HiLoScrewLength()/1.5,ExtruderWidth()/2-ExtruderHeight()+2,-2]){cube([ExtruderLength(),ExtruderWidth()/4,ExtruderHeight()+4]);}
-		//translate([CounterboreRad(.4)*2,ExtruderWidth()-ExtruderIdlerWheelDiam()+1,-1]){cylinder(h=ExtruderHeight()+2,r=ExtruderWidth()/2.5-2);}
-//Counterbored screw holes:
-		translate([ExtruderLength()/2-ExtruderIdlerWheelDiam(.4)/5,ExtruderWidth()/2-HiLoScrewHeadDiameter(.4)*2,-.1]){CounterboreScrew(.4);}
-		translate([ExtruderLength(.4)/2-ExtruderIdlerWheelDiam(.4)/5,-ExtruderWidth()/2+HiLoScrewHeadDiameter(.4)/3,-.1]){CounterboreScrew(.4);}
-		translate([-ExtruderLength()/1.5+ExtruderIdlerWheelDiam(.4),ExtruderWidth()/2-HiLoScrewHeadDiameter(.4)*2,-.1]){CounterboreScrew(.4);}
-		translate([-ExtruderLength()/2+ExtruderIdlerWheelDiam(),-ExtruderWidth()/2+StandardServoThickness()/1.5,-.1]){CounterboreScrew(.4);}
+		screwpattern(.4);
 //The 608 Bearing.  commented out cube is for cross-section examination
 		translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,MagnetLength()-ExtruderIdlerWheelThickness()*3+1]){cylinder(h=608BallBearingHeight(3dPrinterTolerance)+ExtruderIdlerWheelThickness(),r=(608BallBearingDiam()+.04)/2);}
 		translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,ExtruderHeight()/2-ExtruderIdlerWheelThickness()*2.5]){608BallBearing();}

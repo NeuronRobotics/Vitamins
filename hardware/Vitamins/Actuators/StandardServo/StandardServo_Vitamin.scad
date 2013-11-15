@@ -9,6 +9,7 @@
 //THIS IS FOR IF YOU USE OTHER KINDS OF MOTORS, MOTOROUTCROP IS THE DISTANCE FROM THE MOUNTING PLATE TO THE BUISNESS END OF YOUR MOTOR, IF YOU EVER NEED TO SWITCH TO ANOTHER JUST CHANGE THIS VALUE TO THE ACTUAL VALUE
 
 function StandardServoHeightAbvWings(tolerance=.6)=(StandardServoHeight()-(StandardServoWingsHeight()+StandardServoWingsDist()+tolerance*2));
+echo ("StandardServoHeightAboveWings is",(StandardServoHeightAbvWings(.6)));
 
 
 function StandardServoOutcrop()= StandardServoCylinderHeight()+StandardServoHeightAbvWings();
@@ -37,11 +38,11 @@ function StandardServoCylinderDiam()=21;
 function StandardServoCylinderDist()=31;
 
 //nub on top of motor
-function StandardServoNubHeight()=5.85;
+function StandardServoNubHeight()=4.2;
 function StandardServoNubDiam(3dPrinterTolerance=.4)=6+3dPrinterTolerance;
 
 //all bolts
-function StandardServoBoltHeight()=13.5;
+function StandardServoBoltHeight()=8; //reflects the actual protrusion of the bolt above the wing
 function StandardServoBoltDiam()=1.5;//2.5, but when using screws to fasten into plastic, the threads must run through the plastic
 
 //horn bolts
@@ -310,7 +311,7 @@ module horn_drills(d,n,h)
 //The forth  param indicated the tolerance of the motor (default is .4 mm)
 //the Fith   param is the length of the bolts for the horn
 
-StandardServoMotor(true, 1, true, .4, 10);
+StandardServoMotor(true, 2, true, .4, 10);
 
 
 
