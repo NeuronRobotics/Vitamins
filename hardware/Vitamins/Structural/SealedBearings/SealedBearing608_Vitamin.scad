@@ -10,7 +10,7 @@ module 608BallBearing(3dPrinterTolerance=.4)
 	union()
 	{
 		cylinder(608BallBearingHeight(3dPrinterTolerance), 608BallBearingDiam(3dPrinterTolerance)/2, 608BallBearingDiam(3dPrinterTolerance)/2, 0);
-		%cylinder(608BallBearingHeight(3dPrinterTolerance), 608BallBearingInnerDiam(3dPrinterTolerance)/2, 608BallBearingInnerDiam(3dPrinterTolerance)/2);
+		//cylinder(608BallBearingHeight(3dPrinterTolerance), 608BallBearingInnerDiam(3dPrinterTolerance)/2, 608BallBearingInnerDiam(3dPrinterTolerance)/2);
 	}
 }
 

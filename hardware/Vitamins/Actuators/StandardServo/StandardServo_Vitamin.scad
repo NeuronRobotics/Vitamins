@@ -311,7 +311,7 @@ module horn_drills(d,n,h)
 //The forth  param indicated the tolerance of the motor (default is .4 mm)
 //the Fith   param is the length of the bolts for the horn
 
-StandardServoMotor(true, 2, true, .4, 10);
+StandardServoMotor(true, 2, false, .4, 10);
 
 
 
