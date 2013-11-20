@@ -19,14 +19,16 @@ echo("ExtruderY is",(ExtruderY(.4)));
 function ExtruderZ(3dPrinterTolerance=.4) = StandardServoThickness()+FilamentDiam()+3dPrinterTolerance;
 echo("ExtruderZ is",(ExtruderZ(.4)));
 
-//counterbore screw module:
+//Thru-hole screw module:
 function CounterboreRad(3dPrinterTolerance=.4) = HiLoScrewHeadDiameter(3dPrinterTolerance)/2+.5;
-module CounterboreScrew(3dPrinterTolerance=.4){
-	union(){
-		cylinder(h=HiLoScrewLength()/4, r=CounterboreRad(.4));
-		rotate([0,180,0]){HiLoScrew();}
-	}
+module ThruholeScrew(3dPrinterTolerance=.4){
+	rotate([0,0,0]){cylinder(h=HiLoScrewLength()*4, r=HiLoScrewDiameter(.4)/2);}
+	
 }	
+
+function ScrewVector() = [ExtruderX(.4)-HiLoScrewHeadDiameter(),-StandardExtruderSpacing()/2+ExtruderY(.4)/2+HiLoScrewHeadDiameter()/2,0];
+
+
 
 //channel for bearing:
 module BearingChannel(3dPrinterTolerance=.4)
@@ -42,8 +44,8 @@ module ExtruderBottom(3dPrinterTolerance=.4)
 difference()
 {
 	cube([ExtruderX(.4),ExtruderY(.4),ExtruderZ(.4)]);
-	#translate([0,-StandardExtruderSpacing()/2,0]){HiLoScrew();}
-	#translate([0,StandardExtruderSpacing()/2,0]){HiLoScrew();}
+	translate([ExtruderX(.4)-HiLoScrewHeadDiameter(),-StandardExtruderSpacing()/2+ExtruderY(.4)/2+HiLoScrewHeadDiameter()/3,-.1]){ThruholeScrew(.4);}
+	translate([ExtruderX(.4)-HiLoScrewHeadDiameter(),StandardExtruderSpacing()/2+ExtruderY(.4)/2-HiLoScrewHeadDiameter()/3,-.1]){ThruholeScrew(.4);}
 }
 
 difference()
