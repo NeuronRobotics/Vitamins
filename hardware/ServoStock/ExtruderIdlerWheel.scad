@@ -55,13 +55,7 @@ module IdlerWheelKeepaway(3dPrinterTolerance=.4){
 	}
 }
 
-module MK2Idler(3dPrinterTolerance=.4)
-{
-	union()
-	{
-		bearingshaft(.4);
-	}
-}
+
 translate([0,0,MagnetLength()+ExtruderIdlerWheelThickness()/2]){rotate([0,180,0]){IdlerWheel(.4);}}
 //IdlerWheelKeepaway(.4);
 //translate([0,0,MagnetLength()+ExtruderIdlerWheelThickness()/2]){rotate([0,180,0]){MK2Idler(.4);}}

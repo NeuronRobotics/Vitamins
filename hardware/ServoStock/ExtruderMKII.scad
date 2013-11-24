@@ -37,21 +37,33 @@ union()
 }
 //BearingChannel(.4)
 
-//basic form of extruder bottom:
-module ExtruderBottom(3dPrinterTolerance=.4)
-difference()
-{
-	cube([ExtruderX(.4),ExtruderY(.4),ExtruderZ(.4)]);
-	translate([ExtruderX(.4)-HiLoScrewHeadDiameter(),-StandardExtruderSpacing()/2+ExtruderY(.4)/2+HiLoScrewHeadDiameter()/3,-.1]){ThruholeScrew(.4);}
-	translate([ExtruderX(.4)-HiLoScrewHeadDiameter(),StandardExtruderSpacing()/2+ExtruderY(.4)/2-HiLoScrewHeadDiameter()/3,-.1]){ThruholeScrew(.4);}
+//The extruder bottom.  This includes the servo,screws, and filament subtractions:
+module ExtruderBottom(3dPrinterTolerance=.4){
+	difference()
+	{
+		cube([ExtruderX(.4),ExtruderY(.4),ExtruderZ(.4)]);
+//Screw holes:
+		translate([ExtruderX(.4)-HiLoScrewHeadDiameter(),-StandardExtruderSpacing()/2+ExtruderY(.4)/2+HiLoScrewHeadDiameter()/3,-.1]){ThruholeScrew(.4);}
+		translate([ExtruderX(.4)-HiLoScrewHeadDiameter(),StandardExtruderSpacing()/2+ExtruderY(.4)/2-HiLoScrewHeadDiameter()/3,-.1]){ThruholeScrew(.4);}
+		translate([0,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,0]){
+//Servo:
+			#translate([StandardServoNubHeight()+StandardServoHeightAbvWings()+FilamentDiam()/2,0,StandardServoThickness()/2+FilamentDiam()+.2])rotate([0,90,0])StandardServoMotor(true,2,true,.4);
+//The opening for the top half/idler wheel to fit:
+			translate([StandardServoHeightAbvWings()/2+FilamentDiam(),0,608BallBearingDiam()-4])rotate([0,-90,180])BearingChannel();
+//The Filament:
+			#translate([ExtruderX(.4)/2,FilamentHeight()/2,StandardServoThickness()/2+StandardServoNubDiam()+.5])rotate([90,0,0])Filament();
+		}
+	}
 }
+//The extruder top.  This is the mount for the Idler Wheel, bearing, and encoder:
+module ExtruderTop(3dPrinterTolerance=.4){
+	rotate([180,90,0]){
+		union(){
+			MKIIwheel(.4);
+			translate([0,0,-608BallBearingHeight(.4)]){608BallBearing(.4);}
+		}
+	}
+} 
 
-difference()
-{
-	translate([0,-StandardServoWingsHeight()-StandardServoCylinderDist()-1.1,0])ExtruderBottom(.4);
-
-	#translate([StandardServoNubHeight()+StandardServoHeightAbvWings()+FilamentDiam()/2,0,StandardServoThickness()/2+FilamentDiam()+.2])rotate([0,90,0])StandardServoMotor(true,2,true,.4);
-	translate([StandardServoHeightAbvWings()/2+FilamentDiam(),0,608BallBearingDiam()-4])rotate([0,-90,180])BearingChannel();
-	#translate([ExtruderX(.4)/2,FilamentHeight()/2,StandardServoThickness()/2+StandardServoNubDiam()+.5])rotate([90,0,0])Filament();
-	#translate([ExtruderX(.4)-StandardServoNubHeight()*2-FilamentDiam()/2,0,ExtruderZ(.4)+FilamentDiam()]){rotate([180,90,0]){MKIIwheel(.4);}}
-}
+	translate([ExtruderX(.4)-StandardServoNubHeight()*2-FilamentDiam()/2,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,ExtruderZ(.4)+FilamentDiam()]){ExtruderTop(.4);}
+//ExtruderBottom(.4);

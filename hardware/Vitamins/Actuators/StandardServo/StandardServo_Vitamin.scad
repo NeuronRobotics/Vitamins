@@ -197,7 +197,7 @@ module StandardServoMotor(	boltsUp=true,
 							ServoTolerance=StandardServoTolerance(), 
 							hornBoltLength = 10 )
 {
-	echo("Horn bolt length ",hornBoltLength);
+	//echo("Horn bolt length ",hornBoltLength);
 	if(hornCentered==true){
 		if(Cylinder==1){
 			translate([-StandardServoThickness()/2,-StandardServoCylinderDist(),-(StandardServoHeight()+StandardServoCylinderHeight())-ServoTolerance*2])
