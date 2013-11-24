@@ -1,5 +1,5 @@
 $fn=50;
-use<../Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>;
+use <../Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>;
 use <../Vitamins/Actuators/StandardServo/Servo_Connector_Vitamin.scad>;
 use<../Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>;
 use <../Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>;
@@ -7,7 +7,7 @@ use <../Vitamins/Sensors/Encoders/Encoder_Vitamin.scad>;
 use <../Vitamins/Sensors/Encoders/EncoderMagnet_Vitamin.scad>;
 use <../Vitamins/Tools/Standard_Extruder_Spacing_Vitamin.scad>;
 use <../Vitamins/Tools/Filament_Vitamin.scad>;
-use <ExtruderIdlerWheel.scad>;
+use <MKIIwheel.scad>;
 use <Extruder_Encoder_Keepaway.scad>;
 
 //core dimensions depend on the servo and filament.  
@@ -27,8 +27,6 @@ module ThruholeScrew(3dPrinterTolerance=.4){
 }	
 
 function ScrewVector() = [ExtruderX(.4)-HiLoScrewHeadDiameter(),-StandardExtruderSpacing()/2+ExtruderY(.4)/2+HiLoScrewHeadDiameter()/2,0];
-
-
 
 //channel for bearing:
 module BearingChannel(3dPrinterTolerance=.4)
@@ -55,4 +53,5 @@ difference()
 	#translate([StandardServoNubHeight()+StandardServoHeightAbvWings()+FilamentDiam()/2,0,StandardServoThickness()/2+FilamentDiam()+.2])rotate([0,90,0])StandardServoMotor(true,2,true,.4);
 	translate([StandardServoHeightAbvWings()/2+FilamentDiam(),0,608BallBearingDiam()-4])rotate([0,-90,180])BearingChannel();
 	#translate([ExtruderX(.4)/2,FilamentHeight()/2,StandardServoThickness()/2+StandardServoNubDiam()+.5])rotate([90,0,0])Filament();
+	#translate([ExtruderX(.4)-StandardServoNubHeight()*2-FilamentDiam()/2,0,ExtruderZ(.4)+FilamentDiam()]){rotate([180,90,0]){MKIIwheel(.4);}}
 }
