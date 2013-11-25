@@ -11,7 +11,6 @@ use <MKIIwheel.scad>;
 use <Extruder_Encoder_Keepaway.scad>;
 
 //core dimensions depend on the servo and filament.  
-
 function ExtruderX(3dPrinterTolerance=.4) = StandardServoHeightAbvWings(.6)+FilamentDiam()+StandardServoNubHeight()+HiLoScrewDiameter(.4)*2+3dPrinterTolerance;
 echo("ExtruderX is",(ExtruderX(.4)));
 function ExtruderY(3dPrinterTolerance=.4) = StandardServoLength()+3dPrinterTolerance;
@@ -27,13 +26,14 @@ module ThruholeScrew(3dPrinterTolerance=.4){
 }	
 
 function ScrewVector() = [ExtruderX(.4)-HiLoScrewHeadDiameter(),-StandardExtruderSpacing()/2+ExtruderY(.4)/2+HiLoScrewHeadDiameter()/2,0];
+function WheelVector() = [ExtruderX(.4)-StandardServoNubHeight()*2-FilamentDiam()/2,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,ExtruderZ(.4)+FilamentDiam()];
 
 //channel for bearing:
 module BearingChannel(3dPrinterTolerance=.4)
 union()
 {
-	translate([0,-608BallBearingDiam()/2,0])cube([608BallBearingDiam(.4),608BallBearingDiam(.4),StandardServoThickness()]);
-	cylinder(h=StandardServoThickness(), r=608BallBearingDiam(3dPrinterTolerance)/2);
+	translate([0,-608BallBearingDiam()/2-1,0])cube([608BallBearingDiam(.4),608BallBearingDiam(.4)+2,StandardServoThickness()]);
+	cylinder(h=StandardServoThickness(), r=608BallBearingDiam(3dPrinterTolerance)/2+1);
 }
 //BearingChannel(.4)
 
@@ -57,13 +57,14 @@ module ExtruderBottom(3dPrinterTolerance=.4){
 }
 //The extruder top.  This is the mount for the Idler Wheel, bearing, and encoder:
 module ExtruderTop(3dPrinterTolerance=.4){
-	rotate([180,90,0]){
+difference(){
+	translate([ExtruderX(.4)/2+StandardServoNubHeight()/2+.25,0,ExtruderZ(.4)]){cube([ExtruderX(.4),ExtruderY(.4),EncoderHeight(.4)]);	}
 		union(){
-			MKIIwheel(.4);
-			translate([0,0,-608BallBearingHeight(.4)]){608BallBearing(.4);}
+			#translate(WheelVector()){rotate([180,90,0]){MKIIwheel(.4);}}
+			#translate([ExtruderX(.4)-StandardServoNubHeight()*2-FilamentDiam()/2+608BallBearingHeight(.4),StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,ExtruderZ(.4)+FilamentDiam()]){rotate([180,90,0]){608BallBearing(.4);}}
 		}
 	}
 } 
 
-	translate([ExtruderX(.4)-StandardServoNubHeight()*2-FilamentDiam()/2,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,ExtruderZ(.4)+FilamentDiam()]){ExtruderTop(.4);}
-//ExtruderBottom(.4);
+ExtruderTop(.4);
+ExtruderBottom(.4);
