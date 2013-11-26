@@ -15,3 +15,13 @@ module 608BallBearing(3dPrinterTolerance=.4)
 }
 
 608BallBearing();
+
+
+//This is a long keepaway to make bearing-sized holes in a part:
+
+module 608BearingKeepaway(3dPrinterTolerance=.4)
+{
+	cylinder(h=608BallBearingHeight(3dPrinterTolerance)*4,r=608BallBearingDiam(3dPrinterTolerance)/2);
+}
+
+//608BearingKeepaway(.4);

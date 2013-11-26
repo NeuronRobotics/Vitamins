@@ -18,15 +18,19 @@ echo("ExtruderY is",(ExtruderY(.4)));
 function ExtruderZ(3dPrinterTolerance=.4) = StandardServoThickness()+FilamentDiam()+3dPrinterTolerance;
 echo("ExtruderZ is",(ExtruderZ(.4)));
 
+//defining some standard vectors:
+function ScrewVector() = [ExtruderX(.4)-HiLoScrewHeadDiameter(),-StandardExtruderSpacing()/2+ExtruderY(.4)/2+HiLoScrewHeadDiameter()/2,0];
+function WheelVector() = [ExtruderX(.4)-StandardServoNubHeight()*2-FilamentDiam()/2,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,ExtruderZ(.4)+FilamentDiam()+.2];
+
 //Thru-hole screw module:
 function CounterboreRad(3dPrinterTolerance=.4) = HiLoScrewHeadDiameter(3dPrinterTolerance)/2+.5;
 module ThruholeScrew(3dPrinterTolerance=.4){
 	rotate([0,0,0]){cylinder(h=HiLoScrewLength()*4, r=HiLoScrewDiameter(.4)/2);}
-	
+}
+module ScrewPattern(3dPrinterTolerance=.4){
+translate([ExtruderX(.4)-HiLoScrewHeadDiameter()+1,-StandardExtruderSpacing()/2+ExtruderY(.4)/2+HiLoScrewHeadDiameter()/3,-.1]){ThruholeScrew(.4);}
+		translate([ExtruderX(.4)-HiLoScrewHeadDiameter()+1,StandardExtruderSpacing()/2+ExtruderY(.4)/2-HiLoScrewHeadDiameter()/3,-.1]){ThruholeScrew(.4);}
 }	
-
-function ScrewVector() = [ExtruderX(.4)-HiLoScrewHeadDiameter(),-StandardExtruderSpacing()/2+ExtruderY(.4)/2+HiLoScrewHeadDiameter()/2,0];
-function WheelVector() = [ExtruderX(.4)-StandardServoNubHeight()*2-FilamentDiam()/2,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,ExtruderZ(.4)+FilamentDiam()];
 
 //channel for bearing:
 module BearingChannel(3dPrinterTolerance=.4)
@@ -43,13 +47,12 @@ module ExtruderBottom(3dPrinterTolerance=.4){
 	{
 		cube([ExtruderX(.4),ExtruderY(.4),ExtruderZ(.4)]);
 //Screw holes:
-		translate([ExtruderX(.4)-HiLoScrewHeadDiameter(),-StandardExtruderSpacing()/2+ExtruderY(.4)/2+HiLoScrewHeadDiameter()/3,-.1]){ThruholeScrew(.4);}
-		translate([ExtruderX(.4)-HiLoScrewHeadDiameter(),StandardExtruderSpacing()/2+ExtruderY(.4)/2-HiLoScrewHeadDiameter()/3,-.1]){ThruholeScrew(.4);}
+		ScrewPattern(.4);
 		translate([0,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,0]){
 //Servo:
 			#translate([StandardServoNubHeight()+StandardServoHeightAbvWings()+FilamentDiam()/2,0,StandardServoThickness()/2+FilamentDiam()+.2])rotate([0,90,0])StandardServoMotor(true,2,true,.4);
 //The opening for the top half/idler wheel to fit:
-			translate([StandardServoHeightAbvWings()/2+FilamentDiam(),0,608BallBearingDiam()-4])rotate([0,-90,180])BearingChannel();
+			translate([StandardServoHeightAbvWings()/2+FilamentDiam(),0,608BallBearingDiam()-2])rotate([0,-90,180])BearingChannel();
 //The Filament:
 			#translate([ExtruderX(.4)/2,FilamentHeight()/2,StandardServoThickness()/2+StandardServoNubDiam()+.5])rotate([90,0,0])Filament();
 		}
@@ -58,11 +61,16 @@ module ExtruderBottom(3dPrinterTolerance=.4){
 //The extruder top.  This is the mount for the Idler Wheel, bearing, and encoder:
 module ExtruderTop(3dPrinterTolerance=.4){
 difference(){
-	translate([ExtruderX(.4)/2+StandardServoNubHeight()/2+.25,0,ExtruderZ(.4)]){cube([ExtruderX(.4),ExtruderY(.4),EncoderHeight(.4)]);	}
+	translate([ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight(),0,ExtruderZ(.4)-608BallBearingDiam(.4)/2]){cube([ExtruderX(.4)/2-4+1,ExtruderY(.4),EncoderHeight(.4)+8]);	}
 		union(){
 			#translate(WheelVector()){rotate([180,90,0]){MKIIwheel(.4);}}
-			#translate([ExtruderX(.4)-StandardServoNubHeight()*2-FilamentDiam()/2+608BallBearingHeight(.4),StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,ExtruderZ(.4)+FilamentDiam()]){rotate([180,90,0]){608BallBearing(.4);}}
+			translate(WheelVector()){translate([offsetheight(),0,0]){rotate([180,90,0,]){608BearingKeepaway(.4);}}}
+			translate(WheelVector()){translate([MKIIwheelheight(),0,0]){rotate([180,90,0]){cylinder(h=MagnetLength(),r=608BallBearingInnerDiam(.4)/2);}}}
 		}
+	translate([0,-2,0]){cube([ExtruderX(.4),ExtruderY(.4)+4,ExtruderZ(.4)]);}
+
+	#translate(WheelVector()){translate([ExtruderX(.4)/2-2.3,0,0]){rotate([180,-90,0]){rotate(a=-90, v=[0,0,1]){Encoder(true);}}}}
+	//ExtruderBottom(.4);
 	}
 } 
 
