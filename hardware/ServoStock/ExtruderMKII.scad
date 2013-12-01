@@ -11,7 +11,8 @@ use <MKIIwheel.scad>;
 use <Extruder_Encoder_Keepaway.scad>;
 
 //****************TO DO***************
-//****CREATE PIVOT AND SECURING SCREW CONNECTION FOR TOP PLATE
+
+//****FILLET HINGE EDGE OF TOP PLATE
 //****BUILD MOUNTING BRACKETS FOR BOTTOM PLATE SCREWS 
 
 //core dimensions depend on the servo and filament.  
@@ -43,33 +44,48 @@ module ScrewPattern(3dPrinterTolerance=.4){
 //hinge module:
 module ExtruderHinge(){
 	difference(){
-		cylinder(h=ExtruderX(.4)/2,r=HiLoScrewDiameter(.4)/2+1);
+		union(){
+			cylinder(h=ExtruderX(.4)/2-.9,r=HiLoScrewDiameter(.4)/2+1);
+			translate([0,-HiLoScrewDiameter(.4)/2-1,0]){
+				cube([HiLoScrewDiameter(.4)/2+1,HiLoScrewDiameter(.4)+2,ExtruderX(.4)/2-.9]);
+			}
+		}
 		translate([0,0,HiLoScrewLength(.4)-1]){HiLoScrew(.4);}
 	}
 }
 
-//channel for bearing:
-module BearingChannel(3dPrinterTolerance=.4)
-union()
-{
-	translate([0,-608BallBearingDiam()/2-1,0])cube([608BallBearingDiam(.4),608BallBearingDiam(.4)+2,			StandardServoThickness()]);
-	cylinder(h=StandardServoThickness(), r=608BallBearingDiam(3dPrinterTolerance)/2+1);
+//fillet for top plate hinge corner:
+module TopFillet(){
+	
 }
-//cube to smooth off the corners 
+	
+//channel for bearing:
+module BearingChannel(3dPrinterTolerance=.4){
+	union(){
+		translate([0,-608BallBearingDiam()/2-1,0]){
+			cube([608BallBearingDiam(.4),608BallBearingDiam(.4)+2,StandardServoThickness()]);
+		}
+		cylinder(h=StandardServoThickness(), r=608BallBearingDiam(3dPrinterTolerance)/2+1);
+	}
+}
+
+
 
 //The extruder bottom.  This includes the servo,screws, and filament subtractions:
 module ExtruderBottom(3dPrinterTolerance=.4){
-	difference()
-	{
-		cube([ExtruderX(.4),ExtruderY(.4),ExtruderZ(.4)]);
+	difference(){
+			union(){
+				cube([ExtruderX(.4),ExtruderY(.4),ExtruderZ(.4)]);
+				translate(HingeTopVector()){translate([-ExtruderX(.4)/2+.9,0,0]){rotate([0,90,0]){ExtruderHinge(.4);}}}
+			}
 //Screw holes:
 		ScrewPattern(.4);
 //Servo:	
 		translate([0,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,0]){
-			#translate(StandardServoVector()){
+			translate(StandardServoVector()){
 			rotate([0,90,0]){StandardServoMotor(true,2,true,.4);}}
 //The opening for the top half/idler wheel to fit:
-			translate([StandardServoHeightAbvWings()/2+FilamentDiam(),0,608BallBearingDiam()-2]){						rotate([0,-90,180]){BearingChannel();}}
+			translate([StandardServoHeightAbvWings()/2+FilamentDiam()*2,0,608BallBearingDiam()-2]){						rotate([0,-90,180]){BearingChannel();}}
 //The Filament:
 			#translate([ExtruderX(.4)/2,FilamentHeight()/2,StandardServoThickness()/2+StandardServoNubDiam()+.4]){rotate([90,0,0]){Filament();}}
 		}
@@ -78,20 +94,25 @@ module ExtruderBottom(3dPrinterTolerance=.4){
 //The extruder top.  This is the mount for the Idler Wheel, bearing, and encoder:
 module ExtruderTop(3dPrinterTolerance=.4){
 difference(){
+
 	union(){
-	translate([ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight(),0,ExtruderZ(.4)]){						cube([ExtruderX(.4)/2-3,ExtruderY(.4),ExtruderZ(.4)]);}
+	translate([ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight(),0,ExtruderZ(.4)]){								cube([ExtruderX(.4)/2-3,ExtruderY(.4),ExtruderZ(.4)]);}
 	translate(HingeTopVector()){rotate([0,90,0]){ExtruderHinge();}}
 	}
+
 		union(){
 			#translate(WheelVector()){rotate([180,90,0]){MKIIwheel(.4);}}
 			translate(WheelVector()){translate([offsetheight(),0,0]){rotate([180,90,0,]){										608BearingKeepaway(.4);}}}
 			translate(WheelVector()){translate([MKIIwheelheight(),0,0]){rotate([180,90,0]){								cylinder(h=MagnetLength(),r=608BallBearingInnerDiam(.4)/2);}}}
 		}
-	#translate(HingeTopVector()){rotate([0,-90,0]){HiLoScrew(.4);}}
-	#translate(WheelVector()){translate([ExtruderX(.4)/2-2.3,0,0]){rotate([180,-90,0]){rotate(a=-90, 	v=[0,0,1]){Encoder(true);}}}}
-	//ExtruderBottom(.4);
+
+	translate(HingeTopVector()){translate([HiLoScrewLength(.4),0,0]){
+		rotate([0,-90,0]){
+			ThruholeScrew(.4);}}}
+	#translate(WheelVector()){translate([ExtruderX(.4)/2-2.3,0,0]){rotate([180,-90,0]){rotate(a=-90,v=[0,0,1]){Encoder(true);}}}}
+
 	}
 } 
 
 ExtruderTop(.4);
-ExtruderBottom(.4);
+//ExtruderBottom(.4);
