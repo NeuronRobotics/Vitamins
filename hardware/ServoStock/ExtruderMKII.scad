@@ -24,7 +24,7 @@ function ExtruderZ(3dPrinterTolerance=.4) = StandardServoThickness()+FilamentDia
 echo("ExtruderZ is",(ExtruderZ(.4)));
 
 //defining some standard vectors:
-function ScrewVector() = [ExtruderX(.4)-HiLoScrewHeadDiameter(),-StandardExtruderSpacing()/2+ExtruderY(.4)/2+HiLoScrewHeadDiameter()/2,0];
+function ScrewVector() = [ExtruderX(.4)-HiLoScrewHeadDiameter(),-StandardExtruderSpacing()/2+ExtruderY(.4)/2+HiLoScrewHeadDiameter()/2,-.1];
 function WheelVector() = [ExtruderX(.4)-StandardServoNubHeight()*2-FilamentDiam()/2,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,ExtruderZ(.4)+FilamentDiam()+.2];
 function HingeTopVector() = [ExtruderX(.4)/2,HiLoScrewDiameter(.4)/2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+1];
 function StandardServoVector() = [StandardServoNubHeight()+StandardServoHeightAbvWings()+FilamentDiam()/2,0,StandardServoThickness()/2+FilamentDiam()+.2];
@@ -37,7 +37,7 @@ module ThruholeScrew(3dPrinterTolerance=.4){
 }
 
 module ScrewPattern(3dPrinterTolerance=.4){
-		translate([ExtruderX(.4)-HiLoScrewHeadDiameter()+1,-StandardExtruderSpacing()/2+ExtruderY(.4)/2+HiLoScrewHeadDiameter()/3,-.1]){ThruholeScrew(.4);}
+		#translate(ScrewVector()){ThruholeScrew(.4);}
 		translate([ExtruderX(.4)-HiLoScrewHeadDiameter()+1,StandardExtruderSpacing()/2+ExtruderY(.4)/2-HiLoScrewHeadDiameter()/3,-.1]){ThruholeScrew(.4);}
 }	
 
@@ -54,10 +54,25 @@ module ExtruderHinge(){
 	}
 }
 
-//fillet for top plate hinge corner:
-module TopFillet(){
-	
+//Fillet dimensions:
+pad = 0.1;
+tHk = HiLoScrewDiameter(.4)+2;
+fPer = HiLoScrewDiameter(.4)/2;
+fRad = HiLoScrewDiameter(.4)*2;
+
+
+//Fillet:
+module HingeFillet(){
+	difference(){
+		translate([-pad,-pad,-pad]){
+			cube([fRad,fRad,ExtruderX(.4)/2+1]);
+		}
+		translate([fRad-.25,fRad-.25,-(pad*2)]){
+			cylinder(h=ExtruderX(.4)/2+2,r=HiLoScrewDiameter(.4)/1.5+pad);
+		}
+	}
 }
+//HingeFillet();
 	
 //channel for bearing:
 module BearingChannel(3dPrinterTolerance=.4){
@@ -97,22 +112,23 @@ difference(){
 
 	union(){
 	translate([ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight(),0,ExtruderZ(.4)]){								cube([ExtruderX(.4)/2-3,ExtruderY(.4),ExtruderZ(.4)]);}
-	translate(HingeTopVector()){rotate([0,90,0]){ExtruderHinge();}}
+	translate(HingeTopVector()){rotate([0,90,0]){
+		ExtruderHinge();}}
 	}
 
 		union(){
-			#translate(WheelVector()){rotate([180,90,0]){MKIIwheel(.4);}}
-			translate(WheelVector()){translate([offsetheight(),0,0]){rotate([180,90,0,]){										608BearingKeepaway(.4);}}}
-			translate(WheelVector()){translate([MKIIwheelheight(),0,0]){rotate([180,90,0]){								cylinder(h=MagnetLength(),r=608BallBearingInnerDiam(.4)/2);}}}
+			#translate(WheelVector()){rotate([180,90,0]){
+				MKIIwheel(.4);}}
+			translate(WheelVector()){translate([offsetheight(),0,0]){rotate([180,90,0,]){											608BearingKeepaway(.4);}}}
+			translate(WheelVector()){translate([MKIIwheelheight(),0,0]){rotate([180,90,0]){											cylinder(h=MagnetLength(),r=608BallBearingInnerDiam(.4)/2);}}}
 		}
 
-	translate(HingeTopVector()){translate([HiLoScrewLength(.4),0,0]){
-		rotate([0,-90,0]){
-			ThruholeScrew(.4);}}}
+	translate(HingeTopVector()){translate([HiLoScrewLength(.4),0,0]){rotate([0,-90,0]){
+		ThruholeScrew(.4);}}}
 	#translate(WheelVector()){translate([ExtruderX(.4)/2-2.3,0,0]){rotate([180,-90,0]){rotate(a=-90,v=[0,0,1]){Encoder(true);}}}}
-
+	translate(HingeTopVector()){translate([0,-fRad,-fRad]){rotate([90,0,90]){HingeFillet();}}}
 	}
 } 
 
-ExtruderTop(.4);
-//ExtruderBottom(.4);
+//ExtruderTop(.4);
+ExtruderBottom(.4);
