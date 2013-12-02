@@ -54,9 +54,10 @@ module ExtruderBlock(3dPrinterTolerance=.4)
 		translate([ExtruderIdlerWheelDiam()/2.5,-ExtruderIdlerWheelDiam()/2,ExtruderHeight()/2-ExtruderIdlerWheelThickness()*2.5]){608BallBearing();}
 		//translate([0,-ExtruderWidth()/2-608BallBearingDiam(3dPrinterTolerance)/5,-ExtruderHeight()]){cube([100,20,100]);}
 //the hot end and its securing screws:
-		translate([ExtruderWidth()/2,0,ExtruderHeight()]){HotEnd(true,.4);}
+		#translate([ExtruderWidth()/2,0,ExtruderHeight()]){HotEnd(true,.4);}
 		#translate(HEscrewvector(.4)){CounterboreScrew(.4);}
 		#mirror ([0,1,0]){translate(HEscrewvector()){CounterboreScrew(.4);}}
+ 
 
 //the filament channel:
 		rotate([0,90,0]){translate([-ExtruderHeight(),0,-ExtruderLength()/2-2]){Filament();}}
