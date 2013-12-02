@@ -11,8 +11,17 @@ use <../Vitamins/Electronics/Hot_Ends/PrintrBotJHeadHotEnd_Vitamin.scad>;
 use <MKIIwheel.scad>;
 use <Extruder_Encoder_Keepaway.scad>;
 
-//****************TO DO***************
-//****BUILD CONNECTOR FOR EXTRUDERTOP FEED SIDE TO CONNECT TO THE BOTTOM FEED SIDE
+//ALIGNMENT TESTING:
+//ExtruderTop(.4);
+//ExtruderBottom(.4);
+
+//PRINTING:
+translate([ExtruderX(.4)/2,0,ExtruderZ(.4)]){
+	rotate([0,90,0]){
+		ExtruderTop(.4);
+	}
+}
+ExtruderBottom(.4);
 
 //core dimensions depend on the servo and filament.  
 function ExtruderX(3dPrinterTolerance=.4) = StandardServoHeightAbvWings(.6)+FilamentDiam()+StandardServoNubHeight()+HiLoScrewDiameter(.4)*2+3dPrinterTolerance;
@@ -31,6 +40,12 @@ function SVFS() = [(ExtruderX(.4)-StandardExtruderSpacing())/2,ExFilZ(),-HiLoScr
 function WheelVector() = [ExtruderX(.4)-StandardServoNubHeight()*2-FilamentDiam()/2,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,ExtruderZ(.4)+FilamentDiam()+.2];
 
 function HingeTopVector() = [ExtruderX(.4)/2,HiLoScrewDiameter(.4)/2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+1];
+
+function HingeBottomVector() =[.9,HiLoScrewDiameter(.4)/2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+1];
+
+function PinTopVector() = [ExtruderX(.4)/2,ExtruderY(.4)-HiLoScrewHeadHeight(.4)*2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+1];
+
+function PinBottomVector() = [.9,ExtruderY(.4)-HiLoScrewHeadHeight(.4)*2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+1];
 
 function StandardServoVector() = [StandardServoNubHeight()+StandardServoHeightAbvWings()+FilamentDiam()/2,0,StandardServoThickness()/2+FilamentDiam()+.2];
 
@@ -80,16 +95,18 @@ module CarriageConnector(){
 	}
 }
 
-//hinge module:
+//hinge module. Also serves as a pin:
 module ExtruderHinge(){
 	difference(){
 		union(){
-			cylinder(h=ExtruderX(.4)/2-.9,r=HiLoScrewDiameter(.4)/2+1);
-			translate([0,-HiLoScrewDiameter(.4)/2-1,0]){
-				cube([HiLoScrewDiameter(.4)/2+1,HiLoScrewDiameter(.4)+2,ExtruderX(.4)/2-.9]);
+			translate([-HiLoScrewHeadDiameter(.4)/4+1,0,0]){
+				cylinder(h=ExtruderX(.4)/2-.9,r=HiLoScrewDiameter(.4)/2+1);
+			}
+			translate([-1,-HiLoScrewDiameter(.4)/2-1,0]){
+				cube([HiLoScrewDiameter(.4)/2+2,HiLoScrewDiameter(.4)+2,ExtruderX(.4)/2-.9]);
 			}
 		}
-		translate([0,0,HiLoScrewLength(.4)-1]){HiLoScrew(.4);}
+		translate([-1,0,HiLoScrewLength(.4)/2+1]){HiLoScrew(.4);}
 	}
 }
 
@@ -127,12 +144,15 @@ module ExtruderBottom(3dPrinterTolerance=.4){
 	difference(){
 			union(){
 				cube([ExtruderX(.4),ExtruderY(.4),ExtruderZ(.4)]);
-				translate(HingeTopVector()){
-					translate([-ExtruderX(.4)/2+.9,0,0]){
-						rotate([0,90,0]){
-							ExtruderHinge(.4);
-						}
+				translate(HingeBottomVector()){
+					rotate([0,90,0]){
+						ExtruderHinge(.4);
 					}	
+				}
+				translate(PinBottomVector()){
+					rotate([0,90,0]){
+						ExtruderHinge(.4);
+					}
 				}
 				CarriageConnector();
 			}
@@ -140,7 +160,7 @@ module ExtruderBottom(3dPrinterTolerance=.4){
 			translate(StandardServoVector()){
 				rotate([0,90,0]){StandardServoMotor(true,2,true,.4);}}	//Servo
 			translate([StandardServoHeightAbvWings()/2+FilamentDiam()*2,0,608BallBearingDiam()-2]){								rotate([0,-90,180]){BearingChannel();}}//The opening for the top half/idler wheel to fit
-			#translate(FilamentVector()){rotate([90,0,0]){Filament();}}//The Filament
+			translate(FilamentVector()){rotate([90,0,0]){Filament();}}//The Filament
 		}
 	}
 }
@@ -151,23 +171,31 @@ difference(){
 
 	union(){
 	translate([ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight(),0,ExtruderZ(.4)]){								cube([ExtruderX(.4)/2-3,ExtruderY(.4)-HiLoScrewHeadHeight(.4)/2,ExtruderZ(.4)]);}
-	translate(HingeTopVector()){rotate([0,90,0]){
-		ExtruderHinge();}}
+	translate(HingeTopVector()){
+		rotate([0,90,0]){
+			ExtruderHinge();
+		}
+	}
+	translate(PinTopVector()){
+		rotate([0,90,0]){
+			ExtruderHinge();
+		}
+	}
 	}
 
 		union(){
-			#translate(WheelVector()){rotate([180,90,0]){
+			translate(WheelVector()){rotate([180,90,0]){
 				MKIIwheel(.4);}}
 			translate(WheelVector()){translate([offsetheight(),0,0]){rotate([180,90,0,]){											608BearingKeepaway(.4);}}}
 			translate(WheelVector()){translate([MKIIwheelheight(),0,0]){rotate([180,90,0]){											cylinder(h=MagnetLength(),r=608BallBearingInnerDiam(.4)/2);}}}
 		}
 
-	translate(HingeTopVector()){translate([HiLoScrewLength(.4),0,0]){rotate([0,-90,0]){
+	translate(HingeTopVector()){translate([HiLoScrewLength(.4),0,1]){rotate([0,-90,0]){
 		ThruholeScrew(.4);}}}
-	#translate(WheelVector()){translate([ExtruderX(.4)/2-2.3,0,0]){rotate([180,-90,0]){rotate(a=-90,v=[0,0,1]){Encoder(true);}}}}
+	translate(PinTopVector()){translate([HiLoScrewLength(.4),0,1]){rotate([0,-90,0]){
+		ThruholeScrew(.4);}}}
+	translate(WheelVector()){translate([ExtruderX(.4)/2-2.3,0,0]){rotate([180,-90,0]){rotate(a=-90,v=[0,0,1]){Encoder(true);}}}}
 	translate(HingeTopVector()){translate([0,-fRad,-fRad]){rotate([90,0,90]){HingeFillet();}}}
 	}
 } 
 
-ExtruderTop(.4);
-ExtruderBottom(.4);
