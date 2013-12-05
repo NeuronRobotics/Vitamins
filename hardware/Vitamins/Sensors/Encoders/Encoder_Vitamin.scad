@@ -72,7 +72,7 @@ if(Bolts==true)
 }
 
 //This is the encoder, complete with its encoder bolts (though bolts can be removed by changing the boolean to "false". It is shown in red.
-translate([-50,0,0])
+translate([0,0,0])
 {
 	//color("Red")
 	Encoder(true);
@@ -113,8 +113,8 @@ translate([50,0,0])
 {
 	union()
 	{
-		Encoder(false);
-		%Encoder_Keepaway(true);
+		//Encoder(false);
+		//%Encoder_Keepaway(true);
 	}
 }
 
