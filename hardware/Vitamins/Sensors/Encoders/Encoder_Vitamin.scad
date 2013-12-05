@@ -6,7 +6,8 @@ function EncoderThickness(3dPrinterTolerance=.4)=3+ 3dPrinterTolerance;
 
 function EncoderBoltWidth(3dPrinterTolerance=.4)=3+ 3dPrinterTolerance;
 function EncoderBoltLength(3dPrinterTolerance=.4)=20+ 3dPrinterTolerance;
-function EncoderBoltInset(3dPrinterTolerance=.4)=2.2+ 3dPrinterTolerance/2;
+function EncoderBoltInsetY(3dPrinterTolerance=.4)=2.2+ 3dPrinterTolerance/2;
+function EncoderBoltInsetX(3dPrinterTolerance=.4)=4.5+ 3dPrinterTolerance/2;
 
 function EncoderLongBoxWidth(3dPrinterTolerance=.4)=9+ 3dPrinterTolerance;
 
@@ -22,7 +23,6 @@ function EncoderChipOffset(3dPrinterTolerance=.4)=4+ 3dPrinterTolerance/2;
 
 //this sort of forces the HiLo screw down so it is closer to the encoder and the encoder doesn't wiggle as much, feel free to change to 0 if you don't want it.
 function HiLoOffset()=1.5;
-
 
 module Encoder(Bolts=true, 3dPrinterTolerance=.4)
 {
@@ -50,19 +50,19 @@ module Encoder(Bolts=true, 3dPrinterTolerance=.4)
 if(Bolts==true)
 	{
 	//screws
-			translate([EncoderBoltInset(3dPrinterTolerance),EncoderBoltInset(3dPrinterTolerance),-EncoderBoltLength(3dPrinterTolerance)/2])
+			translate([EncoderBoltInsetX(3dPrinterTolerance),EncoderBoltInsetY(3dPrinterTolerance),-EncoderBoltLength(3dPrinterTolerance)/2])
 			{
 				cylinder(EncoderBoltLength(3dPrinterTolerance), EncoderBoltWidth(3dPrinterTolerance)/2, EncoderBoltWidth(3dPrinterTolerance)/2);
 			}
-			translate([EncoderWidth(3dPrinterTolerance)-EncoderBoltInset(3dPrinterTolerance),EncoderBoltInset(3dPrinterTolerance),-EncoderBoltLength(3dPrinterTolerance)/2])
+			translate([EncoderWidth(3dPrinterTolerance)-EncoderBoltInsetX(3dPrinterTolerance),EncoderBoltInsetY(3dPrinterTolerance),-EncoderBoltLength(3dPrinterTolerance)/2])
 			{
 				cylinder(EncoderBoltLength(3dPrinterTolerance), EncoderBoltWidth(3dPrinterTolerance)/2, EncoderBoltWidth(3dPrinterTolerance)/2);
 			}
-			translate([EncoderBoltInset(3dPrinterTolerance),EncoderHeight(3dPrinterTolerance)-EncoderBoltInset(3dPrinterTolerance),-EncoderBoltLength(3dPrinterTolerance)/2])
+			translate([EncoderBoltInsetX(3dPrinterTolerance),EncoderHeight(3dPrinterTolerance)-EncoderBoltInsetY(3dPrinterTolerance),-EncoderBoltLength(3dPrinterTolerance)/2])
 			{
 				cylinder(EncoderBoltLength(3dPrinterTolerance), EncoderBoltWidth(3dPrinterTolerance)/2, EncoderBoltWidth(3dPrinterTolerance)/2);
 			}
-			translate([EncoderWidth(3dPrinterTolerance)-EncoderBoltInset(3dPrinterTolerance),EncoderHeight(3dPrinterTolerance)-EncoderBoltInset(3dPrinterTolerance),-EncoderBoltLength(3dPrinterTolerance)/2])
+			translate([EncoderWidth(3dPrinterTolerance)-EncoderBoltInsetX(3dPrinterTolerance),EncoderHeight(3dPrinterTolerance)-EncoderBoltInsetY(3dPrinterTolerance),-EncoderBoltLength(3dPrinterTolerance)/2])
 			{
 				cylinder(EncoderBoltLength(3dPrinterTolerance), EncoderBoltWidth(3dPrinterTolerance)/2, EncoderBoltWidth(3dPrinterTolerance)/2);
 			}
