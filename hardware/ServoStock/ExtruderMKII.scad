@@ -13,13 +13,13 @@ use <Extruder_Encoder_Keepaway.scad>;
 
 //ALIGNMENT TESTING:
 //ExtruderTop(.4);
-ExtruderBottom(.4);
+//ExtruderBottom(.4);
 
 //PRINTING:
-//ExtruderBottom(.4);
+ExtruderBottom(.4);
 translate([ExtruderX(.4)/2,0,ExtruderZ(.4)]){
 	rotate([0,90,0]){
-		//ExtruderTop(.4);
+		ExtruderTop(.4);
 	}
 }
 
@@ -40,13 +40,13 @@ function SVFS() = [(ExtruderX(.4)-StandardExtruderSpacing())/2,ExFilZ(),-HiLoScr
 
 function WheelVector() = [ExtruderX(.4)-StandardServoNubHeight()*2-FilamentDiam()/2,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,ExtruderZ(.4)+FilamentDiam()+.2];
 
-function HingeTopVector() = [ExtruderX(.4)/2,HiLoScrewDiameter(.4)/2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+1];
+function HingeTopVector() = [ExtruderX(.4)/2,HiLoScrewDiameter(.4)/2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+.9];
 
-function HingeBottomVector() =[.9,HiLoScrewDiameter(.4)/2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+1];
+function HingeBottomVector() =[.9,HiLoScrewDiameter(.4)/2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+.9];
 
-function PinTopVector() = [ExtruderX(.4)/2,ExtruderY(.4)-HiLoScrewHeadHeight(.4)*2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+1];
+function PinTopVector() = [ExtruderX(.4)/2,ExtruderY(.4)-HiLoScrewHeadHeight(.4)*2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+.9];
 
-function PinBottomVector() = [.9,ExtruderY(.4)-HiLoScrewHeadHeight(.4)*2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+1];
+function PinBottomVector() = [.9,ExtruderY(.4)-HiLoScrewHeadHeight(.4)*2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+.9];
 
 function StandardServoVector() = [StandardServoNubHeight()+StandardServoHeightAbvWings()+FilamentDiam()/2,0,StandardServoThickness()/2+FilamentDiam()+1];
 
@@ -119,6 +119,8 @@ module ExtruderHinge(){
 	}
 }
 
+//ExtruderHinge();
+
 //###########################################################
 //Fillet dimensions:
 pad = 0.1;
@@ -126,7 +128,6 @@ tHk = HiLoScrewDiameter(.4)+2;
 fPer = HiLoScrewDiameter(.4)/2;
 fRad = HiLoScrewDiameter(.4)*2;
 
-//###########################################################
 //Fillet:
 module HingeFillet(){
 	difference(){
@@ -143,10 +144,10 @@ module HingeFillet(){
 //channel for bearing:
 module BearingChannel(3dPrinterTolerance=.4){
 	union(){
-		translate([0,-608BallBearingDiam()/2-1,0]){
-			cube([608BallBearingDiam(.4),608BallBearingDiam(.4)+2,StandardServoThickness()]);
+		translate([-608BallBearingDiam()/2,-608BallBearingDiam()/2-1,-ExtruderX(.4)/2]){
+			cube([608BallBearingDiam(.4),608BallBearingDiam(.4)+2,ExtruderX(.4)*2]);
 		}
-		cylinder(h=StandardServoThickness(), r=608BallBearingDiam(3dPrinterTolerance)/2+1);
+		//cylinder(h=StandardServoThickness(), r=608BallBearingDiam(3dPrinterTolerance)/2+1);
 	}
 }
 
@@ -223,7 +224,7 @@ difference(){
 	union(){
 		translate(WheelVector()){
 			rotate([180,90,0]){
-				#MKIIwheel(.4);
+				MKIIwheel(.4);
 			}
 		}
 		translate(WheelVector()){
@@ -267,7 +268,7 @@ difference(){
 	translate(HingeTopVector()){
 		translate([0,-fRad,-fRad]){
 			rotate([90,0,90]){
-				#HingeFillet();
+				HingeFillet();
 			}
 		}
 	}
