@@ -2,4 +2,4 @@
 
 
 
-function StandardExtruderSpacing()=54;
+function StandardExtruderSpacing()=50;
