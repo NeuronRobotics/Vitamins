@@ -105,7 +105,7 @@ module bodyBolts(boltPlacementZ,ServoTolerance=StandardServoTolerance())
 		translate([	(StandardServoThickness()/2)-1,
 					((-1+i)*6)+(StandardServoBaseLength()*i),
 					boltPlacementZ]){
-			cube([2,6,5]);
+			//cube([2,6,5]);
 		}
 	}
 	

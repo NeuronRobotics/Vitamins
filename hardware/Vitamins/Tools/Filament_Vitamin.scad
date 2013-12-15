@@ -21,12 +21,13 @@ module teardrop(radius, length, angle) {
                         projection(cut = false) rotate([0, -angle, 0]) translate([0, 0, radius * sin(45) * 1.5]) cylinder(h = radius * sin(45), r1 = radius * sin(45), r2 = 0, center = true, $fn = 30);
         }
 }
-module FilamentTear(){
+
+module FilamentTeardrop(){
 	translate([0,0,FilamentHeight()/2]){
 		rotate([0,90,90]){
-			teardrop(FilamentDiam(.5)/2,FilamentHeight(),90);
+			teardrop(FilamentDiam(.7)/2,FilamentHeight(),90);
 		}
 	}
 }
 
-FilamentTear();
+FilamentTeardrop();

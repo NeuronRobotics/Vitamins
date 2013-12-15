@@ -1,4 +1,5 @@
-$fn=50;
+$fn=100;
+
 use <../Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>;
 use <../Vitamins/Actuators/StandardServo/Servo_Connector_Vitamin.scad>;
 use<../Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>;
@@ -12,15 +13,15 @@ use <MKIIwheel.scad>;
 use <Extruder_Encoder_Keepaway.scad>;
 
 //ALIGNMENT TESTING:
-//ExtruderTop(.4);
-//ExtruderBottom(.4);
+ExtruderTop(.4);
+ExtruderBottom(.4);
 
 //PRINTING:
-ExtruderBottom(.4);
-MKIIwheelprint();
+//ExtruderBottom(.4);
+//MKIIwheelprint();
 translate([ExtruderX(.4)/2,0,ExtruderZ(.4)]){
 	rotate([0,90,0]){
-		ExtruderTop(.4);
+		//ExtruderTop(.4);
 	}
 }
 
@@ -34,10 +35,6 @@ function ExtruderZ(3dPrinterTolerance=.4) = StandardServoThickness()+FilamentDia
 echo("ExtruderZ is",(ExtruderZ(.4)));
 //###########################################################
 //defining some standard vectors:
-
-function SVHS() = [(ExtruderX(.4)+StandardExtruderSpacing())/2,ExFilZ(),-HiLoScrewLength()*4]; //Screw Vector Hinge Side
-
-function SVFS() = [(ExtruderX(.4)-StandardExtruderSpacing())/2,ExFilZ(),-HiLoScrewLength()*4]; //Screw Vector Feed Side
 
 function WheelVector() = [ExtruderX(.4)-StandardServoNubHeight()*2-FilamentDiam()/2,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,ExtruderZ(.4)+FilamentDiam()+.2];
 
@@ -63,7 +60,10 @@ module ThruholeScrew(3dPrinterTolerance=.4){
 }
 
 //###########################################################
-//alignment of the screws:
+//alignment of the Carriage mounting screws:
+function SVHS() = [(ExtruderX(.4)+StandardExtruderSpacing())/2,ExFilZ(),-HiLoScrewLength()*4]; //Screw Vector Hinge Side
+function SVFS() = [(ExtruderX(.4)-StandardExtruderSpacing())/2,ExFilZ(),-HiLoScrewLength()*4]; //Screw Vector Feed Side
+
 module ScrewPattern(3dPrinterTolerance=.4){
 		translate(SVHS()){ThruholeScrew(.4);}
 		translate(SVFS()){ThruholeScrew(.4);}
@@ -71,15 +71,17 @@ module ScrewPattern(3dPrinterTolerance=.4){
 	
 //###########################################################
 //Hot End and its connecting screws:
+function HEScrewVector()=[HotEndLength()-HotEndRecessOffset()+HiLoScrewDiameter(.4)/2,HotEndRecessDiam()+HiLoScrewDiameter(.4)/2-.25,HiLoScrewLength()/2-.5];
 module HEscrews(){
 	union(){
 		HotEnd(false,.4);
-		translate([HotEndLength()-HotEndRecessOffset()+HiLoScrewDiameter(.4)/2,HotEndRecessDiam()+HiLoScrewDiameter(.4)/2-.25,HiLoScrewLength()/2-.5]){
+		translate(HEScrewVector()){
 			HiLoScrew(.4);
 		}
-		mirror([0,1,0]){translate([HotEndLength()-HotEndRecessOffset()+HiLoScrewDiameter(.4)/2,HotEndRecessDiam()+HiLoScrewDiameter(.4)/2-.25,HiLoScrewLength()/2-.5]){
-			HiLoScrew(.4);
-		}
+		mirror([0,1,0]){
+			translate(HEScrewVector()){
+				HiLoScrew(.4);
+			}
 		}
 	}
 }
@@ -186,7 +188,7 @@ module ExtruderBottom(3dPrinterTolerance=.4){
 					
 			translate(FilamentVector()){
 				rotate([90,0,0]){
-					FilamentTear();
+					FilamentTeardrop();
 				}
 			}//The Filament
 			//translate(FilamentVector()){
