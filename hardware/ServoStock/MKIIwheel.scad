@@ -6,10 +6,10 @@ use <../Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>;
 
 $fn=50;
 
-function wheelheight()= FilamentDiam()*2;
+function wheelheight()= FilamentDiam()*2+.1;
 function offsetheight()= .75;
 function offsetdiam() = 9;
-function MKIIwheelheight() = wheelheight()+offsetheight()+MagnetLength(.4);
+function MKIIwheelheight() = wheelheight()+offsetheight()+MagnetLength(.4)-.1;
 
 module MKIIwheel(){
 	union()
@@ -20,7 +20,7 @@ module MKIIwheel(){
 		translate([0,0,-offsetheight()]){
 			cylinder(h=offsetheight(),r=offsetdiam()/2);
 		}
-		cylinder(h=wheelheight(),r=(608BallBearingDiam(.4)/2+608BallBearingInnerDiam(.4)/2)/2);
+		cylinder(h=wheelheight(),r=(608BallBearingDiam(.4)/2+608BallBearingInnerDiam(.4))/2);
 
 	//the 608 bearing
 		translate([0,0,-MKIIwheelheight()+608BallBearingHeight(.4)/2]){
@@ -34,7 +34,7 @@ translate([0,0,wheelheight()])
 {
 	rotate([0,180,0])
 	{
-		//MKIIwheel(.4);
+		MKIIwheel(.4);
 	}
 }
 
@@ -48,9 +48,9 @@ module MKIIwheelprint(){
 				translate([0,0,-offsetheight()]){
 					cylinder(h=offsetheight(),r=offsetdiam()/2);
 				}
-				cylinder(h=wheelheight(),r=(608BallBearingDiam()/2+608BallBearingInnerDiam()/2)/2);
+				cylinder(h=wheelheight(),r=((608BallBearingDiam(.4)/2+608BallBearingInnerDiam(.4)))/2);
 			}
 		}
 	}
 }
-MKIIwheelprint();
+//MKIIwheelprint();

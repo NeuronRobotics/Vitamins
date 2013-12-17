@@ -176,7 +176,7 @@ module ExtruderBottom(3dPrinterTolerance=.4){
 			//Servo:
 			translate(StandardServoVector()){
 				rotate([0,90,0]){
-					StandardServoMotor(true,2,true,.4);
+					%StandardServoMotor(true,2,true,.4);
 				}
 			}	
 			//The opening for the idler wheel bearing to fit in:
@@ -227,7 +227,7 @@ difference(){
 	union(){
 		translate(WheelVector()){
 			rotate([180,90,0]){
-				MKIIwheel(.4);
+				#MKIIwheel(.4);
 			}
 		}
 		translate(WheelVector()){
