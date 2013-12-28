@@ -16,9 +16,9 @@ Filament();
 module teardrop(radius, length, angle) {
         rotate([0, angle, 0]) union() {
                 linear_extrude(height = length, center = true, convexity = radius, twist = 0)
-                        circle(r = radius, center = true, $fn = 30);
+                	circle(r = radius, center = true, $fn = 30);
                 linear_extrude(height = length, center = true, convexity = radius, twist = 0)
-                        projection(cut = false) rotate([0, -angle, 0]) translate([0, 0, radius * sin(45) * 1.5]) cylinder(h = radius * sin(45), r1 = radius * sin(45), r2 = 0, center = true, $fn = 30);
+                	projection(cut = false) rotate([0, -angle, 0]) translate([0, 0, radius * sin(45) * 1.5]) cylinder(h = radius * sin(45), r1 = radius * sin(45), r2 = 0, center = true, $fn = 30);
         }
 }
 

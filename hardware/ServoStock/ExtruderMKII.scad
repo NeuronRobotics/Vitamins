@@ -54,8 +54,16 @@ function FilamentVector() = [ExtruderX(.4)/2,FilamentHeight()/2,ExFilZ()];
 //###########################################################
 //Thru-hole screw module:
 module ThruholeScrew(3dPrinterTolerance=.4){
-	rotate([0,0,0]){
-		cylinder(h=HiLoScrewLength()*4,r=HiLoScrewDiameter(.4)/2);	
+	module teardrop(radius, length, angle) {
+   	rotate([0, angle, 0]) union() {
+   		linear_extrude(height = length, center = true, convexity = radius, twist = 0)
+   		circle(r = radius, center = true, $fn = 30);
+   		linear_extrude(height = length, center = true, convexity = radius, twist = 0)
+   		projection(cut = false) rotate([0, -angle, 0]) translate([0, 0, radius * sin(45) * 1.5]) cylinder(h = radius * sin(45), r1 = radius * sin(45), r2 = 0, center = true, $fn = 30);
+		}
+	}
+	rotate([0,90,90]){
+		teardrop(HiLoScrewDiameter(.4)/2,HiLoScrewLength()*4,90);	
 	}
 }
 
@@ -176,7 +184,7 @@ module ExtruderBottom(3dPrinterTolerance=.4){
 			//Servo:
 			translate(StandardServoVector()){
 				rotate([0,90,0]){
-					%StandardServoMotor(true,2,true,.4);
+					StandardServoMotor(true,2,true,.4);
 				}
 			}	
 			//The opening for the idler wheel bearing to fit in:
