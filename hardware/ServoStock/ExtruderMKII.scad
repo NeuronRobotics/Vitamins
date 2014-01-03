@@ -53,7 +53,7 @@ function FilamentVector() = [ExtruderX(.4)/2,FilamentHeight()/2,ExFilZ()];
 
 //###########################################################
 //Thru-hole screw module:
-module ThruholeScrew(3dPrinterTolerance=.4){
+module ThruholeScrew(teardrop=true, 3dPrinterTolerance=.4){
 	module teardrop(radius, length, angle) {
    	rotate([0, angle, 0]) union() {
    		linear_extrude(height = length, center = true, convexity = radius, twist = 0)
@@ -62,9 +62,15 @@ module ThruholeScrew(3dPrinterTolerance=.4){
    		projection(cut = false) rotate([0, -angle, 0]) translate([0, 0, radius * sin(45) * 1.5]) cylinder(h = radius * sin(45), r1 = radius * sin(45), r2 = 0, center = true, $fn = 30);
 		}
 	}
+if (teardrop==true){
 	rotate([0,90,90]){
 		teardrop(HiLoScrewDiameter(.4)/2,HiLoScrewLength()*4,90);	
 	}
+}else{
+	rotate([0,90,90]){
+		cylinder([h=HiLoScrewLength()*4,r=HiLoScrewDiameter(.4)/2)]);
+	}
+}
 }
 
 //###########################################################
