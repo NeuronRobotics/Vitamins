@@ -108,13 +108,13 @@ module CarriageConnector(){
 	difference(){
 		translate([StandardExtruderSpacing()/2+ExtruderX(.4)-5,ExtruderY(.4),0]){
 			rotate([0,0,90]){
-				cube([HiLoScrewLength(.4)/2,StandardExtruderSpacing()+ExtruderX(.4)-10,ExtruderZ(.4)+4]);
+				cube([HiLoScrewLength(.4)/1.5,StandardExtruderSpacing()+ExtruderX(.4)-10,ExtruderZ(.4)+4]);
 			}
 		}
 		rotate([90,0,0]){
 			ScrewPattern(.4);
 		}
-		translate([ExtruderX(.4)/2,HotEndLength()*2+HiLoScrewHeadHeight(.4)/2,ExFilZ()]){
+		translate([ExtruderX(.4)/2,HotEndLength()*2+HiLoScrewHeadHeight(.4)*2,ExFilZ()]){
 			rotate([0,0,-90]){
 				HEscrews();
 			}
@@ -229,7 +229,7 @@ difference(){
 		}
 		translate(PinTopVector()){
 			rotate([0,90,0]){
-				ExtruderHinge();
+				//ExtruderHinge();
 			}
 		}
 		translate(WheelVector()){
@@ -271,7 +271,7 @@ difference(){
 	translate(PinTopVector()){
 		translate([HiLoScrewLength(.4),0,1]){
 			rotate([0,-90,0]){
-				ThruholeScrew(false,.4);
+				//ThruholeScrew(false,.4);
 			}
 		}
 	}
