@@ -54,12 +54,14 @@ function FilamentVector() = [ExtruderX(.4)/2,FilamentHeight()/2,ExFilZ()];
 //###########################################################
 //Thru-hole screw module:
 module ThruholeScrew(teardrop=true, 3dPrinterTolerance=.4){
-	module teardrop(radius, length, angle) {
-   	rotate([0, angle, 0]) union() {
-   		linear_extrude(height = length, center = true, convexity = radius, twist = 0)
-   		circle(r = radius, center = true, $fn = 30);
-   		linear_extrude(height = length, center = true, convexity = radius, twist = 0)
-   		projection(cut = false) rotate([0, -angle, 0]) translate([0, 0, radius * sin(45) * 1.5]) cylinder(h = radius * sin(45), r1 = radius * sin(45), r2 = 0, center = true, $fn = 30);
+	module teardrop(radius, length, angle){
+   	rotate([0, angle, 0]){ 
+			union(){
+   			linear_extrude(height = length, center = true, convexity = radius, twist = 0)
+   			circle(r = radius, center = true, $fn = 30);
+   			linear_extrude(height = length, center = true, convexity = radius, twist = 0)
+   			projection(cut = false) rotate([0, -angle, 0]) translate([0, 0, radius * sin(45) * 1.5]) cylinder(h = radius * sin(45), r1 = radius * sin(45), r2 = 0, center = true, $fn = 30);
+			}
 		}
 	}
 if (teardrop==true){
@@ -67,8 +69,8 @@ if (teardrop==true){
 		teardrop(HiLoScrewDiameter(.4)/2,HiLoScrewLength()*4,90);	
 	}
 }else{
-	rotate([0,90,90]){
-		cylinder([h=HiLoScrewLength()*4,r=HiLoScrewDiameter(.4)/2)]);
+	rotate([0,0,90]){
+		cylinder(h = HiLoScrewLength()*4,r = HiLoScrewDiameter(.4)/2);
 	}
 }
 }
@@ -79,8 +81,8 @@ function SVHS() = [(ExtruderX(.4)+StandardExtruderSpacing())/2,ExFilZ(),-HiLoScr
 function SVFS() = [(ExtruderX(.4)-StandardExtruderSpacing())/2,ExFilZ(),-HiLoScrewLength()*4]; //Screw Vector Feed Side
 
 module ScrewPattern(3dPrinterTolerance=.4){
-		translate(SVHS()){ThruholeScrew(.4);}
-		translate(SVFS()){ThruholeScrew(.4);}
+		translate(SVHS()){ThruholeScrew(true,.4);}
+		translate(SVFS()){ThruholeScrew(true,.4);}
 }
 	
 //###########################################################
@@ -125,14 +127,14 @@ module CarriageConnector(){
 module ExtruderHinge(){
 	difference(){
 		union(){
-			translate([-HiLoScrewHeadDiameter(.4)/4+1,0,0]){
+			translate([-HiLoScrewHeadDiameter(.4)/4+.5,0,0]){
 				cylinder(h=ExtruderX(.4)/2-.9,r=HiLoScrewDiameter(.4)/2+1);
 			}
 			translate([-1,-HiLoScrewDiameter(.4)/2-1,0]){
 				cube([HiLoScrewDiameter(.4)/2+2,HiLoScrewDiameter(.4)+2,ExtruderX(.4)/2-.9]);
 			}
 		}
-		translate([-1,0,HiLoScrewLength(.4)/2+1]){HiLoScrew(.4);}
+		translate([-1,0,0]){rotate([0,0,90]){ThruholeScrew(true,.4);}}
 	}
 }
 
@@ -181,7 +183,7 @@ module ExtruderBottom(3dPrinterTolerance=.4){
 				}
 				translate(PinBottomVector()){
 					rotate([0,90,0]){
-						ExtruderHinge(.4);
+						//ExtruderHinge(.4);
 					}
 				}
 				CarriageConnector();
@@ -262,14 +264,14 @@ difference(){
 	translate(HingeTopVector()){
 		translate([HiLoScrewLength(.4),0,1]){
 			rotate([0,-90,0]){
-				ThruholeScrew(.4);
+				ThruholeScrew(false,.4);
 			}
 		}
 	}
 	translate(PinTopVector()){
 		translate([HiLoScrewLength(.4),0,1]){
 			rotate([0,-90,0]){
-				ThruholeScrew(.4);
+				ThruholeScrew(false,.4);
 			}
 		}
 	}
