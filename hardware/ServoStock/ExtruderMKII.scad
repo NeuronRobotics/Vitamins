@@ -13,15 +13,15 @@ use <MKIIwheel.scad>;
 use <Extruder_Encoder_Keepaway.scad>;
 
 //ALIGNMENT TESTING:
-ExtruderTop(.4);
+//ExtruderTop(.4);
 ExtruderBottom(.4);
 
 //PRINTING:
 //ExtruderBottom(.4);
-//MKIIwheelprint();
-translate([ExtruderX(.4)/2,0,ExtruderZ(.4)]){
+MKIIwheelprint();
+translate([ExtruderX(.4),0,ExtruderZ(.4)]){
 	rotate([0,90,0]){
-		//ExtruderTop(.4);
+		ExtruderTop(.4);
 	}
 }
 
@@ -114,10 +114,13 @@ module CarriageConnector(){
 		rotate([90,0,0]){
 			ScrewPattern(.4);
 		}
-		translate([ExtruderX(.4)/2,HotEndLength()*2+HiLoScrewHeadHeight(.4)*2,ExFilZ()]){
+		translate([ExtruderX(.4)/2,HotEndLength()*2+HiLoScrewHeadHeight(.4)*2+1,ExFilZ()]){
 			rotate([0,0,-90]){
 				HEscrews();
 			}
+		}
+		translate([ExtruderX(.4)/2+HiLoScrewHeadDiameter(.4),ExtruderY(.4)+HiLoScrewHeadDiameter(.4)/2-.5,ExFilZ()/2]){
+			ThruholeScrew(false,.4);
 		}
 	}
 }
@@ -170,49 +173,6 @@ module BearingChannel(3dPrinterTolerance=.4){
 	}
 }
 
-//###########################################################
-//The extruder bottom.  This includes the servo,screws, hot end, and filament subtractions:
-module ExtruderBottom(3dPrinterTolerance=.4){
-	difference(){
-			union(){
-				cube([ExtruderX(.4),ExtruderY(.4),ExtruderZ(.4)]);
-				translate(HingeBottomVector()){
-					rotate([0,90,0]){
-						ExtruderHinge(.4);
-					}	
-				}
-				translate(PinBottomVector()){
-					rotate([0,90,0]){
-						//ExtruderHinge(.4);
-					}
-				}
-				CarriageConnector();
-			}
-		translate([0,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,0]){
-			//Servo:
-			translate(StandardServoVector()){
-				rotate([0,90,0]){
-					StandardServoMotor(true,2,true,.4);
-				}
-			}	
-			//The opening for the idler wheel bearing to fit in:
-			translate([StandardServoHeightAbvWings()/2+FilamentDiam()*2,0,608BallBearingDiam()-2]){
-				rotate([0,-90,180]){
-					BearingChannel();
-				}
-			}
-					
-			translate(FilamentVector()){
-				rotate([90,0,0]){
-					FilamentTeardrop();
-				}
-			}//The Filament
-			//translate(FilamentVector()){
-				//rotate([90,0,0]){
-					//Filament(.4);}}
-		}
-	}
-}
 
 //###########################################################
 //The extruder top.  This is the mount for the Idler Wheel, bearing, and encoder:
@@ -220,16 +180,11 @@ module ExtruderTop(3dPrinterTolerance=.4){
 difference(){
 	union(){
 		translate([ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight(),0,ExtruderZ(.4)]){
-			cube([ExtruderX(.4)/2-3,ExtruderY(.4)-HiLoScrewHeadHeight(.4)/2,ExtruderZ(.4)]);
+			cube([ExtruderX(.4)/2-3,ExtruderY(.4),ExtruderZ(.4)]);
 		}
 		translate(HingeTopVector()){
 			rotate([0,90,0]){
-				ExtruderHinge();
-			}
-		}
-		translate(PinTopVector()){
-			rotate([0,90,0]){
-				//ExtruderHinge();
+				ExtruderHinge(.4);
 			}
 		}
 		translate(WheelVector()){
@@ -239,11 +194,14 @@ difference(){
 				}
 			}
 		}
+		translate([ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight(),ExtruderY(.4),ExtruderZ(.4)+5]){
+			cube([ExtruderX(.4)/2-608BallBearingHeight(.4)/2+offsetheight(),HiLoScrewDiameter(.4)+2,HiLoScrewLength(.4)/2]);
+		}
 	}
 	union(){
 		translate(WheelVector()){
 			rotate([180,90,0]){
-				#MKIIwheel(.4);
+				MKIIwheel(.4);
 			}
 		}
 		translate(WheelVector()){
@@ -269,10 +227,13 @@ difference(){
 		}
 	}
 	translate(PinTopVector()){
-		translate([HiLoScrewLength(.4),0,1]){
-			rotate([0,-90,0]){
-				//ThruholeScrew(false,.4);
-			}
+		translate([HiLoScrewHeadDiameter(.4)/2-2,HiLoScrewHeadDiameter(.4)/3,HiLoScrewLength(.4)/2+.15]){
+			cube([ExtruderX(.4)/2,HiLoScrewHeadDiameter(.4)*2,HiLoScrewHeadDiameter(.4)*2]);
+		}
+	}
+	translate(PinTopVector()){
+		translate([HiLoScrewHeadDiameter(.4),HiLoScrewHeadDiameter(.4)+.5,HiLoScrewLength(.4)/2+.2]){
+			HiLoScrew(.4);
 		}
 	}
 	translate(WheelVector()){
@@ -290,7 +251,55 @@ difference(){
 				HingeFillet();
 			}
 		}
+		translate([2.85,fRad,-fRad]){
+			rotate([90,0,-90]){
+				HingeFillet();
+			}
+		}
 	}
 }
 } 
 
+//###########################################################
+//The extruder bottom.  This includes the servo,screws, hot end, and filament subtractions:
+module ExtruderBottom(3dPrinterTolerance=.4){
+	difference(){
+			union(){
+				cube([ExtruderX(.4),ExtruderY(.4),ExtruderZ(.4)]);
+				translate(HingeBottomVector()){
+					rotate([0,90,0]){
+						ExtruderHinge(.4);
+					}	
+				}
+				
+				CarriageConnector();
+			}
+		//cutout for top to adjust:
+		translate([ExtruderX(.4)/2+3,-1,ExtruderZ(.4)/2]){
+			cube([ExtruderX(.4)/2-2,ExtruderY(.4)+1,ExtruderZ(.4)]);
+		}
+		translate([0,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,0]){
+			//Servo:
+			translate(StandardServoVector()){
+				rotate([0,90,0]){
+					StandardServoMotor(true,2,true,.4);
+				}
+			}	
+			//The opening for the idler wheel bearing to fit in:
+			translate([StandardServoHeightAbvWings()/2+FilamentDiam()*2,0,608BallBearingDiam()-2]){
+				rotate([0,-90,180]){
+					BearingChannel();
+				}
+			}
+					
+			translate(FilamentVector()){
+				rotate([90,0,0]){
+					FilamentTeardrop();
+				}
+			}//The Filament
+			//translate(FilamentVector()){
+				//rotate([90,0,0]){
+					//Filament(.4);}}
+		}
+	}
+}
