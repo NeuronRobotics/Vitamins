@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>icons/actions/NR.svg</file>
-        <file>icons/actions/upload.svg</file>
-    </qresource>
-</RCC>
