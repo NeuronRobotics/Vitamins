@@ -14,15 +14,17 @@ module HiLoBolt(3dPrinterTolerance=.4, PlasticWidth=4.2)
 	{
 		translate([0,0,-HiLoBoltLength(3dPrinterTolerance)])
 		{
-			union()
-			{
-				cylinder(h=HiLoBoltLength(3dPrinterTolerance), r=HiLoBoltDiameter(3dPrinterTolerance)/2, $fn=30);
-				translate([0,0,HiLoBoltLength(3dPrinterTolerance)-(PlasticWidth+2)])
+			translate([0,0,.1])
+				union()
 				{
-					cylinder(h=PlasticWidth+2, r=HiLoBoltOuterDiameter(3dPrinterTolerance)/2, $fn=30);
+					cylinder(h=HiLoBoltLength(3dPrinterTolerance), r=HiLoBoltDiameter(3dPrinterTolerance)/2, $fn=30);
+					translate([0,0,HiLoBoltLength(3dPrinterTolerance)-(PlasticWidth+2)])
+					{
+						cylinder(h=PlasticWidth+2, r=HiLoBoltOuterDiameter(3dPrinterTolerance)/2, $fn=30);
+					}
 				}
-			}
 		}
+		
 		cylinder(h=HiLoBoltHeadHeight(3dPrinterTolerance), r=HiLoBoltHeadDiameter(3dPrinterTolerance)/2,$fn=30);
 	}
 }
