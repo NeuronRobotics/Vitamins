@@ -2,10 +2,10 @@ $fn=50;
 
 function HotEndDiam() = 16;
 function HotEndRecessDiam() = 7;
-function HotEndRecessHeight() = 4;
+function HotEndRecessLength() = 4.55;
 function HotEndRecessDepth() = 2;
-function HotEndRecessOffset() = 7;
-function HotEndLength() = 58;
+function HotEndRecessOffset() = 10;
+function HotEndLength() = 50;
 
 module HotEnd(ScrewChannel=false,3dPrinterTolerance=.4){
 rotate([0,90,0]){
@@ -16,8 +16,8 @@ rotate([0,90,0]){
 			cylinder(h=HotEndLength(),r=HotEndDiam()/2+3dPrinterTolerance);
 			translate([0,0,HotEndLength()-HotEndRecessOffset()]){
 				difference(){
-					cylinder(h=HotEndRecessHeight(),r=HotEndDiam()/2+1+3dPrinterTolerance);
-					cylinder(h=HotEndRecessHeight(),r=(HotEndDiam()-HotEndRecessDepth()*2)/2+.4+3dPrinterTolerance);
+					cylinder(h=HotEndRecessLength(),r=HotEndDiam()/2+1+3dPrinterTolerance);
+					cylinder(h=HotEndRecessLength(),r=(HotEndDiam()-HotEndRecessDepth()*2)/2+.4+3dPrinterTolerance);
 				}
 			}
 		}
