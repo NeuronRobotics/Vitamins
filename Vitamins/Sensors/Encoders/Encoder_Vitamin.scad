@@ -6,7 +6,7 @@ function EncoderThickness(3dPrinterTolerance=.4)=3+ 3dPrinterTolerance;
 
 function EncoderBoltWidth(3dPrinterTolerance=.4)=3+ 3dPrinterTolerance;
 function EncoderBoltLength(3dPrinterTolerance=.4)=20+ 3dPrinterTolerance;
-function EncoderBoltInsetY(3dPrinterTolerance=.4)=2.2+ 3dPrinterTolerance/2;
+function EncoderBoltInsetY(3dPrinterTolerance=.4)=2.5+ 3dPrinterTolerance/2;
 function EncoderBoltInsetX(3dPrinterTolerance=.4)=4.5+ 3dPrinterTolerance/2;
 
 function EncoderLongBoxWidth(3dPrinterTolerance=.4)=9+ 3dPrinterTolerance;

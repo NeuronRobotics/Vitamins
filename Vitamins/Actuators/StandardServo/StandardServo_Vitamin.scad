@@ -50,7 +50,7 @@ function hornBoltHeight()=10;
 
 //body bolts
 function StandardServoBoltSideDist()=4.35;
-function StandardServoBoltEdgeDist()=4.85;
+function StandardServoBoltEdgeDist()=5;
 
 //cylinder bolts
 function StandardServoCylBoltDist()=7.62;
@@ -93,12 +93,9 @@ module bodyBolts(boltPlacementZ,ServoTolerance=StandardServoTolerance())
 			           	(j*(StandardServoBaseLength() + StandardServoBoltSideDist()*2)),
 			           	boltPlacementZ]){
 							//Center the first pin on the hole
-							translate([	StandardServoBoltEdgeDist(),
-										-StandardServoBoltSideDist(),
-										0]){
+							translate([StandardServoBoltEdgeDist(),-StandardServoBoltSideDist(),0]){
 								StandardServoBolt(ServoTolerance);
 							}
-					
 			}
 		}
 		// notches for the bolts
