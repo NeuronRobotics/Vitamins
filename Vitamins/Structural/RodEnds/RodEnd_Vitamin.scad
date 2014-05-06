@@ -14,6 +14,8 @@ function RodEndRodInset(3dPrinterTolerance=.4)= 3+3dPrinterTolerance;
 
 function RodEndRodHoleDiam(3dPrinterTolerance=.4)= 3.4-3dPrinterTolerance;
 
+function RodEndEffectiveLegnth() = 14.28+(5.26/2);
+
 
 
 module RodEnd(3dPrinterTolerance=.4)
