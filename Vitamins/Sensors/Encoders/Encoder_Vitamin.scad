@@ -98,11 +98,11 @@ module Encoder_Keepaway(HiLo=true, 3dPrinterTolerance=.4)
 			translate([-EncoderWidth()/2+EncoderThickness(),-EncoderChipOffset(3dPrinterTolerance)-EncoderThickness(3dPrinterTolerance)*1.2-3dPrinterTolerance+HiLoOffset(),EncoderBoltLength(3dPrinterTolerance)/2])
 
 			{
-				#HiLoScrew(3dPrinterTolerance-.05);
+				HiLoScrew(3dPrinterTolerance-.05);
 			}
 			translate([EncoderWidth()/2-EncoderThickness(),-EncoderChipOffset(3dPrinterTolerance)-EncoderThickness(3dPrinterTolerance)*1.2-3dPrinterTolerance+HiLoOffset(),EncoderBoltLength(3dPrinterTolerance)/2])		
 			{
-				#HiLoScrew(3dPrinterTolerance-.05);
+				HiLoScrew(3dPrinterTolerance-.05);
 			}
 		}else{}
 	}
