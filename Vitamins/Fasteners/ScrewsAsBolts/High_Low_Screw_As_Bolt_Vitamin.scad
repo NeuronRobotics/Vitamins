@@ -5,10 +5,11 @@ function HiLoBoltDiameter(3dPrinterTolerance=.4)= 3.3 + 3dPrinterTolerance*2;
 function HiLoBoltLength(3dPrinterTolerance=.4)= 22 + 3dPrinterTolerance;
 function HiLoBoltHeadDiameter(3dPrinterTolerance=.4)= 6.7 + 3dPrinterTolerance*2;
 function HiLoBoltHeadHeight(3dPrinterTolerance=.4)= 2.5 + 3dPrinterTolerance;
+function HiLoBoltDiameterLooseFit(3dPrinterTolerance=.4)= 4.1 + 3dPrinterTolerance*2;
 
 //err on the side of larger tolerances for bolts
 
-module HiLoBolt(3dPrinterTolerance=.4, PlasticWidth=4.2)
+module HiLoBolt(3dPrinterTolerance=.4, PlasticWidth=4.2,looseFit=false)
 {
 	union()
 	{
@@ -17,7 +18,11 @@ module HiLoBolt(3dPrinterTolerance=.4, PlasticWidth=4.2)
 			translate([0,0,.1])
 				union()
 				{
-					cylinder(h=HiLoBoltLength(3dPrinterTolerance), r=HiLoBoltDiameter(3dPrinterTolerance)/2, $fn=30);
+					if(looseFit){
+						#cylinder(h=HiLoBoltLength(3dPrinterTolerance), r=HiLoBoltDiameterLooseFit(3dPrinterTolerance)/2, $fn=30);
+					}else{
+						cylinder(h=HiLoBoltLength(3dPrinterTolerance), r=HiLoBoltDiameter(3dPrinterTolerance)/2, $fn=30);
+					}
 					translate([0,0,HiLoBoltLength(3dPrinterTolerance)-(PlasticWidth+2)])
 					{
 						cylinder(h=PlasticWidth+2, r=HiLoBoltOuterDiameter(3dPrinterTolerance)/2, $fn=30);
