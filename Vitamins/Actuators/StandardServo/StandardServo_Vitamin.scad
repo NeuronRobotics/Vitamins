@@ -42,7 +42,7 @@ function StandardServoNubHeight()=4.2;
 function StandardServoNubDiam(3dPrinterTolerance=.4)=6+3dPrinterTolerance;
 
 //all bolts
-function StandardServoBoltHeight()=8; //reflects the actual protrusion of the bolt above the wing
+function StandardServoBoltHeight()=20; //reflects the actual protrusion of the bolt above the wing
 function StandardServoBoltDiam()=1.5;//2.5, but when using screws to fasten into plastic, the threads must run through the plastic
 
 //horn bolts
@@ -72,7 +72,7 @@ module StandardServoBolt(ServoTolerance=StandardServoTolerance())
 	cylinder(h=StandardServoBoltHeight()+ServoTolerance, r=(StandardServoBoltDiam()+ServoTolerance)/2, $fn=100);
 }
 
-module StandardServoHornBolt(ServoTolerance=StandardServoTolerance(), boltLen = 10 )
+module StandardServoHornBolt(ServoTolerance=StandardServoTolerance(), boltLen = 20 )
 {	
 	union(){
 		translate([0,0, boltLen]){
@@ -308,7 +308,7 @@ module horn_drills(d,n,h)
 //The forth  param indicated the tolerance of the motor (default is .4 mm)
 //the Fith   param is the length of the bolts for the horn
 
-StandardServoMotor(true, 2, false, .4, 10);
+StandardServoMotor(true, 2, false, .4, 20);
 
 
 
