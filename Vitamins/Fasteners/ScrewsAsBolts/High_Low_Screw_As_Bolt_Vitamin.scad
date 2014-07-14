@@ -19,14 +19,14 @@ module HiLoBolt(3dPrinterTolerance=.4, PlasticWidth=4.2,looseFit=false)
 				union()
 				{
 					if(looseFit){
-						#cylinder(h=HiLoBoltLength(3dPrinterTolerance), r=HiLoBoltDiameterLooseFit(3dPrinterTolerance)/2, $fn=30);
+						cylinder(h=HiLoBoltLength(3dPrinterTolerance), r=HiLoBoltOuterDiameter(3dPrinterTolerance)/2, $fn=30);
 					}else{
 						cylinder(h=HiLoBoltLength(3dPrinterTolerance), r=HiLoBoltDiameter(3dPrinterTolerance)/2, $fn=30);
 					}
-					translate([0,0,HiLoBoltLength(3dPrinterTolerance)-(PlasticWidth+2)])
-					{
-						cylinder(h=PlasticWidth+2, r=HiLoBoltOuterDiameter(3dPrinterTolerance)/2, $fn=30);
-					}
+//					translate([0,0,HiLoBoltLength(3dPrinterTolerance)-(PlasticWidth+2)])
+//					{
+//						cylinder(h=PlasticWidth+2, r=HiLoBoltOuterDiameter(3dPrinterTolerance)/2, $fn=30);
+//					}
 				}
 		}
 		
