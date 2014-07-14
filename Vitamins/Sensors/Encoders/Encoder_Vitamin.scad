@@ -32,7 +32,17 @@ module Encoder(Bolts=true, 3dPrinterTolerance=.4)
 		union()
 		{
 	//base
-			cube([EncoderWidth(3dPrinterTolerance), EncoderHeight(3dPrinterTolerance), EncoderThickness(3dPrinterTolerance)]);
+			difference(){
+				cube([EncoderWidth(3dPrinterTolerance), 
+				      EncoderHeight(3dPrinterTolerance), 
+				      EncoderThickness(3dPrinterTolerance)]);
+				union(){
+					
+					cube([EncoderWidth(3dPrinterTolerance),
+					      EncoderHeight(3dPrinterTolerance), 
+					      EncoderThickness(3dPrinterTolerance)-1.6-3dPrinterTolerance]);
+				}
+			}
 	//chip
 			translate([EncoderWidth(3dPrinterTolerance)/2-EncoderChipSide(3dPrinterTolerance)/2, EncoderChipOffset(3dPrinterTolerance), -EncoderChipHeight(3dPrinterTolerance)])
 			{
