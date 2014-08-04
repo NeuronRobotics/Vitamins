@@ -1,0 +1,1 @@
+function CanvasWidth(3dPrinterTolerance=.4) = 0.4+3dPrinterTolerance;
