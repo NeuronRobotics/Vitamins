@@ -16,6 +16,10 @@ function MiniServoOutcrop()= MiniServoCylinderHeight()+MiniServoHeightAbvWings()
 
 function MiniServoWingLength()= (MiniServoLength()-MiniServoBaseLength())/2;
 
+//servo horn
+function MiniServoHornHeight()=3.3;
+function MiniServoHornMaxWidth()=9.5;
+
 
 //for use when the motor is incorporated into parts
 	//this is distance, the short way, from the edge of the motor to the center of the hub
@@ -223,23 +227,23 @@ module Servo_horn()
 {
 	union()
 	{
-		cylinder(r=5.6/2, h=3.3);
-		translate([0, -5.6/2, 3.3-.9])
+		cylinder(r=5.6/2, h=MiniServoHornHeight());
+		translate([0, -5.6/2, MiniServoHornHeight()-.9])
 		{
 			cube([17.75, 5.6, .9]);
 		}
-		translate([13.3, -9.5/2, 3.3-.9])
+		translate([13.3, -9.5/2, MiniServoHornHeight()-.9])
 		{
-			cube([4.4, 9.5, .9]);
+			cube([4.4, MiniServoHornMaxWidth(), .9]);
 		}
 		for (i = [0:4])
 		{
-			translate([5.25+i*2.4, 0, 3.3-.9])
+			translate([5.25+i*2.4, 0, MiniServoHornHeight()-.9])
 			cylinder(r=MiniServoHornBoltDiam()/2, h=5.7, $fn=10);
 		}
 		for (i = [0:1])
 		{
-			translate([5.25+4*2.4, -2.9+(2.9*2*i), 3.3-.9])
+			translate([5.25+4*2.4, -2.9+(2.9*2*i), MiniServoHornHeight()-.9])
 			cylinder(r=MiniServoHornBoltDiam()/2, h=5.7, $fn=10);
 		}
 	}	
