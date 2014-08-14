@@ -1,4 +1,5 @@
-function BowlerBoardHoleDist()=62;
-function BowlerBoardSideLength()=70;
-function BowlerBoardInset()= (BowlerBoardSideLength()-BowlerBoardHoleDist())/2;
+function BowlerBoardLength()=57.2;
 function BowlerBoardHeight()=12;
+function BowlerBoardDepth()=104;
+function BowlerBoardInset()=2;
+
