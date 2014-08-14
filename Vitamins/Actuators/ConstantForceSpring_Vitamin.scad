@@ -1,3 +1,32 @@
+//part 9293K19 from http://www.mcmaster.com/#constant-force-springs/=t8izj1
+
+function mm(inches)=inches*25.4;
+
+function ConstantForceSpringOuterDiameter()=mm(1.53);
+function ConstantForceSpringInnerDiameter()=mm(1.36);
+function ConstantForceSpringWidth()= mm(0.625);
+function ConstantForceSpringScrewHoleDiameter()=mm(0.196);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//depreciated but useful for constant force springs ending in hooks rather than holes for screws
+
 function ConstantForceSpringHookDiameter(3dPrinterTolerance=.3)=3.6+3dPrinterTolerance;
 function ConstantForceSpringHookLength(3dPrinterTolerance=.3)=6+3dPrinterTolerance;
 function ConstantForceSpringHookWidth(3dPrinterTolerance=.3)=7+3dPrinterTolerance;
@@ -34,4 +63,4 @@ module ConstantForceSpringHook(3dPrinterTolerance=.3)
 	}
 }
 
-ConstantForceSpringHook();
+//ConstantForceSpringHook();
