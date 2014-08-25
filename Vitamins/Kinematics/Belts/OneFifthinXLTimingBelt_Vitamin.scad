@@ -2,7 +2,7 @@ function 2XLBeltBaseHeight(3dPrinterTolerance=.4)= 1.3 + 3dPrinterTolerance;
 function 2XLBeltGripHeight(3dPrinterTolerance=.4)= 2.5 + .5 + 3dPrinterTolerance;
 function 2XLBeltToothWidth(3dPrinterTolerance=.4)= 2.2 + 3dPrinterTolerance;
 function 2XLBeltSpaceWidth(3dPrinterTolerance=0)= 2.6 + 3dPrinterTolerance;
-function 2XLBeltWidth(3dPrinterTolerance=.4)= 6.4 + 3dPrinterTolerance;
+function 2XLBeltWidth(3dPrinterTolerance=.4)= 10 + 3dPrinterTolerance;
 function 2XLBeltPitch()= 5.08;
 function 2XLBeltSlotWidth(3dPrinterTolerance=.4)=2XLBeltWidth(3dPrinterTolerance)*1.2;
 
