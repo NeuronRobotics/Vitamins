@@ -91,30 +91,37 @@ translate([0,0,0])
 
 module Encoder_Keepaway(HiLo=true, 3dPrinterTolerance=.4)
 {
-	union()
-	{
-		Encoder(3dPrinterTolerance);
-		translate([-EncoderWidth(3dPrinterTolerance)/2, -EncoderHeight(3dPrinterTolerance)+EncoderChipOffset(3dPrinterTolerance), 0])
+	translate([.92,.92,0]){
+		union()
 		{
-			cube([EncoderWidth(3dPrinterTolerance),EncoderThickness(3dPrinterTolerance)*8, EncoderThickness(3dPrinterTolerance)]);
-		}
-		translate([-(EncoderLongBoxWidth(3dPrinterTolerance)+EncoderShortBoxWidth(3dPrinterTolerance))/2-1,-(EncoderHeight(3dPrinterTolerance)+EncoderThickness(3dPrinterTolerance)*8)/2-1,0])
-		{
-			cube([EncoderLongBoxWidth(3dPrinterTolerance)+EncoderShortBoxWidth(3dPrinterTolerance)+1,EncoderHeight(3dPrinterTolerance)+EncoderThickness(3dPrinterTolerance)*16,EncoderHeight(3dPrinterTolerance)]);
-		}
-		//screws
-		if(HiLo==true)
-		{
-			translate([-EncoderWidth()/2+EncoderThickness(),-EncoderChipOffset(3dPrinterTolerance)-EncoderThickness(3dPrinterTolerance)*1.2-3dPrinterTolerance+HiLoOffset(),EncoderBoltLength(3dPrinterTolerance)/2])
-
+			Encoder(3dPrinterTolerance);
+			translate([-EncoderWidth(3dPrinterTolerance)/2, -EncoderHeight(3dPrinterTolerance)+EncoderChipOffset(3dPrinterTolerance), 0])
 			{
-				HiLoScrew(3dPrinterTolerance-.05);
+				cube([EncoderWidth(3dPrinterTolerance),EncoderThickness(3dPrinterTolerance)*8, EncoderThickness(3dPrinterTolerance)]);
 			}
-			translate([EncoderWidth()/2-EncoderThickness(),-EncoderChipOffset(3dPrinterTolerance)-EncoderThickness(3dPrinterTolerance)*1.2-3dPrinterTolerance+HiLoOffset(),EncoderBoltLength(3dPrinterTolerance)/2])		
+			translate([-(EncoderLongBoxWidth(3dPrinterTolerance)+EncoderShortBoxWidth(3dPrinterTolerance))/2-1,-(EncoderHeight(3dPrinterTolerance)+EncoderThickness(3dPrinterTolerance)*8)/2-1,0])
 			{
-				HiLoScrew(3dPrinterTolerance-.05);
+				cube([EncoderLongBoxWidth(3dPrinterTolerance)+EncoderShortBoxWidth(3dPrinterTolerance)+1,EncoderHeight(3dPrinterTolerance)+EncoderThickness(3dPrinterTolerance)*16,EncoderHeight(3dPrinterTolerance)]);
 			}
-		}else{}
+			//screws
+			if(HiLo==true)
+			{
+				translate([-EncoderWidth()/2+EncoderThickness(),
+				           -(-EncoderChipOffset(3dPrinterTolerance)-EncoderThickness(3dPrinterTolerance)*2.5-3dPrinterTolerance+HiLoOffset()),
+				           EncoderBoltLength(3dPrinterTolerance)/2])
+	
+				{
+					HiLoScrew(3dPrinterTolerance-.5);
+				}
+				translate([EncoderWidth()/2-EncoderThickness(),
+				           -(-EncoderChipOffset(3dPrinterTolerance)-EncoderThickness(3dPrinterTolerance)*2.5-3dPrinterTolerance+HiLoOffset()),
+				           
+				           EncoderBoltLength(3dPrinterTolerance)/2])		
+				{
+					HiLoScrew(3dPrinterTolerance-.5);
+				}
+			}else{}
+		}
 	}
 }
 
