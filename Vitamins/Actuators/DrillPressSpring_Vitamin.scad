@@ -2,6 +2,7 @@ function DrillPressSpringHookDiameter(3dPrinterTolerance=.3)=3.6+3dPrinterTolera
 function DrillPressSpringHookLength(3dPrinterTolerance=.3)=6+3dPrinterTolerance;
 function DrillPressSpringWidth(3dPrinterTolerance=.3)=7+3dPrinterTolerance;
 function DrillPressSpringThickness(3dPrinterTolerance=.3)=0.9+3dPrinterTolerance;
+function DrillPressSpringOuterDiameter(3dPrinterTolerance=.3)=43+3dPrinterTolerance;
 
 
 

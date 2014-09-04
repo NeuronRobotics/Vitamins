@@ -75,7 +75,7 @@ module StandardServoBolt(ServoTolerance=StandardServoTolerance())
 module StandardServoHornBolt(ServoTolerance=StandardServoTolerance(), boltLen = 20 )
 {	
 	union(){
-		translate([0,0, boltLen]){
+		translate([0,0, boltLen+ServoTolerance]){
 			cylinder(	h= boltLen*2+ServoTolerance, 
 						r=(StandardServoBoltDiam()+ServoTolerance)*1.3, 
 						$fn=100);
@@ -192,7 +192,7 @@ module StandardServoMotor(	boltsUp=true,
 							Cylinder=1, 
 							hornCentered=false, 
 							ServoTolerance=StandardServoTolerance(), 
-							hornBoltLength = 10 )
+							hornBoltLength = 12 )
 {
 	//echo("Horn bolt length ",hornBoltLength);
 	if(hornCentered==true){
