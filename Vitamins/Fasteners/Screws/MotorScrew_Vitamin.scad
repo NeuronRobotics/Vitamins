@@ -1,16 +1,16 @@
 //this is the small servo motor screw.
 $fn=100;
 
-headdiam=5.3;
-headheight=2;
-threaddiam=2.7;
-threadheight=9.25;
+function MSheaddiam()=5.3;
+function MSheadheight()=2;
+function MSthreaddiam()=2.7;
+function MSthreadheight()=9.25;
 
 module MotorScrew(3dPrinterTolerance){
 	union(){
-		cylinder(r=threaddiam/2-3dPrinterTolerance/2, h=threadheight);	//the threads
-		translate([0,0,threadheight]){
-			cylinder(r=headdiam/2, h=headheight);	//the head
+		cylinder(r=MSthreaddiam()/2-3dPrinterTolerance/2, h=MSthreadheight());	//the threads
+		translate([0,0,MSthreadheight()]){
+			cylinder(r=MSheaddiam()/2, h=MSheadheight());	//the head
 		}
 	}
 }
