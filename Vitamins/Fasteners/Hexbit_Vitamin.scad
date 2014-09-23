@@ -1,8 +1,8 @@
 //this is the standard hex bit driver
 
 
-module hexbit(bitradius,bitheight){
-	cylinder($fn=6,r=bitradius,h=bitheight);
+module hexbit(3dPrinterTolerance,bitradius,bitheight){
+	cylinder($fn=6,r=bitradius+3dPrinterTolerance/2,h=bitheight);
 }
 
-hexbit(7.2/2,25);
+hexbit(.4,7.2/2,25);
