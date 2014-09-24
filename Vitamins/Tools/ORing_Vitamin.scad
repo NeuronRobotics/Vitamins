@@ -2,7 +2,7 @@
 $fn=100;
 
 function ORinnerdiam()=47;
-function ORdiam()=15.4;
+function ORdiam()=5.4;
 
 module ORing(){
 	rotate_extrude(convexity = 10)
