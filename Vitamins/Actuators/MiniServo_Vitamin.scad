@@ -115,7 +115,7 @@ module bodyBolts(boltPlacementZ,ServoTolerance=MiniServoTolerance())
 			//Center the first pin on the hole
 			translate([MiniServoThickness()/2,-MiniServoRestrainingScrewSideDist(),0])
 			{
-				//translate([0,0,HiLoScrewLength()-.1])
+				translate([0,0,-MiniServoWingsHeight()-.2])
 				HiLoScrew();
 			}
 		}
