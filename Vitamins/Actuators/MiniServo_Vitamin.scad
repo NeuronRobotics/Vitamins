@@ -7,6 +7,7 @@
 // The Fourth number indicated the tolerance of the motor (default is .4 mm)
 
 //THIS IS FOR IF YOU USE OTHER KINDS OF MOTORS, MOTOROUTCROP IS THE DISTANCE FROM THE MOUNTING PLATE TO THE BUISNESS END OF YOUR MOTOR, IF YOU EVER NEED TO SWITCH TO ANOTHER JUST CHANGE THIS VALUE TO THE ACTUAL VALUE
+use <../Fasteners/Screws/High_Low_Screw_Vitamin.scad>
 
 function MiniServoHeightAbvWings(tolerance=.6)=(MiniServoHeight()-(MiniServoWingsHeight()+MiniServoWingsDist()+tolerance*2));
 echo ("MiniServoHeightAboveWings is",(MiniServoHeightAbvWings(.6)));
@@ -55,6 +56,7 @@ function MiniServoHornBoltHeight()=9;
 function MiniServoHornBoltDiam(3dPrinterTolerance=.5)=1.7+3dPrinterTolerance();
 
 //body bolts
+
 function MiniServoBoltSideDist()=1.8;
 function MiniServoBoltEdgeDist()=4;
 
@@ -69,6 +71,10 @@ function MiniServoHubDist()=0;
 
 //tolerance for servo
 function MiniServoTolerance()=.3;
+function MiniServoBoltHoleDistance() = (MiniServoBaseLength() + MiniServoBoltSideDist()*2);
+// restraining screw
+function MiniServoRestrainingScrewSideDist()=MiniServoBoltSideDist()+MiniServoBoltEdgeDist();
+function MiniServoRestrainingScrewDistance() = (MiniServoBaseLength() + MiniServoRestrainingScrewSideDist()*2);
 
 //When calling this module, use MiniServoMotor(boolean,boolean); The first boolean determines the bolt direction(true is up, false is down) and the second determines where the module is centered (true centers at the hub, false centers at the motor mount)
 
@@ -95,12 +101,22 @@ module bodyBolts(boltPlacementZ,ServoTolerance=MiniServoTolerance())
 	for (i = [0:1])
 	{
 		//Use the for loop like binary flags
-		translate([(0), (i*(MiniServoBaseLength() + MiniServoBoltSideDist()*2)), boltPlacementZ])
+		translate([(0), (i*MiniServoBoltHoleDistance()), boltPlacementZ])
 		{
 			//Center the first pin on the hole
 			translate([MiniServoThickness()/2,-MiniServoBoltSideDist(),0])
 			{
 				MiniServoBolt(ServoTolerance);
+			}
+		}
+		//Use the for loop like binary flags
+		translate([(0), (i*MiniServoRestrainingScrewDistance() ), boltPlacementZ])
+		{
+			//Center the first pin on the hole
+			translate([MiniServoThickness()/2,-MiniServoRestrainingScrewSideDist(),0])
+			{
+				//translate([0,0,HiLoScrewLength()-.1])
+				HiLoScrew();
 			}
 		}
 	}
