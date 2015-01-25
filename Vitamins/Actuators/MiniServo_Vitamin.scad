@@ -104,7 +104,7 @@ module bodyBolts(boltPlacementZ,ServoTolerance=MiniServoTolerance())
 		translate([(0), (i*MiniServoBoltHoleDistance()), boltPlacementZ])
 		{
 			//Center the first pin on the hole
-			translate([MiniServoThickness()/2,-MiniServoBoltSideDist(),0])
+			translate([MiniServoThickness()/2,-MiniServoBoltSideDist(),-boltPlacementZ/2])
 			{
 				MiniServoBolt(ServoTolerance);
 			}
@@ -239,6 +239,8 @@ module MiniServoMotor(	boltsUp=true,
 
 }
 
+function calculateHornHoleRadius(index) = 5.25+index*2.4;
+
 module Servo_horn()
 {
 	union()
@@ -254,12 +256,12 @@ module Servo_horn()
 		}
 		for (i = [0:4])
 		{
-			translate([5.25+i*2.4, 0, MiniServoHornHeight()-.9])
+			translate([calculateHornHoleRadius(i), 0, MiniServoHornHeight()-.9])
 			cylinder(r=MiniServoHornBoltDiam()/2, h=5.7, $fn=10);
 		}
 		for (i = [0:1])
 		{
-			translate([5.25+4*2.4, -2.9+(2.9*2*i), MiniServoHornHeight()-.9])
+			translate([calculateHornHoleRadius(4), -2.9+(2.9*2*i), MiniServoHornHeight()-.9])
 			cylinder(r=MiniServoHornBoltDiam()/2, h=5.7, $fn=10);
 		}
 	}	
