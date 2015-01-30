@@ -1,6 +1,6 @@
 function HiLoScrewDiameter(3dPrinterTolerance=.4)= 3.6+3dPrinterTolerance;  
 function HiLoScrewLength(3dPrinterTolerance=.4)= 55+3dPrinterTolerance;
-function HiLoScrewHeadDiameter(3dPrinterTolerance=.4)= 6.7+3dPrinterTolerance;
+function HiLoScrewHeadDiameter(3dPrinterTolerance=.4)= 8.7+3dPrinterTolerance;
 function HiLoScrewHeadHeight(3dPrinterTolerance=.4)= 2.5+3dPrinterTolerance;
 
 //err on the side of smaller tolerances for screws
